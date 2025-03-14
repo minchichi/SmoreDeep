@@ -11,7 +11,7 @@ public class MainController {
 		return "main";
 	}
 	
-	@GetMapping("/lecture-list")
+	@GetMapping("/")
 	public String lecture_list() {
 		return "lecture-list";
 	}
