@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="assets/css/style_min.css">
+  <title>S'MoreDeep</title>
+</head>
+<body>
+<div th:replace="~{/header :: body}"></div>
+  <!-- 강의상세정보 -->
+<div class="content lecture-one">
+  <div class="product">
+    <div class="one-product">
+      <div class="thumb">
+        <a href="#"></a>
+        <img src="images/thumb1.png" alt="">
+      </div>
+
+      <div class="info">
+        <div class="category">
+          <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+          </div>
+        </div>
+        <div class="title">
+          누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+        </div>
+        <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+        <div class="wrap">
+          <div class="day">100일</div>
+          <div class="time">32시간 34분</div>
+        </div>
+        <div class="wrap">
+          <div class="level">입문</div>
+          <div class="atc">👍78%</div>  
+        </div>
+      </div>
+    </div>
+
+    <div class="tab">
+      <a href="#lecture-intro" class="intro pick">강의 소개</a>
+      <a href="#lecture-review" class="intro">수강평</a>
+    </div>
+
+    <div class="sub-content" id="lecture-intro">
+      <div class="sub-title">강의 소개</div>
+      <div class="text">
+        이 강의는 Java와 Spring Boot를 활용한 웹 개발을 처음부터 끝까지 배우는 마스터 과정입니다. 기본적인 Java 문법부터 시작하여, REST API 개발, 데이터베이스 연동, 보안 및 배포까지 실무에서 자주 사용되는 핵심 개념들을 집중적으로 다룹니다.
+      </div>
+      <div class="text recom">
+        🎯 이런 분들에게 추천합니다! <br>
+        ✔️ Java와 Spring Boot로 백엔드 개발을 배우고 싶은 분 <br>
+        ✔️ RESTful API 개발 및 데이터베이스 연동을 경험하고 싶은 분 <br>
+        ✔️ 기업 채용에서 요구하는 웹 개발 역량을 갖추고 싶은 분
+      </div>
+    </div>
+
+    <div class="sub-content" id="lecture-review">
+        <div class="sub-title">수강평</div>
+        <div class="review-one">
+          <div class="wrap">
+            <div class="writer">go06533</div>
+            <div class="date">2025. 02. 02.</div>
+            <div class="date">별점 5</div>
+          </div>
+          <div class="text">Java를 공부하다가 Spring Boot를 배우고 싶어서 수강했는데, 정말 체계적으로 잘 정리된 강의였습니다. 개념 설명이 명확하고 실습 예제도 다양해서 이해하기 쉬웠어요. 프로젝트를 직접 만들어보면서 자신감이 생겼습니다!</div>
+        </div>
+        
+        <div class="review-one">
+          <div class="wrap">
+            <div class="writer">sungwo</div>
+            <div class="date">2025. 02. 09.</div>
+            <div class="date">별점 4</div>
+          </div>
+          <div class="text">Spring Boot를 공부하면서 항상 이론만 보고 실무에 적용하는 게 어려웠는데, 이 강의에서는 실전 프로젝트를 단계별로 진행하면서 배우니까 훨씬 쉽게 익힐 수 있었습니다. 특히 JPA와 보안 관련 부분이 너무 유익했어요.</div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div th:replace="~{/footer :: body}"></div>
+<script src="assets/js/main_min.js"></script>
+</body>
+</html>

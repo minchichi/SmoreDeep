@@ -5,11 +5,15 @@
   --logo : #773E16;
   --gray : #F5F5F5;
   --font--style : 'pretendard';
+  --line : #D9D9D9;
 }
 
 *, a, ul, li, div, p {
   text-decoration: none;
   color: #333333;
+}
+html {
+  scroll-behavior:smooth;
 }
 body {
   font-family: var(--font--style);
@@ -135,7 +139,7 @@ body {
   z-index: 10;
 }
 .product .one-product .info .title {
-  margin: 10px 0 5px;
+  margin-top: 10px;
   line-height: 1.2;
   font-weight: 700;
 }
@@ -146,4 +150,95 @@ body {
 }
 .product .one-product .sub .date span {
   margin-left: 5px;
+}
+
+/* 강의 상세 정보 --------------------------------------------- */
+.lecture-one .product {
+  grid-template-columns: repeat(1, 1fr);
+}
+.lecture-one .info {
+
+}
+.lecture-one .one-product .title {
+  font-size: 24px;
+  margin: 5px 0;
+}
+.lecture-one .info .sub {
+}
+.lecture-one .info .category {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-top: 10px;
+}
+.lecture-one .info .category .text {
+  color: #999;
+}
+.lecture-one .info .category span {
+  color: #999;
+}
+.lecture-one .info .category span::before {
+  content: " > ";
+}
+.lecture-one .wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  gap: 10px;
+}
+.lecture-one .info .day::before {
+  content: "수강기간 - ";
+}
+.lecture-one .info .time::before {
+  content: "총 강의시간 - ";
+}
+.lecture-one .level::before {
+  content: "난이도 - ";
+}
+
+.lecture-one .tab {
+  display: flex;
+  flex-direction: row;
+}
+.lecture-one .sub-content {
+  font-size: 16px;
+}
+.lecture-one .sub-content .text {
+  color: #555;
+  line-height: 1.4;
+}
+.lecture-one .sub-content .recom {
+  margin-top: 5px;
+}
+.lecture-one .tab .intro {
+  width: 100%;
+  height: 40px;
+  border: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.lecture-one .tab .pick {
+  border: 1px solid var(--main);
+}
+
+.lecture-one .sub-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #555;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+.lecture-one .sub-content .date {
+  font-size: 14px;
+  color: #555;
+}
+.lecture-one .sub-content .wrap {
+  margin-bottom: 5px;
+}
+.lecture-one .sub-content .review-one {
+  margin-bottom: 20px;
 }
