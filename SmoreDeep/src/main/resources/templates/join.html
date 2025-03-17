@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+<link rel="stylesheet" href="assets/css/style_na.css">
+<script src="assets/js/main_na.js"></script>
+<title>회원가입</title>
+</head>
+<body>
+
+	<div class="container">
+		<div class="title">회원가입</div>
+		<form action="/submit_registration" method="POST">
+
+			<!-- 전체 동의 체크박스 -->
+			<div class="join">
+				<input type="checkbox" id="join" class="checkbox"
+					onclick="toggleAllAgreement(this)"> <label for="join">전체
+					동의</label>
+			</div>
+
+			<!-- 개별 동의 항목 -->
+			<div class="agree">
+				<div>
+					<input type="checkbox" id="agree_service" class="checkbox">
+					<span class="required">필수</span> <label for="agree_service">서비스
+						약관 동의</label>
+				</div>
+				<div>
+					<input type="checkbox" id="agree_privacy" class="checkbox">
+					<span class="required">필수</span> <label for="agree_privacy">개인정보수집/이용
+						동의</label>
+				</div>
+				<div>
+					<input type="checkbox" id="agree_third_party" class="checkbox">
+					<span class="required">필수</span> <label for="agree_third_party">개인정보
+						제3자 정보제공 동의</label>
+				</div>
+				<div>
+					<input type="checkbox" id="agree_location" class="checkbox">
+					<span class="required">필수</span> <label for="agree_location">위치기반
+						서비스 이용약관 동의</label>
+				</div>
+			</div>
+
+			<button type="submit" class="button">다음</button>
+
+		</form>
+	</div>
+
+</body>
+</html>

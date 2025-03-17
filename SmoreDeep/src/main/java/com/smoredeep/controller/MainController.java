@@ -16,5 +16,15 @@ public class MainController {
 		return "lecture-list";
 	}
 	
+	@GetMapping("/join")
+	public String join() {
+		return "join";
+	}
+	
+	@GetMapping("/join2")
+	public String join2() {
+		return "join2";
+	}
+	
 	
 }
