@@ -13,7 +13,7 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String lecture_list() {
-		return "lecture-list";
+		return "lecture_list";
 	}
 	
 	@GetMapping("/join")
@@ -24,6 +24,11 @@ public class MainController {
 	@GetMapping("/join2")
 	public String join2() {
 		return "join2";
+	}
+	
+	@GetMapping("/lecture_one")
+	public String lecture_one() {
+		return "lecture_one";
 	}
 	
 	

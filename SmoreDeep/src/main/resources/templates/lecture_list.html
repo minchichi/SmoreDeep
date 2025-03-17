@@ -7,17 +7,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-
   <link rel="stylesheet" href="assets/css/style_min.css">
-
   <title>S'MoreDeep</title>
 </head>
 <body>
-  <div class="header">
-    <a href="#" class="title">S'MoreDeep</a>
-  </div>
-
-  <div class="lecture-list content">
+<div th:replace="~{/header :: body}"></div>
+<div class="content lecture-list">
 
     <form method="post" id="search-form">
       <div class="search">
@@ -167,44 +162,7 @@
     </div> <!-- end product -->
   </div>
 
-  <!-- 카테고리 슬라이드 -->
-  <script>
-    var on = $('.slides').find('.activetop').index();
-    var options = {
-      horizontal: 1,
-      mouseDragging: 1,
-      touchDragging: 1,
-    };
-    var frame = new Sly('.category', options).init();
-
-    $('.category .slides li').on("click", function(){
-      $('.category .slides li').removeClass("focus");
-      $(this).addClass("focus");
-    })
-  </script>
-
-  
-  </div>
-
-  <div class="footer">
-    <div class="btn">
-      <a href="#">
-        <img src="images/user.svg">
-        <div class="name">LOGIN</div>
-      </a>
-    </div>
-    <div class="btn">
-      <a href="#">
-        <img src="images/home.svg">
-        <div class="name">HOME</div>
-      </a>
-    </div>
-    <div class="btn">
-      <a href="#">
-        <img src="images/chat.svg">
-        <div class="name">S'MORE</div>
-      </a>
-    </div>
-  </div>
+<div th:replace="~{/footer :: body}"></div>
+<script src="assets/js/main_min.js"></script>
 </body>
 </html>
