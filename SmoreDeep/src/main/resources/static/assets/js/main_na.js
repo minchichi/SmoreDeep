@@ -23,33 +23,44 @@ document.addEventListener("DOMContentLoaded", function () {
     updateButtonState();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirm_password");
-    const form = document.querySelector("form");
-    const inputs = document.querySelectorAll("input[required], select[required]");
+// 회원가입 다음 페이지 넘기기
+$(".next").click(function(){
+    $(".wrap-join2").show();
+    $(".wrap-join").hide();
+})
 
-    form.addEventListener("submit", function (e) {
-        // 필수 입력값 검증
-        const emptyInput = Array.from(inputs).some(input => !input.value.trim());
-        if (emptyInput) {
-            alert("모든 필수 항목을 입력해주세요.");
-            e.preventDefault();
-            return;
-        }
+// 비밀번호 유효성 검사
+  let password = document.querySelector("#password");
+  let passwordRetype = document.querySelector("#confirm_password")
+  let passCheck = document.querySelector('.pass_check');
+  let passSame = document.querySelector(".pass_same");
 
-        // 비밀번호 형식 검증 (영문+숫자 포함, 8자 이상)
-        const passwordValue = password.value.trim();
-        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(passwordValue)) {
-            alert("비밀번호는 8자리 이상이며, 영문과 숫자를 포함해야 합니다.");
-            e.preventDefault();
-            return;
-        }
+  function strongPassword(str) {
+    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(str);
+  }
 
-        // 비밀번호 일치 검증
-        if (passwordValue !== confirmPassword.value.trim()) {
-            alert("비밀번호가 일치하지 않습니다.");
-            e.preventDefault();
-        }
-    });
-});
+  function isMatch (password1, password2) {
+    return password1 === password2;
+  }
+
+  password.onkeyup = function () {
+    if (password.value.length !== 0) {
+      if(strongPassword(password.value)) {
+        passCheck.classList.add('hidden');
+      }
+      else {
+        passCheck.classList.remove('hidden');
+      }
+    }
+  };
+
+  passwordRetype.onkeyup = function () {
+    if (password.value.length !== 0) {
+      if(isMatch(password.value, passwordRetype.value)) {
+        passSame.classList.add('hidden');
+      }
+      else {
+        passSame.classList.remove('hidden');
+      }
+    }
+  }
