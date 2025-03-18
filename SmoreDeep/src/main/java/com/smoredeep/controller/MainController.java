@@ -21,14 +21,14 @@ public class MainController {
 		return "join";
 	}
 	
-	@GetMapping("/join2")
-	public String join2() {
-		return "join2";
-	}
-	
 	@GetMapping("/lecture_one")
 	public String lecture_one() {
 		return "lecture_one";
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		return "login";
 	}
 	
 	
