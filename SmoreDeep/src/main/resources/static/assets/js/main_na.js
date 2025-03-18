@@ -64,3 +64,17 @@ $(".next").click(function(){
       }
     }
   }
+
+/* 로그인 페이지 탭 키 */
+function switchTab(role) {
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('form').forEach(form => form.classList.add('hidden'));
+    
+    if (role === 'user') {
+        document.querySelectorAll('.tab-button')[0].classList.add('active');
+        document.getElementById('user').classList.remove('hidden');
+    } else {
+        document.querySelectorAll('.tab-button')[1].classList.add('active');
+        document.getElementById('admin').classList.remove('hidden');
+    }
+}
