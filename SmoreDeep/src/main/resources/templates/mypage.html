@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
+  	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  	<link rel="stylesheet" href="assets/css/style_na.css">
+    <title>S'MoreDeep</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">마이페이지</div>
+        <form action="/submit_registration" method="POST">
+
+            <div class="mypage">
+                <label for="id">아이디</label>
+                <input type="identifier" name="user_id" placeholder="gildong@naver.com" required>
+            </div>
+
+            <div class="course">
+                <label for="category">관심과목 (선택사항)</label>
+                <select id="course_category" name="course_category" required>
+                    <option value="">선택</option>
+                    <option value="개발‧프로그래밍">개발‧프로그래밍</option>
+                    <option value="게임 개발">게임개발</option>
+                    <option value="데이터 사이언스">데이터 사이언스</option>
+                    <option value="인공지능">인공지능</option>
+                </select>
+            </div>
+
+            <div class="course2">
+                <div class="course-item">
+                    <label for="level">난이도 (선택사항)</label>
+                    <select id="course_level" name="course_level" required>
+                        <option value="">선택</option>
+                        <option value="입문">입문</option>
+                        <option value="초급">초급</option>
+                        <option value="중급 이상">중급 이상</option>
+                    </select>
+                </div>
+                <div class="course-item">
+                    <label for="term">강의시간 (선택사항)</label>
+                    <select id="course_term" name="course_tm" required>
+                        <option value="">선택</option>
+                        <option value="2hour">2시간 이하</option>
+                        <option value="4hour">4시간</option>
+                        <option value="8hour">8시간</option>
+                        <option value="12hour">12시간 이상</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="button">회원정보 수정</button>
+
+        </form>
+    </div>
+    
+</body>
+</html>
