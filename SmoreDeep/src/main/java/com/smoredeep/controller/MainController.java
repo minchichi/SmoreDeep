@@ -31,5 +31,10 @@ public class MainController {
 		return "login";
 	}
 	
+	@GetMapping("/chatbot")
+	public String chatbot() {
+		return "chatbot";
+	}
+	
 	
 }
