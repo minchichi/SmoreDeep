@@ -1,33 +1,44 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const allAgreeCheckbox = document.getElementById("join");
-    const checkboxes = document.querySelectorAll(".agree .checkbox");
-    const nextButton = document.querySelector("button[type='submit']");
-    /* 회원가입 체크박스 전체동의 */
-    function updateButtonState() {
-        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-        nextButton.disabled = !allChecked;
-    }
-    // 전체 동의 체크박스 클릭 시 개별 항목들 자동 선택/해제
+docudocument.addEventListener("DOMContentLoaded", function () {
+    const allAgreeCheckbox = document.getElementById("join"); // 전체 동의 체크박스
+    const checkboxes = document.querySelectorAll(".agree input[type='checkbox']"); // 개별 체크박스
+    const nextButton = document.querySelector(".button.next");
+
+    // 전체 동의 체크박스 클릭 시 개별 체크박스 상태 변경
     allAgreeCheckbox.addEventListener("change", function () {
-        checkboxes.forEach(checkbox => checkbox.checked = allAgreeCheckbox.checked);
-        updateButtonState();
+        const isChecked = allAgreeCheckbox.checked;
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+        updateNextButtonState();
     });
 
+    // 개별 체크박스 상태 변경 시 전체 동의 체크박스 상태 업데이트
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("change", function () {
-            allAgreeCheckbox.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-            updateButtonState();
+            allAgreeCheckbox.checked = [...checkboxes].every(checkbox => checkbox.checked);
+            updateNextButtonState();
         });
     });
 
-    updateButtonState();
-});
+    // "다음" 버튼 활성화 여부 업데이트 함수
+    function updateNextButtonState() {
+        const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+        nextButton.disabled = !allChecked;
+        nextButton.style.opacity = allChecked ? "1" : "0.5";
+        nextButton.style.cursor = allChecked ? "pointer" : "not-allowed";
+    }
 
-// 회원가입 다음 페이지 넘기기
-$(".next").click(function(){
-    $(".wrap-join2").show();
-    $(".wrap-join").hide();
-})
+    // "다음" 버튼 클릭 시 다음 단계로 이동
+    function goToNextPage() {
+        if (!nextButton.disabled) {
+            document.querySelector(".wrap-join").classList.add("hidden");
+            document.querySelector(".wrap-join2").classList.remove("hidden");
+        }
+    }
+
+    nextButton.addEventListener("click", goToNextPage);
+    updateNextButtonState(); // 초기 상태 설정
+});
 
 // 비밀번호 유효성 검사
   let password = document.querySelector("#password");
