@@ -31,6 +31,11 @@ public class MainController {
 		return "login";
 	}
 	
+	@GetMapping("/mypage")
+	public String mypage() {
+		return "mypage";
+	}
+	
 	@GetMapping("/chatbot")
 	public String chatbot() {
 		return "chatbot";
