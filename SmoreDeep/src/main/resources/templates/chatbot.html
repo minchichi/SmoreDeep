@@ -79,6 +79,11 @@
           </div>
         </div>
       </div>
+      <div class="quick-buttons">
+        <button class="quick-button" onclick="sendQuickMessage('추천 강의 보여줘')">추천 강의</button>
+        <button class="quick-button" onclick="sendQuickMessage('인기 강의 뭐 있어?')">인기 강의</button>
+        <button class="quick-button" onclick="sendQuickMessage('기초 강의 추천해줘')">기초 강의</button>
+      </div>
 
       <div class="message user-message">
         기초강의를 추천해줘
@@ -136,6 +141,12 @@
       touchDragging: 1,
     };
     var frame = new Sly('.course-message', options).init();
+    
+    function sendQuickMessage(text) {
+        document.getElementById("user-input").value = text;
+        sendMessage();    	
+    }
+    
 </script>
 
 </body>
