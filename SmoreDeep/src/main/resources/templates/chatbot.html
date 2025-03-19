@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="assets/css/style_min.css">
+  <!-- jQuery 추가 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>S'MoreDeep</title>
+</head>
+<body>
+<div th:replace="~{/header :: body}"></div>
+
+<div class="chat-container">
+    <div class="chat-box" id="chat-box">
+      <div class="message bot-message">
+        안녕하세요 스모어딥 챗봇입니다. 원하시는 강의 스타일이나 관심분야를 말해주시면 강의를 추천해드릴게요!
+      </div>
+
+      <div class="course-message">
+        <div class="product-list">
+
+          <div class="one-product">
+            <a href="#"></a>
+            <div class="thumb">
+              <img src="images/thumb1.png" alt="">
+            </div>
+            <div class="info">
+              <div class="title">누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</div>
+              <div class="sub">
+                <div class="date">3시간 40분</div>
+                <div class="positive">👍78%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="one-product">
+            <div class="thumb">
+              <a href="#"></a>
+              <img src="images/thumb2.png" alt="">
+            </div>
+            <div class="info">
+              <div class="title">서버 개발자가 되는 가장 빠른 길, Node.js & Express.js</div>
+              <div class="sub">
+                <div class="date">3시간 40분</div>
+                <div class="positive">👍32%</div>
+              </div>
+            </div>
+          </div>
+          <div class="one-product">
+            <div class="thumb">
+              <a href="#"></a>
+              <img src="images/thumb2.png" alt="">
+            </div>
+            <div class="info">
+              <div class="title">서버 개발자가 되는 가장 빠른 길, Node.js & Express.js</div>
+              <div class="sub">
+                <div class="date">3시간 40분</div>
+                <div class="positive">👍32%</div>
+              </div>
+            </div>
+          </div>
+          <div class="one-product">
+            <div class="thumb">
+              <a href="#"></a>
+              <img src="images/thumb3.png" alt="">
+            </div>
+            <div class="info">
+              <div class="title">한 방에 끝내는 Java & Spring Boot 웹 개발 마스터코스</div>
+              <div class="sub">
+                <div class="date">3시간 40분</div>
+                <div class="positive">👍98%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="message user-message">
+        기초강의를 추천해줘
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="메시지를 입력하세요">
+      <button onclick="sendMessage()">전송</button>
+    </div>
+  </div>
+
+<div th:replace="~{/footer :: body}"></div>
+
+<script>
+    function sendMessage() {
+        const userInput = document.getElementById("user-input");
+        const chatBox = document.getElementById("chat-box");
+        const message = userInput.value.trim();
+
+        if (message === "") return;
+
+        // 사용자 메시지 추가
+        const userMessage = document.createElement("div");
+        userMessage.classList.add("message", "user-message");
+        userMessage.textContent = message;
+        chatBox.appendChild(userMessage);
+
+        userInput.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight; // 자동 스크롤
+
+        // 챗봇 응답 (기본적인 응답 설정)
+        setTimeout(() => {
+            const botMessage = document.createElement("div");
+            botMessage.classList.add("message", "bot-message");
+            botMessage.textContent = getBotResponse(message);
+            chatBox.appendChild(botMessage);
+            chatBox.scrollTop = chatBox.scrollHeight; // 자동 스크롤
+        }, 500);
+    }
+
+    function getBotResponse(input) {
+        const responses = {
+            "안녕": "안녕하세요! 무엇을 도와드릴까요?",
+            "이름이 뭐야?": "저는 간단한 챗봇이에요!",
+            "날씨 어때?": "현재 날씨 정보는 제공되지 않아요. 하지만 맑을 거라고 믿어요! ☀️",
+            "잘가": "또 만나요! 👋"
+        };
+        return responses[input] || "죄송해요, 잘 이해하지 못했어요. 😢";
+    }
+
+    var on = $('.product-list').index();
+    var options = {
+      horizontal: 1,
+      mouseDragging: 1,
+      touchDragging: 1,
+    };
+    var frame = new Sly('.course-message', options).init();
+</script>
+
+</body>
+</html>
