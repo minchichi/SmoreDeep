@@ -164,9 +164,10 @@
         </div>
       </div>
 -->
-      
+    </div> <!-- end product -->
+    
 	<!-- 페이징처리 시작 -->
-    <div th:if="${!paging.isEmpty()}">
+    <div th:if="${!paging.isEmpty()}" class="page">
         <ul class="pagination justify-content-center">
             <!-- <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'"> -->
             <li class="page-item" th:unless=${!paging.hasPrevious}>
@@ -190,9 +191,6 @@
         </ul>
     </div>
     <!-- 페이징처리 끝 -->
-     
-     
-    </div> <!-- end product -->
   </div>
 
 <div th:replace="~{/footer :: body}"></div>
