@@ -23,6 +23,29 @@
       </div>
     </form>
 
+	<!-- 검색필터 -->
+	<div class="search-list">
+      <!-- 난이도 -->
+      <div class="search-level">
+        <select id="search-level" name="search-level" required>
+          <option value="">난이도</option>
+          <option value="입문">입문</option>
+          <option value="초급">초급</option>
+          <option value="중급이상">중급이상</option>
+        </select>
+      </div>
+      <!-- 강의시간 -->
+      <div class="search-schedule">
+        <select id="search-schedule" name="search-schedule" required>
+          <option value="">강의시간</option>
+          <option value="2">2시간 이하</option>
+          <option value="4">4시간</option>
+          <option value="8">8시간</option>
+          <option value="12">12시간 이상</option>
+        </select>
+      </div>
+    </div>
+
     <div class="category">
       <ul class="slides">
         <li class="focus"><a href="#" class="activetop">전체메뉴</a></li>

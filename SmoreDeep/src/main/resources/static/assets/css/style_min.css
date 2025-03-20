@@ -93,6 +93,40 @@ body {
   cursor: pointer;
   padding: 10px 20px;
 }
+.lecture-list .search-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.lecture-list .search-list .search-level,
+.lecture-list .search-list .search-schedule {
+  width: 100%;
+  position: relative;
+}
+.lecture-list .search-list .search-level::after,
+.lecture-list .search-list .search-schedule::after {
+  content: "▼";
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.lecture-list .search-list select {
+  padding: 10px 16px;
+  background-color: #f5f5f5;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  appearance: none;
+  cursor: pointer;
+}
 .lecture-list .category {
   margin: 10px 0;
 }
@@ -342,7 +376,6 @@ body {
   flex-wrap: nowrap;
   width: max-content;
 }
-
 
 .quick-buttons {
   display: flex;
