@@ -231,6 +231,13 @@ body {
     text-decoration: none;
 }
 
+.error-message {
+	font-size: 16px;
+    color: red;
+    text-align: center;
+    padding: 10px;
+}
+
 .separator {
     font-size: 16px;
     color: #555;

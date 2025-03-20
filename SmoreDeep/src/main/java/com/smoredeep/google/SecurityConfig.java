@@ -78,8 +78,8 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // 세션을 사용할 필요가 있으면 사용
                 );
-            
-        return http.build();
+        // CSRF 필터 해제 
+        return http.csrf().disable().build();
     }
     
     

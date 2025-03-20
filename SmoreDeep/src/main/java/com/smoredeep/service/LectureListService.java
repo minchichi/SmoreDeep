@@ -17,7 +17,7 @@ public class LectureListService {
 	private final CourseRepository courseRepository;
 
 	public Page<TbCourse> getList(int page) {
-		Pageable pageable = PageRequest.of(page, 8);
+		Pageable pageable = PageRequest.of(page, 10);
 		return this.courseRepository.findAll(pageable);
 	}
 

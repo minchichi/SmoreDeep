@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.smoredeep.entity.TbUser;
 import com.smoredeep.repository.UserRepository;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,7 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class OAuth2MemberService extends DefaultOAuth2UserService {
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
-
+    private final HttpSession session;
+    
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -33,11 +35,14 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
             TbUser user = TbUser.builder()
                     .email(email)
                     .password(encoder.encode("password"))
-                    .name(username)
+//                    .name(username)
                     .role(role)
                     .provider(provider).build();
             userRepository.save(user);
         }
+        
+        session.setAttribute("user", findUser);
+        
         return oAuth2User;
     }
 }

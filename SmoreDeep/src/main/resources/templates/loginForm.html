@@ -17,29 +17,30 @@
 	<div class="container">
 		<div class="title">로그인</div>
 		<div class="tabs">
-			<button class="tab-button active" onclick="switchTab('user')">일반</button>
+			<button class="tab-button active" onclick="location.href='/loginForm'">일반</button>
 			<button class="tab-button" onclick="switchTab('admin')">관리자</button>
 		</div>
-
-		<form id="user" action="/submit_login_user" method="POST"
-			class="hidden">
+		
+		<form id="user" action="/submit_login_user" method="POST">
 			<div class="login">
-				<input type="identifier" name="user_id" placeholder="이메일 또는 아이디"
-					required>
+				<input type="identifier" name="user_id"  placeholder="이메일 또는 아이디" required>
 			</div>
 			<div class="login">
-				<input type="password" name="user_password" placeholder="비밀번호"
-					required>
+				<input type="password" name="user_pw"  placeholder="비밀번호" required>
 			</div>
 			<div class="find-pw">
 				<a href="#">비밀번호를 잊어버리셨나요?</a>
 			</div>
+			<!-- 오류 메시지 표시 -->
+       		<div class="error-message" th:if="${error}">
+        	  <p th:text="${error}"></p>
+     		</div>
+			<button type="submit"  class="button">로그인</button>					 
 		</form>
-
-		<form id="admin" action="/submit_login_admin" method="POST">
+		
+		<form id="admin" action="/submit_login_admin" method="POST" class="hidden">
 			<div class="login">
-				<input type="identifier" name="admin_id" placeholder="이메일 또는 아이디"
-					required>
+				<input type="identifier" name="admin_id" placeholder="이메일 또는 아이디" required>
 			</div>
 			<div class="login">
 				<input type="password" name="admin_pw" placeholder="비밀번호" required>
@@ -47,25 +48,20 @@
 			<div class="find-pw">
 				<a href="#">비밀번호를 잊어버리셨나요?</a>
 			</div>
+			<button type="submit" class="button">로그인</button> 
 		</form>
-
-		<button type="submit" class="button">로그인</button>
-
 		<div class="separator">
 			<span>------------------------ 또는 -------------------------</span>
 		</div>
 
 		<div class="image-links">
-			<a
-				href="https://kauth.kakao.com/oauth/authorize?client_id=0814623f049ae3fd6b80e81bd3ab74d9&redirect_uri=http://localhost:8083/login&response_type=code&prompt=login">
-				<img src="images/kakao.png" alt="kakao">
-			</a> <a
-				href="/oauth2/authorization/google">
-				<img src="images/google.png" alt="google">
-			</a>
+			<a href="https://kauth.kakao.com/oauth/authorize?client_id=0814623f049ae3fd6b80e81bd3ab74d9&redirect_uri=http://localhost:8083/login&response_type=code&prompt=login">
+				<img src="images/kakao.png" alt="kakao"></a> 
+			
+			<a href="/oauth2/authorization/google">
+				<img src="images/google.png" alt="google"></a>
 		</div>
-
-		<button type="submit" class="join-btn">회원가입</button>
+		<button type="button" class="join-btn" onclick="location.href='/join'">회원가입</button>
 
 	</div>
 

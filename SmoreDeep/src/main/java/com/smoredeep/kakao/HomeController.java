@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ import com.smoredeep.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@Controller
 public class HomeController {
 
 	KakaoAPI kakaoApi = new KakaoAPI();
@@ -30,7 +31,7 @@ public class HomeController {
 	UserRepository userRepository;
 
 	@RequestMapping(value = "/login")
-	public ModelAndView login(@RequestParam("code") String code, HttpSession session) {
+	public String login(@RequestParam("code") String code, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		// 1번 인증코드 요청 전달
 		String accessToken = kakaoApi.getAccessToken(code);
@@ -46,7 +47,7 @@ public class HomeController {
 			session.setAttribute("accessToken", accessToken);
 		}
 		mav.addObject("userId", userInfo.get("email"));
-		mav.setViewName("index");
+		mav.setViewName("lecture_list");
 
 		System.out.println(userInfo);
 
@@ -61,23 +62,27 @@ public class HomeController {
 			TbUser user = TbUser.builder()
 					.email(email)
 					.password(encoder.encode("password"))
-					.name(username).role(role)
+//					.name(username)
+					.role(role)
 					.provider(provider).build();
 			userRepository.save(user);
 		}
+		
+		session.setAttribute("user", userInfo);
 
-		return mav;
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/logout")
-	public ModelAndView logout(HttpSession session) {
+	public String logout(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
 		kakaoApi.kakaoLogout((String) session.getAttribute("accessToken"));
 		session.removeAttribute("accessToken");
 		session.removeAttribute("userId");
-		mav.setViewName("index");
-		return mav;
+		session.removeAttribute("user");
+		mav.setViewName("lecture_list");
+		return "redirect:/";
 	}
 
 }

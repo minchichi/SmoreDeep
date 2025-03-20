@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+
+<!-- thymeleaf 사용을 위해 코드 작성 , 타임리프 문법사용을 위해 th 사용 -->
+<html xmlns:th="http://www.thymeleaf.org" lang = "ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,21 +17,31 @@
 </head>
 <body>
 <div class="footer">
+
+   <div class="btn">  
+      <div th:if="${session.user} != null">       
+	 	<a href="/logout"> 
+	 	 	<img src="images/user.svg">
+	 		<div class="name">LOGOUT</div>
+	 	</a>
+	  </div>
+      
+      <div th:unless="${session.user} != null">
+		<a href="/loginForm">
+		 	<img src="images/user.svg">
+			<div class="name"> LOGIN</div>
+		</a>        	 
+      </div>
+   </div>
+    
     <div class="btn">
-      <a href="#">
-        <img src="images/user.svg">
-        <div class="name login">LOGIN</div>
-        <!-- <div class="name logout">LOGOUT</div> -->
-      </a>
-    </div>
-    <div class="btn">
-      <a href="#">
+      <a href="/">
         <img src="images/home.svg">
         <div class="name">HOME</div>
       </a>
     </div>
     <div class="btn">
-      <a href="#">
+      <a href="/chatbot">
         <img src="images/chat.svg">
         <div class="name">S'MORE</div>
       </a>

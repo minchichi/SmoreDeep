@@ -11,5 +11,8 @@ import com.smoredeep.entity.TbUser;
 
 @Repository
 public interface UserRepository extends JpaRepository<TbUser, String> {
-    public Optional<TbUser> findByUserId(String user_id);
+    
+	TbUser findByUserIdAndUserPw(String user_id, String user_pw);
+	
+	public Optional<TbUser> findByUserId(String user_id);
 }
