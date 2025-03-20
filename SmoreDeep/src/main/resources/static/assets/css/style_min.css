@@ -288,6 +288,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow-y: auto;
 }
 .chat-container .chat-box .message {
   max-width: 75%;
