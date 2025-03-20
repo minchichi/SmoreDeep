@@ -1,0 +1,24 @@
+package com.smoredeep.service;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.smoredeep.entity.TbCourse;
+import com.smoredeep.repository.CourseRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class LectureListService {
+
+	private final CourseRepository courseRepository;
+
+	public Page<TbCourse> getList(int page) {
+		Pageable pageable = PageRequest.of(page, 8);
+		return this.courseRepository.findAll(pageable);
+	}
+
+}
