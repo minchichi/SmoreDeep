@@ -15,6 +15,9 @@
 html {
   scroll-behavior:smooth;
 }
+input, select {
+  font-family: var(--font--style);
+}
 body {
   font-family: var(--font--style);
   width: 412px;
@@ -49,15 +52,26 @@ body {
   align-items: center;
   position: fixed;
   bottom: 0;
+  z-index: 100;
 }
 .footer .btn {
   text-align: center;
-  padding: 20px 25px;
+  padding: 30px 40px;
   cursor: pointer;
+  position: relative;
+}
+.footer .btn a {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
 }
 .footer img {
   width: 20px;
   height: 20px;
+  margin-top: 10px;
 }
 .footer .btn .name {
   margin-top: 5px;
@@ -83,11 +97,11 @@ body {
   border: none;
   outline: none;
   color: #333333;
-  font-style: var(--font--style);
+  font-family: var(--font--style);
 }
 .lecture-list .search-btn {
   display: block;
-  background:transparent url('./img/search.svg') center center no-repeat;
+  background:transparent url('../../images/search.svg') center center no-repeat;
   background-color: var(--gray);
   border: none;
   cursor: pointer;
@@ -174,6 +188,8 @@ body {
 }
 .product .one-product .thumb img {
   width: 100%;
+  height: 117px;
+  vertical-align: middle;
 }
 .product .one-product .thumb a {
   position: absolute;
