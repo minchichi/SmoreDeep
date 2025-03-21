@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smoredeep.entity.TbCourse;
 import com.smoredeep.entity.TbUser;
@@ -94,6 +95,16 @@ public class MainController {
 		model.addAttribute("paging", paging);
 		return "lecture_list";
 	}
+	
+	
+//	@GetMapping("/lecture_list.selectLevel")
+//	@ResponseBody
+//	public String lecture_list_level(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam("btnValue") String btnValue) {
+//		Page<TbCourse> pagingLevel = this.lectureListService.getListLevel(page, btnValue);
+//		model.addAttribute("paging", pagingLevel);
+//		return "redirect:/";
+//	}
+	
 	
 		
 	@GetMapping("/lecture_one")

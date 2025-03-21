@@ -20,5 +20,11 @@ public class LectureListService {
 		Pageable pageable = PageRequest.of(page, 10);
 		return this.courseRepository.findAll(pageable);
 	}
-
+	
+	public Page<TbCourse> getListLevel(int page, String btnValue) {
+		Pageable pageable = PageRequest.of(page, 10);
+		return this.courseRepository.findByCourseLevel(btnValue, pageable);
+	}
+	
+	
 }

@@ -16,4 +16,5 @@ import com.smoredeep.entity.TbCourse;
 public interface CourseRepository extends JpaRepository<TbCourse, Integer> {
     public Optional<TbCourse> findByCourseIdx(int course_idx);
     Page<TbCourse> findAll(Pageable pageable);
+    Page<TbCourse> findByCourseLevel(String search_level, Pageable pageable);
 }
