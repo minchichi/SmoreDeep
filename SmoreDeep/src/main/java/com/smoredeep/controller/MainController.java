@@ -182,7 +182,7 @@ public class MainController {
 	public String lecture_one(Model model,
 			@RequestParam(value="page", defaultValue="0") int page,
 			@RequestParam(value="idx") int idx) {
-		System.out.println(page);
+		System.out.println("페이지: "+page);
 		model.addAttribute("page", page);
 		TbCourse courseOne = courseRepository.findByCourseIdx(idx);
 		Page<TbReview> pagingReview = this.reviewListService.getList(idx, page);
