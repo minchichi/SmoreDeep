@@ -159,9 +159,9 @@ public class MainController {
 		return "chatbot";
 	}
 	
-	@GetMapping("/admin-lecture")
+	@GetMapping("/admin_lecture")
 	public String admin_lecture() {
-		return "admin-lecture";
+		return "admin_lecture";
 	}
 	
 	
