@@ -17,7 +17,7 @@ public class ReviewListService {
 	private final ReviewRepositorySupport reviewRepositorySupport;
 
 	public Page<TbReview> getList(int idx, int page) {
-		Pageable pageable = PageRequest.of(page, 3);
+		Pageable pageable = PageRequest.of(page, 10);
 		return this.reviewRepositorySupport.findReview(idx, pageable);
 	}
 	

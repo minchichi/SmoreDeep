@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="assets/css/style_boot.css">
+  <title>S'MoreDeep</title>
+  <style>
+        .navbar {
+            width: 100%;
+            height: 80px;
+            background-color: #2c2f33;
+        }
+
+        .navbar-brand img {
+            width: 50px;
+        }
+
+        .navbar-dark .navbar-brand {
+            font-family: 'pretendard';
+            font-size: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-dark .navbar-text {
+            font-family: 'pretendard';
+            font-size: 20px;
+            color: white;
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            padding-top: 30px;
+            background-color: white;
+        }
+
+        .sidebar a {
+            padding: 15px 40px;
+            text-decoration: none;
+            font-family: 'pretendard';
+            font-size: 20px;
+            color: #333;
+            display: block;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            font-weight: bold;
+            background-color: #2f2f37;
+        }
+
+        .content {
+            font-family: 'pretendard';
+            color: #333;
+            margin-left: 260px;
+            padding: 25px;
+            margin-top: 80px;
+        }
+
+        .box {
+            font-family: 'pretendard';
+            color: #333;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .active-section {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid d-flex justify-content-between">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="logo"> 관리자용
+            </a>
+            <span class="navbar-text">Admin님</span>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <a href="#" onclick="showSection('course-list', this)">강의 목록</a>
+        <a href="#" onclick="showSection('user-management', this)">사용자 관리</a>
+        <a href="#" onclick="showSection('setting', this)">설정</a>
+    </div>
+
+
+    <div id="course-list" class="content admin-course active-section">
+        <h4>강의 목록</h4>
+        <div class="course">
+          <table class="course-table">
+            <thead>
+              <tr>
+                <th>NO</th>
+                <th>강의명</th>
+                <th>카테고리</th>
+                <th>난이도</th>
+                <th>수강기간</th>
+                <th>상태</th>
+              </tr>
+            </thead>
+            <tbody class="course-item">
+              <tr>       
+                <td>1</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+
+              <tr>       
+                <td>2</td>
+                <td>서버 개발자가 되는 가장 빠른 길, Node.js & Express.js</td>
+                <td>백엔드</td>
+                <td>초급</td>
+                <td>2시간 이하</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>3</td>
+                <td>한 방에 끝내는 Java & Spring Boot 웹 개발 마스터코스</td>
+                <td>데이터베이스</td>
+                <td>중급</td>
+                <td>12시간</td>
+                <td class="item-button">
+                  <button>노출</button>
+                  <button class="pick">숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>4</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>5</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>6</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>7</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>8</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>9</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+              <tr>       
+                <td>10</td>
+                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
+                <td>프론트엔드</td>
+                <td>입문</td>
+                <td>3시간</td>
+                <td class="item-button">
+                  <button class="pick">노출</button>
+                  <button>숨김</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- 페이징처리 시작 -->
+        <div class="page">
+          <ul class="pagination justify-content-center">
+              
+              <li class="page-item">
+                  <a class="page-link">
+                      <span>이전</span>
+                  </a>
+              </li>
+
+              <li class="page-item">
+                  <a class="page-link"></a>
+              </li>
+
+              <li class="page-item">
+                  <a class="page-link">
+                      <span>다음</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <!-- 페이징처리 끝 --> 
+    </div>
+
+    <script>
+      $(".item-button button").on("click", function(){
+        $(this).siblings().removeClass("pick");
+        $(this).addClass("pick");
+      })
+    </script>
+
+
+    <script>
+        function showSection(sectionId, element) {
+            // 모든 섹션 숨기기
+            document.querySelectorAll('.content').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            document.getElementById(sectionId).classList.add('active-section');
+
+            // 모든 사이드바 메뉴에서 active 제거
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // 클릭된 메뉴에 active 추가
+            element.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

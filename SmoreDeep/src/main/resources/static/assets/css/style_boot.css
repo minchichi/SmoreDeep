@@ -1,0 +1,43 @@
+.admin-course h4 {
+  margin-bottom: 20px;
+}
+.course {
+  border: 1px solid #D9D9D9;
+  border-radius: 10px;
+}
+.course-table {
+  width: 100%;
+}
+.course-table thead {
+}
+.course-table td {
+  border-top: 1px solid #D9D9D9;
+}
+.course-table th,
+.course-table td {
+  padding: 10px;
+  text-align: center;
+}
+.course-table .course-item td {
+}
+.course-table .item-button button {
+  color: #999;
+  border: #999;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.course-table .item-button .pick {
+  background-color: #E49434;
+  color: white;
+}
+
+.admin-course .page ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0 0 0;
+}
+.admin-course .page .active .page-link {
+  color: var(--main);
+}
