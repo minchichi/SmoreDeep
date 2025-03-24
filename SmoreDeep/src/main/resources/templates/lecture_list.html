@@ -16,69 +16,77 @@
 <div th:replace="~{/header :: body}"></div>
 <div class="content lecture-list">
 
-    <form method="post" id="search-form">
+    <form method="get" id="search-form">
       <div class="search">
-        <input type="text" class="search-input" placeholder="검색">
-        <input type="submit" class="search-btn" value="">
+        <!-- <input type="text" class="search-input" id="search-input" placeholder="검색"> -->
+        <input th:if="${search==null||search==''}" type="text" class="search-input" id="search-input" placeholder="검색">
+        <input th:unless="${search==null}" type="text" class="search-input" id="search-input" th:placeholder="${search}">
+        <input type="button" class="search-btn" id="search-button" value="">
       </div>
     </form>
 
     <div class="category">
       <ul class="slides">
-        <li class="focus"><a href="#" class="activetop">전체</a></li>
-        <li><a href="#">프론트엔드</a></li>
-        <li><a href="#">백엔드</a></li>
-        <li><a href="#">프로그래밍언어</a></li>
-        <li><a href="#">알고리즘·자료구조</a></li>
-        <li><a href="#">데브옵스·인프라</a></li>
-        <li><a href="#">데이터베이스</a></li>
-        <li><a href="#">웹개발</a></li>
-        <li><a href="#">모바일앱개발</a></li>
-        <li><a href="#">개발도구</a></li>
-        <li><a href="#">개발·프로그래밍기타</a></li>
-        <li><a href="#">풀스택</a></li>
-        <li><a href="#">데스크톱앱개발</a></li>
+        <li value="0"><a href="#">전체</a></li>
+        <li value="1"><a href="#">프론트엔드</a></li>
+        <li value="2"><a href="#">백엔드</a></li>
+        <li value="3"><a href="#">프로그래밍언어</a></li>
+        <li value="4"><a href="#">알고리즘·자료구조</a></li>
+        <li value="5"><a href="#">데브옵스·인프라</a></li>
+        <li value="6"><a href="#">데이터베이스</a></li>
+        <li value="7"><a href="#">웹개발</a></li>
+        <li value="8"><a href="#">모바일앱개발</a></li>
+        <li value="9"><a href="#">개발도구</a></li>
+        <li value="10"><a href="#">개발·프로그래밍기타</a></li>
+        <li value="11"><a href="#">풀스택</a></li>
+        <li value="12"><a href="#">데스크톱앱개발</a></li>
       </ul>
-    </div> <!-- end category -->
+    </div>
+    <!-- end category -->
 
 	<!-- 검색필터 -->
 	<div class="search-list">
       <!-- 난이도 -->
       <div class="search-level">
-        <select id="search-level" name="search-level" required>
-          <option value="">난이도</option>
-          <option value="입문">입문</option>
-          <option value="초급">초급</option>
-          <option value="중급이상">중급이상</option>
-        </select>
+        <select id="search-level" name="search-level" th:value="${level}" required>
+        	<option value="난이도" th:if="${level==null}" th:text="난이도" selected style="display:none"></option>
+			<option th:unless="${level==null}" th:text="${level}" style="display:none"></option>
+			<option value="전체">전체</option>
+			<option th:each="course_level:${course_level}" th:value="${course_level}" th:text="${course_level}"></option>
+		</select>
       </div>
       <!-- 강의시간 -->
       <div class="search-schedule">
-        <select id="search-schedule" name="search-schedule" required>
-          <option value="">강의시간</option>
-          <option value="2">2시간 이하</option>
-          <option value="4">4시간</option>
-          <option value="8">8시간</option>
-          <option value="12">12시간 이상</option>
+        <select id="search-schedule" name="search-schedule" th:value="${schedule}" required>
+          <option value="강의시간" th:if="${schedule==null}" th:text="강의시간" selected style="display:none"></option>
+          <option th:unless="${schedule==null}" th:text="${schedule}" style="display:none"></option>
+          <option value="전체">전체</option>
+          <option value="2시간 미만">2시간 미만</option>
+          <option value="4시간 미만">4시간 미만</option>
+          <option value="8시간 미만">8시간 미만</option>
+          <option value="12시간 미만">12시간 미만</option>
+          <option value="12시간 이상">12시간 이상</option>
         </select>
       </div>
     </div>
 
+	<div id="reload">
     <div class="product">
     <div class="one-product" th:each="course, loop : ${paging}">
+        <!-- <a th:href="@{{url}(url=${course.courseUrl})}"> -->
+        <a th:href="@{/lecture_one(idx=${course.courseIdx})}">
         <div class="thumb">
-          <a th:href="@{{url}(url=${course.courseUrl})}"></a>
-           <img th:src="${course.courseImg}" alt="">
+          <img th:src="${course.courseImg}" alt="">
         </div>
         <div class="info">
           <div class="title" th:text="${course.courseNm}"></div>
 			<div class="sub">
-            <div class="date" th:text="수강기간">
-              <span th:text="{coruse.courseTm}"></span>
-            </div>
-            <div class="positive">👍78%</div>
-          </div>
+            <!-- <div class="date" th:text="'수강기간 '+${course.courseTm}"></div> -->
+            <div class="date" th:text="'난이도 ['+${course.courseLevel}+']'"></div>
+            <div class="positive" th:text="'👍' +${#numbers.formatInteger(course.positiveRatio,0)}+'%'"></div>
+          	</div>
         </div>
+        </a>
       </div>
     </div>
     <!-- end product -->
@@ -88,8 +96,8 @@
         <ul class="pagination justify-content-center">
             <!-- <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'"> -->
             <li class="page-item" th:unless=${!paging.hasPrevious}>
-                <a class="page-link"
-                    th:href="@{|?page=${paging.number-1}|}">
+                <!-- <a class="page-link" th:href="@{?page=${paging.number-1}|}"> -->
+                    <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}">
                     <span>이전</span>
                 </a>
             </li>
@@ -97,21 +105,35 @@
                 th:if="${page >= paging.number-2 and page <= paging.number+2}"
                 th:classappend="${page == paging.number} ? 'active'" 
                 class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                <!-- <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a> -->
+                <a th:text="${page}+1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
             </li>
             <!-- <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'"> -->
             <li class="page-item" th:unless=${!paging.hasNext}>
-                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                <!-- <a class="page-link" th:href="@{|?page=${paging.number+1}|}"> -->
+                <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
                     <span>다음</span>
                 </a>
             </li>
         </ul>
     </div>
-    <!-- 페이징처리 끝 -->    
-    
+    <!-- 페이징처리 끝 -->
+    <form th:action="@{/}" method="get" id="searchForm">
+        <input type="hidden" id="search" name="search" th:value="${search}">
+        <input type="hidden" id="category" name="category" th:value="${category}">
+        <input type="hidden" id="level" name="level" th:value="${level}">
+        <input type="hidden" id="schedule" name="schedule" th:value="${schedule}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
+    </div>
   </div>
 
 <div th:replace="~{/footer :: body}"></div>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+	var categoryText = /*[[${category}]]*/'';
+/*]]>*/
+</script>
 <script src="assets/js/main_min.js"></script>
 </body>
 </html>

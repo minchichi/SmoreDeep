@@ -28,14 +28,7 @@ public class TbCourse {
 	private String mainCategory;	// 대분류
 	private String middleCategory;	// 중분류
 	private String subCategory;		// 소분류
-
-//	@Builder
-//	public TbCourse(String email, String password, String name, String role, String provider) {
-//		this.userId = email;
-//		this.userPw = password;
-//		this.userName = name;
-//		this.adminIs = role;
-//		this.provider = provider;
-//	}
+	private Double positiveRatio;	// 긍정비율
+	private Double averageRating;
 
 }

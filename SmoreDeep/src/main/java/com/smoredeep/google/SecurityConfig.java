@@ -7,8 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import jakarta.servlet.http.Cookie;
@@ -20,27 +18,10 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
     private final OAuth2MemberService oAuth2MemberService;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-//        return httpSecurity
-//                .httpBasic().disable()
-//                .csrf().disable()
-//                .cors().and()
-//                .authorizeRequests()
-//                .requestMatchers("/private/**").authenticated() //private로 시작하는 uri는 로그인 필수
-//                .requestMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") //admin으로 시작하는 uri는 관리자 계정만 접근 가능
-//                .anyRequest().permitAll() //나머지 uri는 모든 접근 허용
-//                .and().oauth2Login()
-//                .loginPage("/loginForm") //로그인이 필요한데 로그인을 하지 않았다면 이동할 uri 설정
-//                .defaultSuccessUrl("/") //OAuth 구글 로그인이 성공하면 이동할 uri 설정
-//                .userInfoEndpoint()//로그인 완료 후 회원 정보 받기
-//                .userService(oAuth2MemberService).and().and().build(); //
-//    }
-   
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+        	.csrf(csrf -> csrf.disable())  // CSRF 필터 해제 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/private/**").authenticated()  // private로 시작하는 URI는 로그인 필수
                 .requestMatchers("/admin/**").hasRole("1")  // admin으로 시작하는 URI는 관리자만 접근 가능
@@ -72,14 +53,11 @@ public class SecurityConfig {
                 .addLogoutHandler((request, response, authentication) -> {})  // 추가 로그아웃 핸들러
                 .permitAll()
             )
-//            .sessionManagement(session -> session
-//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // 세션을 사용하지 않도록 설정 -> private URI 접근 불가
-//                );
             .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // 세션을 사용할 필요가 있으면 사용
-                );
-        // CSRF 필터 해제 
-        return http.csrf().disable().build();
+            );
+        
+        return http.build();
     }
     
     

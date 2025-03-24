@@ -14,6 +14,7 @@
 }
 html {
   scroll-behavior:smooth;
+  overflow-y: scroll;
 }
 input, select {
   font-family: var(--font--style);
@@ -186,17 +187,17 @@ body {
 .product .one-product .thumb {
   position: relative;
 }
-.product .one-product .thumb img {
+.lecture-list .product .one-product .thumb img {
   width: 100%;
   height: 117px;
   vertical-align: middle;
 }
-.product .one-product .thumb a {
+.lecture-list .product .one-product .thumb a {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 117px;
   z-index: 10;
 }
 .product .one-product .info .title {
@@ -218,6 +219,21 @@ body {
 .lecture-one .product {
   grid-template-columns: repeat(1, 1fr);
 }
+
+.lecture-one .product .one-product .thumb img {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+}
+.lecture-one .product .one-product .thumb a {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
 .lecture-one .one-product .title {
   font-size: 24px;
   margin: 5px 0;
@@ -299,6 +315,16 @@ body {
 }
 .lecture-one .sub-content .review-one {
   margin-bottom: 20px;
+}
+
+.lecture-one .page ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+.lecture-one .page .active .page-link {
+  color: var(--main);
 }
 
 /* 챗봇 */

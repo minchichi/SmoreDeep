@@ -21,6 +21,7 @@ public class CourseVO {
 	private String main_category;	// 대분류
 	private String middle_category;	// 중분류
 	private String sub_category;	// 소분류
-	
+	private Double positive_ratio;	// 긍정비율
+	private Double average_rationg;
 	
 }

@@ -3,7 +3,6 @@ package com.smoredeep.entity;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.smoredeep.model.MemberVO;
@@ -14,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @NoArgsConstructor
@@ -22,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class TbUser {
     
-		
     @Id
     private String userId;			// 사용자 아이디
     private String userPw;			// 사용자 비밀번호
@@ -59,5 +56,4 @@ public class TbUser {
     	return tbuser;
     }
     
-       
 }

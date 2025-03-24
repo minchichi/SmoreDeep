@@ -5,20 +5,15 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smoredeep.entity.TbUser;
 import com.smoredeep.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 
 @Controller
 public class HomeController {
@@ -52,13 +47,12 @@ public class HomeController {
 		System.out.println(userInfo);
 
 		String email = userInfo.get("email").toString();
-		String password = userInfo.get("email").toString();
-		String username = userInfo.get("nickname").toString();
+//		String username = userInfo.get("nickname").toString();
 		String role = "0";
 		String provider = "kakao";
 
 		Optional<TbUser> findUser = userRepository.findByUserId(email);
-		if (findUser.isEmpty()) { // 찾지 못했다면
+		if (findUser.isEmpty()) {
 			TbUser user = TbUser.builder()
 					.email(email)
 					.password(encoder.encode("password"))

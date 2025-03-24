@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<TbUser, String> {
 	TbUser findByUserIdAndUserPw(String user_id, String user_pw);
 	
 	public Optional<TbUser> findByUserId(String user_id);
+	
 }

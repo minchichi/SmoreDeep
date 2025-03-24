@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.smoredeep.entity.TbCourse;
 import com.smoredeep.repository.CourseRepository;
+import com.smoredeep.repository.CourseRepositorySupport;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,16 +16,16 @@ import lombok.RequiredArgsConstructor;
 public class LectureListService {
 
 	private final CourseRepository courseRepository;
+	private final CourseRepositorySupport courseRepositorySupport;
 
 	public Page<TbCourse> getList(int page) {
 		Pageable pageable = PageRequest.of(page, 10);
 		return this.courseRepository.findAll(pageable);
 	}
 	
-	public Page<TbCourse> getListLevel(int page, String btnValue) {
+	public Page<TbCourse> getList(String search, String category, String level, String schedule, int page) {
 		Pageable pageable = PageRequest.of(page, 10);
-		return this.courseRepository.findByCourseLevel(btnValue, pageable);
+		return this.courseRepositorySupport.findCourse(search, category, level, schedule, pageable);
 	}
-	
 	
 }

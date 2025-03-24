@@ -19,32 +19,35 @@
     <div class="product">
       <div class="one-product">
         <div class="thumb">
-          <a href="#"></a>
-          <img src="images/thumb1.png" alt="">
+          <a th:href="@{{url}(url=${courseOne.courseUrl})}"></a>
+          <img th:src="${courseOne.courseImg}" alt="">
         </div>
 
         <div class="info">
           <div class="category">
-            <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+            <div class="text">
+            	<span th:text="${courseOne.middleCategory}"></span>
+            	<span th:text="${courseOne.subCategory}"></span>
             </div>
           </div>
-          <div class="title">
-            누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+          <div class="title" th:text="${courseOne.courseNm}">
           </div>
-          <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+          <!-- <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div> -->
           <div class="wrap">
-            <div class="time">32시간 34분</div>
+            <div class="time" th:text="${#strings.substring(courseOne.courseTm,1,#strings.length(courseOne.courseTm)-1)}"></div>
           </div>
           <div class="wrap">
-            <div class="level">입문</div>
-            <div class="positive">👍78%</div>  
+            <div class="level" th:text="${courseOne.courseLevel}"></div>
+            <div class="positive" th:text="'👍' +${#numbers.formatInteger(courseOne.positiveRatio,0)}+'%'"></div>
           </div>
         </div>
       </div>
 
       <div class="tab">
+        <!-- <a href="#lecture-intro" class="intro" th:classappend="${page==0 ? ' pick' : ''}">강의 소개</a>
+        <a href="#lecture-review" class="intro" th:classappend="${page!=0 ? ' pick' : ''}" id="intro-review">수강평</a> -->
         <a href="#lecture-intro" class="intro pick">강의 소개</a>
-        <a href="#lecture-review" class="intro">수강평</a>
+        <a href="#lecture-review" class="intro" id="intro-review">수강평</a>
       </div>
 
       <div class="sub-content" id="lecture-intro">
@@ -54,34 +57,59 @@
         </div>
         <div class="text recom">
           🎯 이런 분들에게 추천합니다! <br>
-          ✔️ Java와 Spring Boot로 백엔드 개발을 배우고 싶은 분 <br>
-          ✔️ RESTful API 개발 및 데이터베이스 연동을 경험하고 싶은 분 <br>
-          ✔️ 기업 채용에서 요구하는 웹 개발 역량을 갖추고 싶은 분
+          <ul>
+          <li th:each="item :${#strings.arraySplit(courseOne.targetAudience, ',')}" th:text="'✔️ '+${#strings.trim(item)}"></li>
+          </ul>
         </div>
       </div>
 
       <div class="sub-content" id="lecture-review">
         <div class="sub-title">수강평</div>
-        <div class="review-one">
+        <div class="review-one" th:each="review, loop : ${pagingReview}">
           <div class="wrap">
-            <div class="writer">go06533</div>
-            <div class="date">2025. 02. 02.</div>
+            <div class="writer" th:text="${review.reviewWriter}"></div>
+            <div class="date" th:text="${#strings.substring(review.createdAt,0,10)}"></div>
           </div>
-          <div class="text">Java를 공부하다가 Spring Boot를 배우고 싶어서 수강했는데, 정말 체계적으로 잘 정리된 강의였습니다. 개념 설명이 명확하고 실습 예제도 다양해서 이해하기 쉬웠어요. 프로젝트를 직접 만들어보면서 자신감이 생겼습니다!</div>
-        </div>
-        
-        <div class="review-one">
-          <div class="wrap">
-            <div class="writer">sungwo</div>
-            <div class="date">2025. 02. 09.</div>
-          </div>
-          <div class="text">Spring Boot를 공부하면서 항상 이론만 보고 실무에 적용하는 게 어려웠는데, 이 강의에서는 실전 프로젝트를 단계별로 진행하면서 배우니까 훨씬 쉽게 익힐 수 있었습니다. 특히 JPA와 보안 관련 부분이 너무 유익했어요.</div>
+          <div class="text" th:text="${review.reviewContent}"></div>
         </div>
       </div>
+      
+	<!-- 페이징처리 시작 -->
+    <div th:if="${!pagingReview.isEmpty()}" class="page">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:unless=${!pagingReview.hasPrevious}>
+                    <a class="page-link" href="javascript:void(0)" th:data-page="${pagingReview.number-1}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, pagingReview.totalPages-1)}" 
+                th:if="${page >= pagingReview.number-2 and page <= pagingReview.number+2}"
+                th:classappend="${page == pagingReview.number} ? 'active'" 
+                class="page-item">
+                <a th:text="${page}+1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
+            </li>
+            <li class="page-item" th:unless=${!pagingReview.hasNext}>
+                <a class="page-link" href="javascript:void(0)" th:data-page="${pagingReview.number+1}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
+	<form th:action="@{/lecture_one}" method="get" id="searchForm">
+        <input type="hidden" id="idx" name="idx" th:value="${courseOne.courseIdx}">
+        <input type="hidden" id="page" name="page" th:value="${pagingReview.number}">
+    </form>
+    
     </div>
   </div>
 
 <div th:replace="~{/footer :: body}"></div>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+	var page = /*[[${page}]]*/'';
+/*]]>*/
+</script>
 <script src="assets/js/main_min.js"></script>
 </body>
 </html>

@@ -27,11 +27,11 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 //        String provider = userRequest.getClientRegistration().getClientId();
         String provider = "google";
-        String username = oAuth2User.getAttribute("name");
+//        String username = oAuth2User.getAttribute("name");
         String email = oAuth2User.getAttribute("email");
         String role = "0"; //일반 유저
         Optional<TbUser> findUser = userRepository.findByUserId(email);
-        if (findUser.isEmpty()) { //찾지 못했다면
+        if (findUser.isEmpty()) {
             TbUser user = TbUser.builder()
                     .email(email)
                     .password(encoder.encode("password"))

@@ -1,5 +1,6 @@
 package com.smoredeep.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smoredeep.entity.TbCourse;
+import com.smoredeep.entity.TbReview;
 import com.smoredeep.entity.TbUser;
 import com.smoredeep.model.MemberVO;
+import com.smoredeep.repository.CourseRepository;
 import com.smoredeep.repository.UserRepository;
 import com.smoredeep.service.LectureListService;
+import com.smoredeep.service.ReviewListService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -88,31 +91,64 @@ public class MainController {
 	
 	
 	private final LectureListService lectureListService;
+	private final CourseRepository courseRepository;
+	
 	
 	@GetMapping("/")
-	public String lecture_list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
-		Page<TbCourse> paging = this.lectureListService.getList(page);
+	public String lecture_list(Model model,
+			@RequestParam(value="page", defaultValue="0") int page,
+			@RequestParam(value="search", required=false) String search,
+			@RequestParam(value="category", required=false) String category,
+			@RequestParam(value="level", required=false) String level,
+			@RequestParam(value="schedule", required=false) String schedule) {
+		List<String> course_level = courseRepository.findDistinctCourseLevel();
+		model.addAttribute("course_level", course_level);
+		Page<TbCourse> paging = this.lectureListService.getList(search, category, level, schedule, page);
 		model.addAttribute("paging", paging);
-		return "lecture_list";
+		
+		if(search!=null) {
+			model.addAttribute("search", search);
+		}
+		if(category==null||category.equals("")) {
+			model.addAttribute("category", "전체");
+		} else {
+			model.addAttribute("category", category);
+		}
+		if(level==null||level.equals("")) {
+			model.addAttribute("level", "난이도");
+		} else {
+			model.addAttribute("level", level);
+		}
+		if(schedule==null||schedule.equals("")) {
+			model.addAttribute("schedule", "강의시간");
+		} else {
+			model.addAttribute("schedule", schedule);
+		}
+		System.out.println(search);
+		System.out.println(category);
+		System.out.println(level);
+		System.out.println(schedule);
+		System.out.println(model.getAttribute("paging"));
+		return "lecture_list";			
 	}
 	
+	private final ReviewListService reviewListService;
 	
-//	@GetMapping("/lecture_list.selectLevel")
-//	@ResponseBody
-//	public String lecture_list_level(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam("btnValue") String btnValue) {
-//		Page<TbCourse> pagingLevel = this.lectureListService.getListLevel(page, btnValue);
-//		model.addAttribute("paging", pagingLevel);
-//		return "redirect:/";
-//	}
-	
-	
-		
 	@GetMapping("/lecture_one")
-	public String lecture_one() {
+	public String lecture_one(Model model,
+			@RequestParam(value="page", defaultValue="0") int page,
+			@RequestParam(value="idx") int idx) {
+		System.out.println(page);
+		model.addAttribute("page", page);
+		TbCourse courseOne = courseRepository.findByCourseIdx(idx);
+		Page<TbReview> pagingReview = this.reviewListService.getList(idx, page);
+		model.addAttribute("courseOne", courseOne);
+		model.addAttribute("pagingReview", pagingReview);
+		System.out.println(model.getAttribute("courseOne"));
+		System.out.println(model.getAttribute("pagingReview"));
 		return "lecture_one";
 	}
 
-	
 	@GetMapping("/mypage")
 	public String mypage() {
 		return "mypage";
@@ -122,10 +158,5 @@ public class MainController {
 	public String chatbot() {
 		return "chatbot";
 	}	
-
-	
-
-
-	
 	
 }
