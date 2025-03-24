@@ -56,4 +56,14 @@ public class TbUser {
     	return tbuser;
     }
     
+    public static TbUser TbUser1(MemberVO vo) {
+    	TbUser tbuser = new TbUser();	 	  	
+    	tbuser.userId = vo.getId();
+    	tbuser.userPw = vo.getPw();
+    	tbuser.courseCategory = vo.getCourse_category();
+    	tbuser.courseLevel = vo.getCourse_level();
+    	tbuser.courseTm = vo.getCourse_tm();
+    	return tbuser;
+    }
+    
 }
