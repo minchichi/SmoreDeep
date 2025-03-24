@@ -19,7 +19,7 @@
     <form method="get" id="search-form">
       <div class="search">
         <!-- <input type="text" class="search-input" id="search-input" placeholder="검색"> -->
-        <input th:if="${search==null||search==''}" type="text" class="search-input" id="search-input" placeholder="검색">
+        <input th:if="${search==null}" type="text" class="search-input" id="search-input" placeholder="검색">
         <input th:unless="${search==null}" type="text" class="search-input" id="search-input" th:placeholder="${search}">
         <input type="button" class="search-btn" id="search-button" value="">
       </div>
