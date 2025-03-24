@@ -32,7 +32,6 @@
           </div>
           <div class="title" th:text="${courseOne.courseNm}">
           </div>
-          <!-- <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div> -->
           <div class="wrap">
             <div class="time" th:text="${#strings.substring(courseOne.courseTm,1,#strings.length(courseOne.courseTm)-1)}"></div>
           </div>
@@ -44,16 +43,13 @@
       </div>
 
       <div class="tab">
-        <!-- <a href="#lecture-intro" class="intro" th:classappend="${page==0 ? ' pick' : ''}">강의 소개</a>
-        <a href="#lecture-review" class="intro" th:classappend="${page!=0 ? ' pick' : ''}" id="intro-review">수강평</a> -->
         <a href="#lecture-intro" class="intro pick">강의 소개</a>
         <a href="#lecture-review" class="intro" id="intro-review">수강평</a>
       </div>
 
       <div class="sub-content" id="lecture-intro">
         <div class="sub-title">강의 소개</div>
-        <div class="text">
-          이 강의는 Java와 Spring Boot를 활용한 웹 개발을 처음부터 끝까지 배우는 마스터 과정입니다. 기본적인 Java 문법부터 시작하여, REST API 개발, 데이터베이스 연동, 보안 및 배포까지 실무에서 자주 사용되는 핵심 개념들을 집중적으로 다룹니다.
+        <div class="text" th:text="${courseOne.courseIntro}">
         </div>
         <div class="text recom">
           🎯 이런 분들에게 추천합니다! <br>
