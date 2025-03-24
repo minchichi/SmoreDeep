@@ -4,6 +4,17 @@ $(".intro").click(function(){
   $(this).addClass("pick");
 });
 
+$(document).ready(function() {
+	$(".intro").on("click", function(event) {
+		event.preventDefault();
+
+		var target = $(this).attr("href");
+		var targetOffset = $(target).offset().top - 80;
+
+		$("html, body").scrollTop(targetOffset);
+	});
+});
+
 window.onload = function() { 
 	if(page!=0) {
 		$("#intro-review").trigger("click");
@@ -12,15 +23,6 @@ window.onload = function() {
 		}
 	}
 };
-
-/* lecture-list 카테고리 슬라이드 */
-/*var on = $('.slides').find('.activetop').index();
-var options = {
-  horizontal: 1,
-  mouseDragging: 1,
-  touchDragging: 1
-};
-var frame = new Sly('.category', options).init();*/
 
 $('.category .slides li').on("click", function(){
   $('.category .slides li').removeClass("focus");
@@ -160,3 +162,4 @@ search_schedule.addEventListener('change', function() {
     document.getElementById('page').value = 0;
     document.getElementById('searchForm').submit();
 });
+
