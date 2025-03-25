@@ -87,6 +87,33 @@
         .active-section {
             display: block;
         }
+        
+        .page-item.active .page-link {
+		    z-index: 3;
+		    color: white;
+		    background-color: #E49434;
+		    border-color: white;
+		}
+		
+		.page-link {
+		    position: relative;
+		    display: block;
+		    padding: .5rem .75rem;
+		    margin-left: -1px;
+		    line-height: 1.25;
+		    color: black;
+		    background-color: #fff;
+		    border: 1px solid #dee2e6;
+		}
+		
+		.page-link:hover {
+		    z-index: 2;
+		    color: #E49434;
+		    text-decoration: none;
+		    background-color: #e9ecef;
+		    border-color: #dee2e6;
+		}
+        
     </style>
 </head>
 <body>
@@ -122,112 +149,12 @@
               </tr>
             </thead>
             <tbody class="course-item">
-              <tr>       
-                <td>1</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-
-              <tr>       
-                <td>2</td>
-                <td>서버 개발자가 되는 가장 빠른 길, Node.js & Express.js</td>
-                <td>백엔드</td>
-                <td>초급</td>
-                <td>2시간 이하</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>3</td>
-                <td>한 방에 끝내는 Java & Spring Boot 웹 개발 마스터코스</td>
-                <td>데이터베이스</td>
-                <td>중급</td>
-                <td>12시간</td>
-                <td class="item-button">
-                  <button>노출</button>
-                  <button class="pick">숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>4</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>5</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>6</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>7</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>8</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>9</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
-                </td>
-              </tr>
-              <tr>       
-                <td>10</td>
-                <td>누구나 할 수 있는 웹사이트 제작 전문가 - Java Script</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
+              <tr th:each="course, loop : ${adminpg}">       
+                <td th:text = "${course.courseIdx}"></td>
+                <td th:text="${course.courseNm}"></td>
+                <td th:text="${course.middleCategory}"></td>
+                <td th:text="${course.courseLevel}"></td>
+                <td th:text="${#strings.substring(course.courseTm,1,#strings.length(course.courseTm)-1)}"></td>
                 <td class="item-button">
                   <button class="pick">노출</button>
                   <button>숨김</button>
@@ -237,27 +164,38 @@
           </table>
         </div>
         <!-- 페이징처리 시작 -->
-        <div class="page">
-          <ul class="pagination justify-content-center">
-              
-              <li class="page-item">
-                  <a class="page-link">
-                      <span>이전</span>
-                  </a>
-              </li>
-
-              <li class="page-item">
-                  <a class="page-link"></a>
-              </li>
-
-              <li class="page-item">
-                  <a class="page-link">
-                      <span>다음</span>
-                  </a>
-              </li>
-          </ul>
-      </div>
+    <div th:if="${!adminpg.isEmpty()}" class="page">
+        <ul class="pagination justify-content-center">
+            <!-- <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'"> -->
+            <li class="page-item" th:unless=${!adminpg.hasPrevious}>
+                <!-- <a class="page-link" th:href="@{?page=${paging.number-1}|}"> -->
+                    <a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number-1}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, adminpg.totalPages-1)}" 
+                th:if="${page >=adminpg.number-2 and page <= adminpg.number+2}"
+                th:classappend="${page == adminpg.number} ? 'active'" 
+                class="page-item">
+                <!-- <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a> -->
+                <a th:text="${page}+1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
+            </li>
+            <!-- <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'"> -->
+            <li class="page-item" th:unless=${!adminpg.hasNext}>
+                <!-- <a class="page-link" th:href="@{|?page=${paging.number+1}|}"> -->
+                <a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number+1}">
+                    <span>다음</span>
+                </a>
+            </li>
+            <button class="btn btn-warning">수정</button>
+        </ul>
+    </div>
       <!-- 페이징처리 끝 --> 
+      	<form th:action="@{/admin_lecture}" method="get" id="searchForm">
+        <input type="hidden" id="page" name="page" th:value="${adminpg.number}">
+    </form>
+      
+     
     </div>
 
     <script>
@@ -265,10 +203,10 @@
         $(this).siblings().removeClass("pick");
         $(this).addClass("pick");
       })
-    </script>
-
-
+    </script>	
     <script>
+    
+    	
         function showSection(sectionId, element) {
             // 모든 섹션 숨기기
             document.querySelectorAll('.content').forEach(section => {
@@ -285,6 +223,6 @@
             element.classList.add('active');
         }
     </script>
-
+<script src="assets/js/main_min.js"></script>
 </body>
 </html>

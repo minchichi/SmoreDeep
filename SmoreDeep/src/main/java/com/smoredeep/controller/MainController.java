@@ -32,6 +32,11 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
 
 	
+	
+	private final LectureListService lectureListService;
+	private final CourseRepository courseRepository;
+	
+	
 	@GetMapping("/join")
 	public String join() {
 		return "join";
@@ -107,9 +112,15 @@ public class MainController {
 				    return "redirect:/admin_lecture";		
 				}	
 
+		
+		
 		// 관리자 대시보드 
 		@GetMapping("/admin_lecture")
-		public String admin_lecture() {
+		public String admin_lecture(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+			Page<TbCourse> paging = this.lectureListService.getList(page);
+			model.addAttribute("adminpg", paging);
+			
+			
 			return "admin_lecture";
 		}	
 				
@@ -132,9 +143,7 @@ public class MainController {
 			userRepository.updateUser(user_id, course_category, course_level, course_tm);
 	        return "redirect:/";
 	    }
-		
-	private final LectureListService lectureListService;
-	private final CourseRepository courseRepository;
+
 	
 	
 	@GetMapping("/")
@@ -146,6 +155,7 @@ public class MainController {
 			@RequestParam(value="schedule", required=false) String schedule) {
 		List<String> course_level = courseRepository.findDistinctCourseLevel();
 		model.addAttribute("course_level", course_level);
+		
 		Page<TbCourse> paging = this.lectureListService.getList(search, category, level, schedule, page);
 		model.addAttribute("paging", paging);
 		
