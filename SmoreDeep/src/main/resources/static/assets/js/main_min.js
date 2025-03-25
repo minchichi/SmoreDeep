@@ -9,18 +9,19 @@ $(document).ready(function() {
 		event.preventDefault();
 
 		var target = $(this).attr("href");
-		var targetOffset = $(target).offset().top - 80;
+		var targetOffset = $(target).offset().top - 90;
 
 		$("html, body").scrollTop(targetOffset);
 	});
 });
 
 window.onload = function() { 
-	if(page!=0) {
+	if(window.location.href.includes("page")) {
 		$("#intro-review").trigger("click");
-		if(window.location.href.includes("lecture_one")) {
-			window.location.href=window.location.href+"#lecture-review";
-		}
+		var target = $("#intro-review").attr("href");
+		var targetOffset = $(target).offset().top - 90;
+
+		$("html, body").scrollTop(targetOffset);
 	}
 };
 
