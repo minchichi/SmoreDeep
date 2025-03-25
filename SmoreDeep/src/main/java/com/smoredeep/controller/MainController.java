@@ -104,16 +104,15 @@ public class MainController {
 				    // 로그인 성공: 세션에 사용자 정보 저장
 				 session.setAttribute("user", tbUser);
 				    }
-				    return "admin_lecture";		
+				    return "redirect:/admin_lecture";		
 				}	
 
-		
+		// 관리자 대시보드 
 		@GetMapping("/admin_lecture")
 		public String admin_lecture() {
 			return "admin_lecture";
 		}	
-			
-	
+				
 		
 	// 로그아웃 기능
 	@GetMapping("/logout")
