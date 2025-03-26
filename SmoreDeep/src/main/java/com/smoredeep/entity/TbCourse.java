@@ -29,6 +29,7 @@ public class TbCourse {
 	private String middleCategory;	// 중분류
 	private String subCategory;		// 소분류
 	private Double positiveRatio;	// 긍정비율
-	private Double averageRating;	// 평균 별점
+	private Double averageRating;	// 강의 평점
 	private String courseIntro;		// 강의 소개
+	private int courseHide;			// 강의 숨김 여부
 }

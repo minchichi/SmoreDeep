@@ -24,16 +24,18 @@ public class CourseRepositorySupport extends QuerydslRepositorySupport {
 		this.queryFactory = queryFactory;
 	}
 	
-	public Page<TbCourse> findCourse(String search, String middleCategory, String courseLevel, String courseTm, Pageable pageable) {
+	public Page<TbCourse> findCourse(int hide, String search, String middleCategory, String courseLevel, String courseTm, Pageable pageable) {
 		List<TbCourse> result = queryFactory
 				.selectFrom(QTbCourse.tbCourse)
 				.where(
+						QTbCourse.tbCourse.courseHide.eq(hide),
 						search(search),
 						eqMiddleCategory(middleCategory),
 						eqCourseLevel(courseLevel),
 						compareCourseTm(courseTm)
 						)
-				.orderBy(QTbCourse.tbCourse.enrolledStudents.desc())
+//				.orderBy(QTbCourse.tbCourse.enrolledStudents.desc())
+				.orderBy(QTbCourse.tbCourse.courseIdx.asc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
 				.fetch();
@@ -41,6 +43,7 @@ public class CourseRepositorySupport extends QuerydslRepositorySupport {
 				.select(QTbCourse.tbCourse.count())
 				.from(QTbCourse.tbCourse)
 				.where(
+						QTbCourse.tbCourse.courseHide.eq(hide),
 						search(search),
 						eqMiddleCategory(middleCategory),
 						eqCourseLevel(courseLevel),

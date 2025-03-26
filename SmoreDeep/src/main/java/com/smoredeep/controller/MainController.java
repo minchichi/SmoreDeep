@@ -31,10 +31,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MainController {
 
-	
+	private final UserRepository userRepository;
+	private final CourseRepository courseRepository;
 	
 	private final LectureListService lectureListService;
-	private final CourseRepository courseRepository;
+	private final ReviewListService reviewListService;
 	
 	
 	@GetMapping("/join")
@@ -61,9 +62,6 @@ public class MainController {
         return "loginForm";
     }
 	
-	@Autowired
-	UserRepository userRepository;
-	
 	// 로그인 기능 	
 	@PostMapping("/submit_login_user")
 	public String login(String user_id, String user_pw, HttpSession session, Model model, BCryptPasswordEncoder encoder) {			
@@ -81,49 +79,62 @@ public class MainController {
 	    }
 	    // 로그인 성공: 세션에 사용자 정보 저장
 	    session.setAttribute("user", tbUser);
-	    return "redirect:/";		
+	    return "redirect:/";
 	}	
 	
-		
-		// 관리자 로그인 기능 	
-		@PostMapping("/submit_login_admin")
-		public String login(String admin_id, String admin_pw, HttpSession session, Model model) {			
-			Optional<TbUser> tbUser = userRepository.findByUserId(admin_id);	
-			System.out.println(admin_id);
-			// 사용자가 존재하지 않는 경우
-			if (tbUser.isEmpty()) {
-				 model.addAttribute("error", "아이디가 존재하지 않습니다.");
-				 return "loginForm";
-		    }
-			// 관리자가 아닌 경우
-			else if (tbUser.get().getAdminIs().equals("0")) {
-				  model.addAttribute("error", "관리자가 아닙니다.");
-				  return "loginForm";
-			}
-			// 비밀번호가 틀린 경우
-			else if (!tbUser.get().getUserPw().equals(admin_pw)) {
-				  model.addAttribute("error", "비밀번호가 일치하지않습니다.");
-				  return "loginForm";
-				    } 
-			else {
-				    // 로그인 성공: 세션에 사용자 정보 저장
-				 session.setAttribute("user", tbUser);
-				    }
-				    return "redirect:/admin_lecture";		
-				}	
+	// 관리자 로그인 기능 	
+	@PostMapping("/submit_login_admin")
+	public String login(String admin_id, String admin_pw, HttpSession session, Model model) {			
+		Optional<TbUser> tbUser = userRepository.findByUserId(admin_id);	
+		System.out.println(admin_id);
+		// 사용자가 존재하지 않는 경우
+		if (tbUser.isEmpty()) {
+			 model.addAttribute("error", "아이디가 존재하지 않습니다.");
+			 return "loginForm";
+	    }
+		// 관리자가 아닌 경우
+		else if (tbUser.get().getAdminIs().equals("0")) {
+			  model.addAttribute("error", "관리자가 아닙니다.");
+			  return "loginForm";
+		}
+		// 비밀번호가 틀린 경우
+		else if (!tbUser.get().getUserPw().equals(admin_pw)) {
+			  model.addAttribute("error", "비밀번호가 일치하지않습니다.");
+			  return "loginForm";
+			    } 
+		else {
+			    // 로그인 성공: 세션에 사용자 정보 저장
+			 session.setAttribute("user", tbUser);
+			    }
+			    return "redirect:/admin_lecture";		
+			}	
 
+	
+	// 관리자 강의관리 페이지
+	@GetMapping("/admin_lecture")
+	public String admin_lecture(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+		Page<TbCourse> paging = this.lectureListService.getList(page);
+		model.addAttribute("adminpg", paging);
+		return "admin_lecture";
+	}
+	
+	
+	@PostMapping("/admin_lecture_edit")
+	public String admin_lecture_edit(@RequestParam("courseIdxList") List<Integer> courseIdxList,
+			@RequestParam("courseHideList") List<Integer> courseHideList) {
+		System.out.println(courseIdxList);
+		System.out.println(courseHideList);
+		for (int i = 0; i < courseIdxList.size(); i++) {
+			Integer courseIdx = courseIdxList.get(i);
+			Integer courseHide = courseHideList.get(i);
+			System.out.println(courseIdx);
+			System.out.println(courseHide);
+			// 강의 업데이트
+			courseRepository.updateCourseHide(courseIdx, courseHide);
+		}
+		return "redirect:/admin_lecture";
+	}
 		
-		
-		// 관리자 대시보드 
-		@GetMapping("/admin_lecture")
-		public String admin_lecture(Model model, @RequestParam(value="page", defaultValue="0") int page) {
-			Page<TbCourse> paging = this.lectureListService.getList(page);
-			model.addAttribute("adminpg", paging);
-			
-			
-			return "admin_lecture";
-		}	
-				
 		
 	// 로그아웃 기능
 	@GetMapping("/logout")
@@ -134,20 +145,19 @@ public class MainController {
 		
 	
 	// 마이페이지 --> category, level, tm 수정 
-		@PostMapping("/submit_mypage")
-	    public String updateUser(@RequestParam String user_id,
-	                             @RequestParam String course_category,
-	                             @RequestParam String course_level,
-	                             @RequestParam String course_tm) {
-	        // 직접 repository 메서드 호출
-			userRepository.updateUser(user_id, course_category, course_level, course_tm);
-	        return "redirect:/";
-	    }
+	@PostMapping("/submit_mypage")
+    public String updateUser(@RequestParam String user_id,
+                             @RequestParam String course_category,
+                             @RequestParam String course_level,
+                             @RequestParam String course_tm) {
+        // 직접 repository 메서드 호출
+		userRepository.updateUser(user_id, course_category, course_level, course_tm);
+        return "redirect:/";
+    }
 
 	
-	
 	@GetMapping("/")
-	public String lecture_list(Model model,
+	public String lecture_list(Model model, HttpSession session,
 			@RequestParam(value="page", defaultValue="0") int page,
 			@RequestParam(value="search", required=false) String search,
 			@RequestParam(value="category", required=false) String category,
@@ -155,10 +165,17 @@ public class MainController {
 			@RequestParam(value="schedule", required=false) String schedule) {
 		List<String> course_level = courseRepository.findDistinctCourseLevel();
 		model.addAttribute("course_level", course_level);
-		
-		Page<TbCourse> paging = this.lectureListService.getList(search, category, level, schedule, page);
+		int hide = 0;
+		Page<TbCourse> paging = this.lectureListService.getList(hide, search, category, level, schedule, page);
 		model.addAttribute("paging", paging);
-		
+		if (session.getAttribute("user")!=null) {
+			Optional<TbUser> tbuser_login = (Optional<TbUser>) session.getAttribute("user");
+			tbuser_login.ifPresent(user -> {
+				String userId = user.getUserId();
+			    Optional<TbUser> tbUser = userRepository.findByUserId(userId);
+				session.setAttribute("user", tbUser);
+			});
+		}
 		if(search!=null) {
 			model.addAttribute("search", search);
 		}
@@ -185,7 +202,6 @@ public class MainController {
 		return "lecture_list";			
 	}
 	
-	private final ReviewListService reviewListService;
 	
 	@GetMapping("/lecture_one")
 	public String lecture_one(Model model,

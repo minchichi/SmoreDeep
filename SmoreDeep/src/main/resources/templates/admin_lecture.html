@@ -95,13 +95,24 @@
 		    border-color: white;
 		}
 		
+		.page-link:focus {
+		    z-index: 3;
+		    outline: 0;
+		    /* box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25); */
+		    box-shadow: none;
+		}
+		
+		.admin-course .page .active .page-link {
+ 	   		color: white;
+		}
+		
 		.page-link {
 		    position: relative;
 		    display: block;
 		    padding: .5rem .75rem;
 		    margin-left: -1px;
 		    line-height: 1.25;
-		    color: black;
+		    color: gray;
 		    background-color: #fff;
 		    border: 1px solid #dee2e6;
 		}
@@ -136,6 +147,7 @@
 
     <div id="course-list" class="content admin-course active-section">
         <h4>강의 목록</h4>
+        <form id="courseForm" th:action="@{/admin_lecture_edit}" method="post">
         <div class="course">
           <table class="course-table">
             <thead>
@@ -150,63 +162,104 @@
             </thead>
             <tbody class="course-item">
               <tr th:each="course, loop : ${adminpg}">       
-                <td th:text = "${course.courseIdx}"></td>
+                <td th:text="${course.courseIdx}"></td>
                 <td th:text="${course.courseNm}"></td>
                 <td th:text="${course.middleCategory}"></td>
                 <td th:text="${course.courseLevel}"></td>
                 <td th:text="${#strings.substring(course.courseTm,1,#strings.length(course.courseTm)-1)}"></td>
                 <td class="item-button">
-                  <button class="pick">노출</button>
-                  <button>숨김</button>
+                  <button type="button" class="toggle-hide" data-idx="${course.courseIdx}" data-hide="0" th:classappend="${course.courseHide==0} ? 'pick' : ''" th:value=0 th:text="노출"></button>
+                  <button type="button" class="toggle-hide" data-idx="${course.courseIdx}" data-hide="1" th:classappend="${course.courseHide==1} ? 'pick' : ''" th:value=1 th:text="숨김"></button>
+                  <input type="hidden" name="courseIdxList" th:value="${course.courseIdx}"/>
+                  <input type="hidden" name="courseHideList" th:value="${course.courseHide}"/>
                 </td>
               </tr>
             </tbody>
           </table>
-        </div>
-        <!-- 페이징처리 시작 -->
-    <div th:if="${!adminpg.isEmpty()}" class="page">
-        <ul class="pagination justify-content-center">
-            <!-- <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'"> -->
-            <li class="page-item" th:unless=${!adminpg.hasPrevious}>
-                <!-- <a class="page-link" th:href="@{?page=${paging.number-1}|}"> -->
-                    <a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number-1}">
-                    <span>이전</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(0, adminpg.totalPages-1)}" 
-                th:if="${page >=adminpg.number-2 and page <= adminpg.number+2}"
-                th:classappend="${page == adminpg.number} ? 'active'" 
-                class="page-item">
-                <!-- <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a> -->
-                <a th:text="${page}+1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
-            </li>
-            <!-- <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'"> -->
-            <li class="page-item" th:unless=${!adminpg.hasNext}>
-                <!-- <a class="page-link" th:href="@{|?page=${paging.number+1}|}"> -->
-                <a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number+1}">
-                    <span>다음</span>
-                </a>
-            </li>
-            <button class="btn btn-warning">수정</button>
-        </ul>
-    </div>
-      <!-- 페이징처리 끝 --> 
-      	<form th:action="@{/admin_lecture}" method="get" id="searchForm">
-        <input type="hidden" id="page" name="page" th:value="${adminpg.number}">
-    </form>
-      
+    	</div>
+    	<!-- 페이징처리 시작 -->
+	    <div th:if="${!adminpg.isEmpty()}" class="page">
+	        <ul class="pagination justify-content-center">
+	            <!-- <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'"> -->
+	            <li class="page-item" th:unless=${!adminpg.hasPrevious}>
+	                <!-- <a class="page-link" th:href="@{?page=${paging.number-1}|}"> -->
+	                    <a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number-1}">
+	                    <span>이전</span>
+	                </a>
+	            </li>
+	            <li th:each="page: ${#numbers.sequence(0, adminpg.totalPages-1)}" 
+	                th:if="${page >=adminpg.number-2 and page <= adminpg.number+2}"
+	                th:classappend="${page == adminpg.number} ? 'active'" 
+	                class="page-item">
+	                <!-- <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a> -->
+	                <a th:text="${page}+1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
+	            </li>
+	            <!-- <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'"> -->
+	            <li class="page-item" th:unless=${!adminpg.hasNext}>
+	                <!-- <a class="page-link" th:href="@{|?page=${paging.number+1}|}"> -->
+	                <a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number+1}">
+	                    <span>다음</span>
+	                </a>
+	            </li>
+	            <button type="submit" class="btn btn-warning">수정</button>
+	        </ul>
+	    </div>
+	    <!-- 페이징처리 끝 --> 
+	    </form>
+	    
+	    
+	   	<form th:action="@{/admin_lecture}" method="get" id="searchForm">
+	        <input type="hidden" id="page" name="page" th:value="${adminpg.number}">
+	    </form>
      
     </div>
 
-    <script>
+<!--     <script>
       $(".item-button button").on("click", function(){
         $(this).siblings().removeClass("pick");
         $(this).addClass("pick");
       })
-    </script>	
-    <script>
+    </script> -->
     
-    	
+    <script type="text/javascript">
+ 	// "노출" / "숨김" 버튼을 클릭했을 때, 모든 강의의 `courseHide` 값을 업데이트
+    $(".toggle-hide").on("click", function() {
+        var courseIdx = $(this).data("idx");
+        var courseHide = $(this).data("hide");
+
+     	// 클릭된 버튼의 부모 <tr>에서 해당 input[name='courseHideList']을 찾기
+        var tr = $(this).closest("tr");
+        tr.find("input[name='courseHideList']").val(courseHide);
+
+        // 선택된 강의에 대해 class 토글
+        $(this).siblings().removeClass("pick");  // 다른 버튼에서 선택된 클래스 제거
+        $(this).addClass("pick");  // 클릭된 버튼에 선택된 클래스 추가
+    });
+
+    // 폼 제출을 위한 "수정" 버튼 클릭
+    $("#courseForm").on("submit", function(e) {
+        e.preventDefault();  // 기본 폼 제출 방지
+
+        // 폼을 서버로 제출하기 전에 데이터 확인
+        var formData = $(this).serialize();
+        
+        // AJAX를 통해 폼 데이터를 서버로 전송
+        $.ajax({
+            url: '/admin_lecture_edit',  // 서버의 URL
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                alert("강의 목록이 수정되었습니다.");
+                location.reload();  // 페이지 새로고침
+            },
+            error: function(xhr, status, error) {
+                alert("에러 발생: " + error);
+            }
+        });
+    });
+    </script>
+    
+    <script>
         function showSection(sectionId, element) {
             // 모든 섹션 숨기기
             document.querySelectorAll('.content').forEach(section => {
