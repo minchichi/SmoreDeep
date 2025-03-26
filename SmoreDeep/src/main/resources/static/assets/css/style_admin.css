@@ -1,0 +1,290 @@
+body {
+    font-family: 'pretendard', sans-serif;
+    background-color: #f8f9fa;
+}
+
+:root {
+  --main : #E49434;
+  --logo : #773E16;
+  --gray : #F5F5F5;
+  --font--style : 'pretendard';
+  --line : #D9D9D9;
+}
+
+.navbar {
+    width: 100%;
+    height: 80px;
+    background-color: #404040;
+}
+
+.navbar-brand img {
+    width: 50px;
+}
+
+.navbar-dark .navbar-brand {
+    font-size: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-dark .navbar-text {
+    font-size: 20px;
+    color: white;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    padding-top: 30px;
+    background-color: white;
+}
+
+.sidebar a {
+    padding: 15px 40px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #333;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    color: white;
+    font-weight: bold;
+    background-color: #e49434;
+}
+
+.content {
+    margin-left: 260px;
+    padding: 25px;
+    margin-top: 80px;
+}
+
+.content {
+    display: none;
+}
+
+.active-section {
+    display: block;
+}
+
+.box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: start;
+}
+.box h4 {
+	font-size: 20px;
+    margin: 5px 0 0 10px;
+}
+.admin-dashboard .box {
+	text-align: center;
+}
+.admin-dashboard .row .col-7,
+.admin-dashboard .row .col-5 {
+	padding: 10px;
+}
+.row {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.print {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.print span {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 대시보드 아이콘 */
+.icon {
+    font-size: 40px;
+    color: #e49434;
+    margin-bottom: 5px;
+}
+
+/* 대시보드 각 타이틀 */
+.card-title {
+    font-size: 18px;
+    color: #e49434;
+}
+
+/* 카테고리별 추천강의 TOP5 */
+.category-top5 {
+    width: 100%;
+}
+
+.category-recommand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+/* 도넛차트 컨테이너를 가로로 정렬 */
+.chart-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 도넛차트 왼쪽 labels 스타일 */
+.chart-labels {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+}
+
+.chart-labels ul {
+    list-style: none;
+    padding: 0;
+}
+
+.chart-labels li {
+    font-size: 16px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.chart-labels li span {
+    display: inline-block;
+    width: 30px;
+    height: 15px;
+    margin-right: 20px;
+}
+
+/* 도넛차트 오른쪽 차트 스타일 */
+.doughnutchart-container {
+    flex: 1;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 사용자 꺾은선 그래프 차트*/
+.chart-container {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 추천 강의 리뷰 */
+select {
+    padding: 5px;
+    font-size: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 13px 0;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #e49434;
+    color: white;
+}
+
+/* 강의 목록 */
+.admin-user h4,
+.admin-course h4 {
+    margin-bottom: 20px;
+}
+
+.course {
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.course-table {
+    width: 100%;
+}
+.course-table .course-index {
+	width: 50px;
+}
+.course-table td {
+    border-top: 1px solid #D9D9D9;
+    width: 150px;
+}
+
+.course-table th,
+.course-table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.course-table .item-button button {
+    color: #999;
+    border: #999;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.course-table .item-button .pick {
+    background-color: #E49434;
+    color: white;
+}
+
+.pagination {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.admin-course .page ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0 0 0;
+}
+
+.admin-course .page .active .page-link {
+    color: var(--main);
+}
+.page-link {
+	color: #555555;
+}
+.page-link:hover {
+	color: var(--main);
+}
+.page-item.active .page-link {
+	background-color: white;
+	border-color: var(--main);
+}
+
+.sidebar .pick {
+    font-weight: bold;
+}
+.course-item .pointer {
+	cursor: pointer;
+	width: 800px;
+}
+
+.admin-user .pointer {
+	width: 500px;
+}

@@ -123,6 +123,13 @@ public class MainController {
     public String admin_user() {
         return "admin_user";
     }
+	
+	// 관리자 대시보드 페이지 ++ 추가
+	@GetMapping("/admin_dashboard")
+    public String admin_dashboard() {
+        return "admin_dashboard";
+    }
+	
 	// ++ 추가
 	@GetMapping("/main")
     public String main() {

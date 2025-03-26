@@ -1,248 +1,170 @@
+<!-- thymeleaf 사용을 위해 코드 작성 , 타임리프 문법사용을 위해 th 사용 -->
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="assets/css/style_boot.css">
-  <title>S'MoreDeep</title>
-  <style>
-        .navbar {
-            width: 100%;
-            height: 80px;
-            background-color: #2c2f33;
-        }
+<!-- 메타 태그 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        .navbar-brand img {
-            width: 50px;
-        }
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style_admin.css">
 
-        .navbar-dark .navbar-brand {
-            font-family: 'pretendard';
-            font-size: 20px;
-            color: white;
-            display: flex;
-            align-items: center;
-        }
+<!-- 파비콘 -->
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
-        .navbar-dark .navbar-text {
-            font-family: 'pretendard';
-            font-size: 20px;
-            color: white;
-        }
-
-        .sidebar {
-            height: 100vh;
-            width: 250px;
-            position: fixed;
-            padding-top: 30px;
-            background-color: white;
-        }
-
-        .sidebar a {
-            padding: 15px 40px;
-            text-decoration: none;
-            font-family: 'pretendard';
-            font-size: 20px;
-            color: #333;
-            display: block;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            color: white;
-            font-weight: bold;
-            background-color: #2f2f37;
-        }
-
-        .content {
-            font-family: 'pretendard';
-            color: #333;
-            margin-left: 260px;
-            padding: 25px;
-            margin-top: 80px;
-        }
-
-        .box {
-            font-family: 'pretendard';
-            color: #333;
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .content {
-            display: none;
-        }
-
-        .active-section {
-            display: block;
-        }
-        
-        .page-item.active .page-link {
-		    z-index: 3;
-		    color: white;
-		    background-color: #E49434;
-		    border-color: white;
-		}
-		
-		.page-link:focus {
-		    z-index: 3;
-		    outline: 0;
-		    /* box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25); */
-		    box-shadow: none;
-		}
-		
-		.admin-course .page .active .page-link {
- 	   		color: white;
-		}
-		
-		.page-link {
-		    position: relative;
-		    display: block;
-		    padding: .5rem .75rem;
-		    margin-left: -1px;
-		    line-height: 1.25;
-		    color: gray;
-		    background-color: #fff;
-		    border: 1px solid #dee2e6;
-		}
-		
-		.page-link:hover {
-		    z-index: 2;
-		    color: #E49434;
-		    text-decoration: none;
-		    background-color: #e9ecef;
-		    border-color: #dee2e6;
-		}
-        
-    </style>
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>S'MoreDeep</title>
 </head>
 <body>
-	<nav class="navbar navbar-dark fixed-top">
-		<div class="container-fluid d-flex justify-content-between">
-			<a class="navbar-brand" href="#"> <img src="images/logo.png" alt="logo">
-				S'MoreDeep
-			</a>
-			<span class="navbar-text">관리자</span>
+
+<nav class="navbar navbar-dark fixed-top">
+   <div class="container-fluid d-flex justify-content-between">
+      <a class="navbar-brand" href="#">
+      	<img src="images/logo.png" alt="logo">
+         S'MoreDeep
+      </a>
+      <span class="navbar-text">관리자</span>
+   </div>
+</nav>
+
+<div class="sidebar">
+   <a href="#">대시보드</a>
+   <a href="#" class="pick">강의목록</a>
+   <a href="#">사용자 관리</a>
+</div>
+
+<div id="course-list" class="content admin-course active-section">
+<div class="box">
+	<h4>강의 목록</h4>
+	<form id="courseForm" th:action="@{/admin_lecture_edit}" method="post">
+		<div class="course">
+			<table class="course-table">
+				<thead>
+					<tr>
+						<th>NO</th>
+						<th>강의명</th>
+						<th>카테고리</th>
+						<th>난이도</th>
+						<th>수강기간</th>
+						<th>상태</th>
+					</tr>
+				</thead>
+				<tbody class="course-item">
+					<tr th:each="course, loop : ${adminpg}">
+						<td th:text="${course.courseIdx}" class="course-index"></td>
+						<td th:text="${course.courseNm}" class="pointer"></td>
+						<td th:text="${course.middleCategory}"></td>
+						<td th:text="${course.courseLevel}"></td>
+						<td	th:text="${#strings.substring(course.courseTm,1,#strings.length(course.courseTm)-1)}"></td>
+						<td class="item-button">
+							<button type="button" class="toggle-hide" data-idx="${course.courseIdx}" data-hide="0"
+								th:classappend="${course.courseHide==0} ? 'pick' : ''"
+								th:value=0 th:text="노출">
+							</button>
+							<button type="button" class="toggle-hide" data-idx="${course.courseIdx}" data-hide="1"
+								th:classappend="${course.courseHide==1} ? 'pick' : ''"
+								th:value=1 th:text="숨김">
+							</button>
+							<input type="hidden" name="courseIdxList" th:value="${course.courseIdx}" />
+							<input type="hidden" name="courseHideList" th:value="${course.courseHide}" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-	</nav>
+		
+		<!-- 페이징처리 시작 -->
+		<div th:if="${!adminpg.isEmpty()}" class="page">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:unless=${!adminpg.hasPrevious}>
+					<a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number-1}">
+						<span>이전</span>
+					</a>
+				</li>
+				<li th:each="page: ${#numbers.sequence(0, adminpg.totalPages-1)}"
+					th:if="${page >=adminpg.number-2 and page <= adminpg.number+2}"
+					th:classappend="${page == adminpg.number} ? 'active'" class="page-item">
+					<a th:text="${page}+1" class="page-link" href="javascript:void(0)"
+					th:data-page="${page}"></a>
+				</li>
+				<li class="page-item" th:unless=${!adminpg.hasNext}>
+					<a class="page-link" href="javascript:void(0)" th:data-page="${adminpg.number+1}">
+						<span>다음</span>
+					</a>
+				</li>
+				<button type="submit" class="btn btn-warning">수정</button>
+			</ul>
+		</div>
+		<!-- 페이징처리 끝 -->
+	</form>
+	</div>
 
-	<div class="sidebar">
-        <a href="#" onclick="showSection('course-list', this)">강의 목록</a>
-        <a href="#" onclick="showSection('user-management', this)">사용자 관리</a>
-        <a href="#" onclick="showSection('setting', this)">설정</a>
-    </div>
+	<form th:action="@{/admin_lecture}" method="get" id="searchForm">
+		<input type="hidden" id="page" name="page" th:value="${adminpg.number}">
+	</form>
+</div>
 
-	<div id="user-list" class="content admin-user active-section">
-        <h4>사용자 관리</h4>
-        <div class="course user">
-          <table class="course-table user-table">
-            <thead>
-              <tr>
-                <th>NO</th>
-                <th>아이디</th>
-                <th>선호 카테고리</th>
-                <th>선호 난이도</th>
-                <th>선호 수강기간</th>
-                <th>가입일자</th>
-              </tr>
-            </thead>
-            <tbody class="user-item">
-              <tr>       
-                <td>1</td>
-                <td>pp071418</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.03.01</td>
-              </tr>
+<script type="text/javascript">
+ 	// "노출" / "숨김" 버튼을 클릭했을 때, 모든 강의의 `courseHide` 값을 업데이트
+    $(".toggle-hide").on("click", function() {
+        var courseIdx = $(this).data("idx");
+        var courseHide = $(this).data("hide");
 
-              <tr>       
-                <td>2</td>
-                <td>gkmrl</td>
-                <td>백엔드</td>
-                <td>초급</td>
-                <td>2시간 이하</td>
-                <td>2025.02.28</td>
-              </tr>
-              <tr>       
-                <td>3</td>
-                <td>asd</td>
-                <td>데이터베이스</td>
-                <td>중급</td>
-                <td>12시간</td>
-                <td>2025.02.14</td>
-              </tr>
-              <tr>       
-                <td>4</td>
-                <td>test</td>
-                <td>프론트엔드</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.02.11</td>
-              </tr>
-              <tr>       
-                <td>5</td>
-                <td>wjd7428@naver.com</td>
-                <td>웹개발</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.02.11</td>
-              </tr>
-              <tr>       
-                <td>6</td>
-                <td>hjhjhj4007@naver.com</td>
-                <td>데이터베이스</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.01.30</td>
-              </tr>
-              <tr>       
-                <td>7</td>
-                <td>jeonghr1230@gmail.com</td>
-                <td>데이터베이스</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.03.01</td>
-              </tr>
-              <tr>       
-                <td>8</td>
-                <td>test2</td>
-                <td>데브옵스·인프라</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.02.01</td>
-              </tr>
-              <tr>       
-                <td>9</td>
-                <td>test3</td>
-                <td>알고리즘·자료구조</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.03.01</td>
-              </tr>
-              <tr>       
-                <td>10</td>
-                <td>test4</td>
-                <td>프로그래밍언어</td>
-                <td>입문</td>
-                <td>3시간</td>
-                <td>2025.03.01</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-    
+     	// 클릭된 버튼의 부모 <tr>에서 해당 input[name='courseHideList']을 찾기
+        var tr = $(this).closest("tr");
+        tr.find("input[name='courseHideList']").val(courseHide);
+
+        // 선택된 강의에 대해 class 토글
+        $(this).siblings().removeClass("pick");  // 다른 버튼에서 선택된 클래스 제거
+        $(this).addClass("pick");  // 클릭된 버튼에 선택된 클래스 추가
+    });
+
+    // 폼 제출을 위한 "수정" 버튼 클릭
+    $("#courseForm").on("submit", function(e) {
+        e.preventDefault();  // 기본 폼 제출 방지
+
+        // 폼을 서버로 제출하기 전에 데이터 확인
+        var formData = $(this).serialize();
+        
+        // AJAX를 통해 폼 데이터를 서버로 전송
+        $.ajax({
+            url: '/admin_lecture_edit',  // 서버의 URL
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                alert("강의 목록이 수정되었습니다.");
+                location.reload();  // 페이지 새로고침
+            },
+            error: function(xhr, status, error) {
+                alert("에러 발생: " + error);
+            }
+        });
+    });
+</script>
+
+<script>
+	function showSection(sectionId, element) {
+	    // 모든 섹션 숨기기
+	    document.querySelectorAll('.content').forEach(section => {
+	        section.classList.remove('active-section');
+	    });
+	    document.getElementById(sectionId).classList.add('active-section');
+	
+	    // 모든 사이드바 메뉴에서 active 제거
+	    document.querySelectorAll('.sidebar a').forEach(link => {
+	        link.classList.remove('active');
+	    });
+	
+	    // 클릭된 메뉴에 active 추가
+	    element.classList.add('active');
+	}
+</script>
 <script src="assets/js/main_min.js"></script>
 </body>
-</html>

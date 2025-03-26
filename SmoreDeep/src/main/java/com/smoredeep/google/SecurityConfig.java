@@ -23,8 +23,8 @@ public class SecurityConfig {
         http
         	.csrf(csrf -> csrf.disable())  // CSRF 필터 해제 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/private/**").authenticated()  // private로 시작하는 URI는 로그인 필수
-                .requestMatchers("/admin/**").hasRole("1")  // admin으로 시작하는 URI는 관리자만 접근 가능
+//                .requestMatchers("/private/**").authenticated()  // private로 시작하는 URI는 로그인 필수
+//                .requestMatchers("/admin/**").hasRole("1")  // admin으로 시작하는 URI는 관리자만 접근 가능
                 .anyRequest().permitAll()  // 나머지 URI는 모두 접근 허용
             )
             .oauth2Login(oauth -> oauth

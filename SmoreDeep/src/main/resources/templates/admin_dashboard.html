@@ -1,0 +1,331 @@
+<!-- thymeleaf 사용을 위해 코드 작성 , 타임리프 문법사용을 위해 th 사용 -->
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!-- 메타 태그 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style_admin.css">
+
+<!-- 파비콘 -->
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>S'MoreDeep</title>
+</head>
+
+<body>
+   <nav class="navbar navbar-dark fixed-top">
+      <div class="container-fluid d-flex justify-content-between">
+         <a class="navbar-brand" href="#">
+         	<img src="images/logo.png" alt="logo">
+            S'MoreDeep
+         </a>
+         <span class="navbar-text">관리자</span>
+      </div>
+   </nav>
+
+   <div class="sidebar">
+      <a href="#" class="pick">대시보드</a> <a
+         href="#">강의목록</a> <a
+         href="#">사용자 관리</a>
+   </div>
+
+   <div id="dashboard" class="content active-section admin-dashboard">
+      <div class="box">
+         <div class="print">
+	   		<h4>대시보드</h4>
+         	<span>관리자용 페이지 출력 🖨</span>
+         </div>
+         <div class="row">
+            <!-- 카테고리별 추천 강의 순위 막대 그래프 -->
+            <div class="col-7">
+               <div class="box">
+                  <i class="fas fa-trophy icon"></i>
+                  <h6 class="card-title">카테고리별 추천 강의 TOP 5</h6>
+                  <div class="category-recommand">
+                     <!-- 첫 번째 행: 테이블 -->
+                     <div class="category-top5">
+                        <table class="category-table">
+                           <thead>
+                              <tr>
+                                 <th><i class="fas fa-trophy"></i></th>
+                                 <th>추천 강의명</th>
+                                 <th>인기도</th>
+                                 <th>좋아요</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>01</td>
+                                 <td>프론트엔드</td>
+                                 <td>90%</td>
+                                 <td>👍85</td>
+                              </tr>
+                              <tr>
+                                 <td>02</td>
+                                 <td>백엔드</td>
+                                 <td>80%</td>
+                                 <td>👍78</td>
+                              </tr>
+                              <tr>
+                                 <td>03</td>
+                                 <td>프로그래밍 언어</td>
+                                 <td>75%</td>
+                                 <td>👍72</td>
+                              </tr>
+                              <tr>
+                                 <td>04</td>
+                                 <td>알고리즘</td>
+                                 <td>70%</td>
+                                 <td>👍65</td>
+                              </tr>
+                              <tr>
+                                 <td>05</td>
+                                 <td>데이터베이스</td>
+                                 <td>65%</td>
+                                 <td>👍60</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- 두 번째 행: 차트 -->
+                     <div class="category-top5">
+                        <canvas id="chart"></canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- 카테고리별 강의 사용자 도넛 차트 -->
+            <div class="col-5">
+               <div class="box">
+                  <i class="fas fa-chalkboard-teacher icon"></i>
+                  <h6 class="card-title">카테고리별 강의 사용자</h6>
+                  <div class="chart-wrapper">
+                     <!-- 왼쪽: labels -->
+                     <div class="chart-labels">
+                        <ul>
+                           <li><span style="background-color: #e49434;"></span> 프론트엔드</li>
+                           <li><span style="background-color: #f7c24d;"></span> 백엔드</li>
+                           <li><span style="background-color: #f79c42;"></span> 프로그래밍
+                              언어</li>
+                           <li><span style="background-color: #f68c36;"></span> 알고리즘</li>
+                           <li><span style="background-color: #f45b29;"></span>
+                              데이터베이스</li>
+                        </ul>
+                     </div>
+                     <!-- 오른쪽: 도넛 차트 -->
+                     <div class="doughnutchart-container">
+                        <canvas id="category-users-chart"></canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="row">
+            <!-- 사용자 꺾은선 차트 -->
+            <div class="col-5">
+               <div class="box">
+                  <i class="fas fa-users icon"></i>
+                  <h6 class="card-title">사용자</h6>
+                  <p>신규 33 명 / 총 334 명</p>
+                  <div class="chart-container">
+                     <canvas id="new-users-chart"></canvas>
+                  </div>
+               </div>
+            </div>
+
+            <!-- 추천 강의 선택 리뷰 평점 -->
+            <div class="col-7">
+               <div class="box">
+                  <i class="fas fa-comments icon"></i>
+                  <h6 class="card-title">추천 강의 리뷰</h6>
+                  <label for="course-select">강의 선택: </label> <select
+                     id="course-select" onchange="updateReviews()">
+                     <option value="웹 개발 입문">프론트엔드</option>
+                     <option value="데이터 사이언스">벡엔드</option>
+                     <option value="머신러닝 개론">프로그래밍 언어</option>
+                     <option value="네트워크 기초">알고리즘</option>
+                     <option value="데이터베이스 설계">데이터베이스</option>
+                  </select>
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>No.</th>
+                           <th>리뷰 내용</th>
+                           <th>평점</th>
+                        </tr>
+                     </thead>
+                     <tbody id="review-table-body">
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   
+
+   <script>
+        // 대시보드 사이드바
+        function showSection(sectionId, element) {
+            // 모든 섹션 숨기기
+            document.querySelectorAll('.content').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            document.getElementById(sectionId).classList.add('active-section');
+
+            // 모든 사이드바 메뉴에서 active 제거
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // 클릭된 메뉴에 active 추가
+            element.classList.add('active');
+        }
+
+        // 카테고리별 추천 강의 TOP5
+        const ctx = document.getElementById('chart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['프론트엔드', '백엔드', '프로그래밍 언어', '알고리즘', '데이터베이스'],
+                datasets: [
+                    {
+                        label: '인기도',
+                        data: [90, 80, 75, 70, 65],
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                    },
+                    {
+                        label: '좋아요 퍼센트',
+                        data: [85, 78, 72, 65, 60],
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // 카테고리별 강의 사용자 도넛 차트
+        var categoryUsersCtx = document.getElementById('category-users-chart').getContext('2d');
+        var categoryUsersChart = new Chart(categoryUsersCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['프론트엔드', '백엔드', '프로그래밍 언어', '알고리즘', '데이터베이스'],
+                datasets: [{
+                    label: '강의 사용자 수',
+                    data: [100, 150, 200, 120, 180],
+                    backgroundColor: ['#e49434', '#f7c24d', '#f79c42', '#f68c36', '#f45b29'],
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false, /* 기존 차트 legend 숨김 */
+                    }
+                }
+            }
+        });
+
+        // 사용자 꺾은선 그래프
+        var newUsersCtx = document.getElementById('new-users-chart').getContext('2d');
+        var newUsersChart = new Chart(newUsersCtx, {
+            type: 'line',
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
+                datasets: [
+                    {
+                        label: '총 사용자 수',
+                        data: [300, 301, 326, 337, 358, 373],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: true
+                    },
+                    {
+                        label: '신규 사용자 수',
+                        data: [7, 1, 25, 11, 21, 15],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        fill: true,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 카테고리별 추천 강의 리뷰 평점
+        const reviews = {
+            "웹 개발 입문": [
+                { text: "정말 좋은 강의였습니다!", rating: 5 },
+                { text: "입문자가 듣기에 적절합니다.", rating: 4 },
+                { text: "예제가 많아 도움이 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "추천합니다!", rating: 5 }
+            ],
+            "데이터 사이언스": [
+                { text: "유익한 강의였어요!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "실습이 많아 좋았어요.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ]
+        };
+        function updateReviews() {
+            const selectedCourse = document.getElementById("course-select").value;
+            const tableBody = document.getElementById("review-table-body");
+            tableBody.innerHTML = "";
+
+            if (reviews[selectedCourse]) {
+                reviews[selectedCourse].forEach((review, index) => {
+                    const row = `<tr>
+                        <td>${index + 1}</td>
+                        <td>${review.text}</td>
+                        <td>${review.rating} ⭐</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            }
+        }
+        window.onload = updateReviews;
+    </script>
+
+</body>
+
+</html>

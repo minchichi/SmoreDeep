@@ -7,15 +7,169 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="assets/css/style_min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  
   <!-- jQuery 추가 -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="assets/css/style_min.css">
   <title>S'MoreDeep</title>
 </head>
 <body>
 <div th:replace="~{/header :: body}"></div>
-<div class="content lecture-list">
 
+	<!-- Swiper -->
+	  <div class="banner">
+	    <div class="banner-title">다음 강의를 추천 받았어요!</div>
+	    <div class="swiper mySwiper">
+	      <div class="swiper-wrapper">
+	        <div class="swiper-slide">
+	          <div class="one-product">
+	            <div class="thumb">
+	              <a href="#"></a>
+	              <img src="images/thumb1.png" alt="">
+	            </div>
+	    
+	            <div class="info">
+	              <div class="category">
+	                <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+	                </div>
+	              </div>
+	              <div class="title">
+	                누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+	              </div>
+	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+	            </div>
+	          </div>
+	        </div>
+	        <div class="swiper-slide">
+	          <div class="one-product">
+	            <div class="thumb">
+	              <a href="#"></a>
+	              <img src="images/thumb2.png" alt="">
+	            </div>
+	    
+	            <div class="info">
+	              <div class="category">
+	                <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+	                </div>
+	              </div>
+	              <div class="title">
+	                누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+	              </div>
+	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+	            </div>
+	          </div>
+	        </div>
+	        <div class="swiper-slide">
+	          <div class="one-product">
+	            <div class="thumb">
+	              <a href="#"></a>
+	              <img src="images/thumb3.png" alt="">
+	            </div>
+	    
+	            <div class="info">
+	              <div class="category">
+	                <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+	                </div>
+	              </div>
+	              <div class="title">
+	                누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+	              </div>
+	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="swiper-pagination"></div>
+	    </div>
+	  </div>
+	<!-- 모달을 여는 버튼 -->
+	<button type="button" class="btn btn-primary btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin: 100px 16px -80px;">
+	  신규 강의를 추천해 드릴게요!
+	</button>
+	
+	<!-- 모달 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1">
+	  <div class="modal-dialog modal-dialog-scrollable">
+	      <div class="modal-content">
+	      <div class="modal-header">
+	          <h5 class="modal-title">신규 강의</h5>
+	          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body lecture-one">
+	          <div class="one-product">
+	              <div class="thumb">
+	              <a href="#"></a>
+	              <img src="images/thumb1.png" alt="">
+	              </div>
+	      
+	              <div class="info">
+	              <div class="category">
+	                  <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+	                  </div>
+	              </div>
+	              <div class="title">
+	                  누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+	              </div>
+	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+	              <div class="wrap">
+	                  <div class="time">32시간 34분</div>
+	              </div>
+	              <div class="wrap">
+	                  <div class="level">입문</div>
+	                  <div class="positive">👍78%</div>  
+	              </div>
+	              </div>
+	          </div>
+	          <br>
+	          <div class="sub-content" id="lecture-intro">
+	              <div class="sub-title">강의 소개</div>
+	              <div class="text">
+	                  이 강의는 Java와 Spring Boot를 활용한 웹 개발을 처음부터 끝까지 배우는 마스터 과정입니다. 기본적인 Java 문법부터 시작하여, REST API 개발, 데이터베이스 연동, 보안 및 배포까지 실무에서 자주 사용되는 핵심 개념들을 집중적으로 다룹니다.
+	                  </div>
+	                  <div class="text recom">
+	                  🎯 이런 분들에게 추천합니다! <br>
+	                  ✔️ Java와 Spring Boot로 백엔드 개발을 배우고 싶은 분 <br>
+	                  ✔️ RESTful API 개발 및 데이터베이스 연동을 경험하고 싶은 분 <br>
+	                  ✔️ 기업 채용에서 요구하는 웹 개발 역량을 갖추고 싶은 분
+	                  </div>
+	              </div>
+	      </div>
+	      <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	          <button type="button" class="btn btn-warning">강의 보러가기</button>
+	      </div>
+	      </div>
+	  </div>
+	  </div>
+	
+	  <script>
+	      document.addEventListener("DOMContentLoaded", function () {
+	          const myModal = document.getElementById('exampleModal');
+	          const myInput = document.getElementById('myInput');
+	
+	          if (myModal && myInput) {
+	              myModal.addEventListener('shown.bs.modal', () => {
+	                  myInput.focus();
+	              });
+	          }
+	      });
+	  </script>
+	  <!-- Swiper JS -->
+	  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+	
+	  <script>
+	    var swiper = new Swiper(".mySwiper", {
+	      spaceBetween: 30,
+	      pagination: {
+	        el: ".swiper-pagination",
+	        clickable: true,
+	      },
+	    });
+	  </script>
+<div class="content lecture-list">
     <form method="get" id="search-form">
       <div class="search">
         <!-- <input type="text" class="search-input" id="search-input" placeholder="검색"> -->
@@ -26,7 +180,7 @@
     </form>
 
     <div class="category">
-      <ul class="slides">
+      <ul class="slides" style="padding: 0;">
         <li value="0"><a href="#">전체</a></li>
         <li value="1"><a href="#">프론트엔드</a></li>
         <li value="2"><a href="#">백엔드</a></li>
