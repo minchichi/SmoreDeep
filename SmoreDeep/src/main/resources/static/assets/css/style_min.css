@@ -447,3 +447,14 @@ body {
   transition: 0.3s;
   font-family: var(--font--style);
 }
+
+
+.main-container {
+  margin: 0 auto;
+}
+.main-container .main {
+  margin-top: 150px;
+}
+.main-container .main img {
+  width: 390px;
+}

@@ -123,6 +123,11 @@ public class MainController {
     public String admin_user() {
         return "admin_user";
     }
+	// ++ 추가
+	@GetMapping("/main")
+    public String main() {
+        return "main";
+    }
 	
 	@PostMapping("/admin_lecture_edit")
 	public String admin_lecture_edit(@RequestParam("courseIdxList") List<Integer> courseIdxList,
