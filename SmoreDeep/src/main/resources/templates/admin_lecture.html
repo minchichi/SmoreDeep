@@ -128,17 +128,15 @@
     </style>
 </head>
 <body>
+	<nav class="navbar navbar-dark fixed-top">
+		<div class="container-fluid d-flex justify-content-between">
+			<a class="navbar-brand" href="#"> <img src="images/logo.png" alt="logo">
+				관리자용
+			</a> <span class="navbar-text">Admin님</span>
+		</div>
+	</nav>
 
-<nav class="navbar navbar-dark fixed-top">
-        <div class="container-fluid d-flex justify-content-between">
-            <a class="navbar-brand" href="#">
-                <img src="logo.png" alt="logo"> 관리자용
-            </a>
-            <span class="navbar-text">Admin님</span>
-        </div>
-    </nav>
-
-    <div class="sidebar">
+	<div class="sidebar">
         <a href="#" onclick="showSection('course-list', this)">강의 목록</a>
         <a href="#" onclick="showSection('user-management', this)">사용자 관리</a>
         <a href="#" onclick="showSection('setting', this)">설정</a>
@@ -163,7 +161,7 @@
             <tbody class="course-item">
               <tr th:each="course, loop : ${adminpg}">       
                 <td th:text="${course.courseIdx}"></td>
-                <td th:text="${course.courseNm}"></td>
+                <td th:text="${course.courseNm}" class="course-name"></td>
                 <td th:text="${course.middleCategory}"></td>
                 <td th:text="${course.courseLevel}"></td>
                 <td th:text="${#strings.substring(course.courseTm,1,#strings.length(course.courseTm)-1)}"></td>
@@ -177,6 +175,7 @@
             </tbody>
           </table>
     	</div>
+    	
     	<!-- 페이징처리 시작 -->
 	    <div th:if="${!adminpg.isEmpty()}" class="page">
 	        <ul class="pagination justify-content-center">

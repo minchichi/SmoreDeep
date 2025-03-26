@@ -18,7 +18,8 @@
   padding: 10px;
   text-align: center;
 }
-.course-table .course-item td {
+.course-table .course-item .course-name {
+  cursor: pointer;
 }
 .course-table .item-button button {
   color: #999;
