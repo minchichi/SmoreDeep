@@ -118,6 +118,11 @@ public class MainController {
 		return "admin_lecture";
 	}
 	
+	// 관리자 사용자관리 페이지 ++ 추가
+	@GetMapping("/admin_user")
+    public String admin_user() {
+        return "admin_user";
+    }
 	
 	@PostMapping("/admin_lecture_edit")
 	public String admin_lecture_edit(@RequestParam("courseIdxList") List<Integer> courseIdxList,
