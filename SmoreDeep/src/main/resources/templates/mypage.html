@@ -31,12 +31,15 @@
 			<div class="course">
 				<label for="category">관심과목 (선택사항)</label> <select
 					id="course_category" name="course_category">
-					<option th:value="${session.user.get().getCourseCategory()}"
-						th:text="${session.user.get().getCourseCategory()}"></option>
-					<option value="개발‧프로그래밍">개발‧프로그래밍</option>
-					<option value="게임 개발">게임개발</option>
-					<option value="데이터 사이언스">데이터 사이언스</option>
-					<option value="인공지능">인공지능</option>
+					<option value="" th:if="${session.user.get().getCourseCategory()==''||session.user.get().getCourseCategory()==null}" th:text="선택" selected style="display:none"></option>
+					<option th:unless="${session.user.get().getCourseCategory()==''||session.user.get().getCourseCategory()==null}"
+							th:text="${session.user.get().getCourseCategory()}" style="display:none"></option>
+					<option value="프론트엔드">프론트엔드</option>
+					<option value="백엔드">백엔드</option>
+					<option value="프로그래밍언어">프로그래밍언어</option>
+					<option value="데이터베이스">데이터베이스</option>
+					<option value="풀스택">풀스택</option>
+					
 				</select>
 			</div>
 
@@ -44,8 +47,9 @@
 				<div class="course-item">
 					<label for="level">난이도 (선택사항)</label> <select id="course_level"
 						name="course_level">
-						<option th:value="${session.user.get().getCourseLevel()}"
-							th:text="${session.user.get().getCourseLevel()}"></option>
+						<option value="" th:if="${session.user.get().getCourseLevel()==''||session.user.get().getCourseLevel()==null}" th:text="선택" selected style="display:none"></option>
+						<option th:unless="${session.user.get().getCourseLevel()==''||session.user.get().getCourseLevel()==null}"
+								th:text="${session.user.get().getCourseLevel()}" style="display:none"></option>
 						<option value="입문">입문</option>
 						<option value="초급">초급</option>
 						<option value="중급 이상">중급 이상</option>
@@ -54,12 +58,14 @@
 				<div class="course-item">
 					<label for="term">강의시간 (선택사항)</label> <select id="course_term"
 						name="course_tm">
-						<option th:value="${session.user.get().getCourseTm()}"
-							th:text="${session.user.get().getCourseTm()}"></option>
-						<option value="2hour">2hour</option>
-						<option value="4hour">4hour</option>
-						<option value="8hour">8hour</option>
-						<option value="12hour">12hour</option>
+						<option value="" th:if="${session.user.get().getCourseTm()==''||session.user.get().getCourseTm()==null}" th:text="선택" selected style="display:none"></option>
+						<option th:unless="${session.user.get().getCourseTm()==''||session.user.get().getCourseTm()==null}"
+								th:text="${session.user.get().getCourseTm()}" style="display:none"></option>
+						<option value="2시간 미만">2시간 미만</option>
+                        <option value="4시간 미만">4시간 미만</option>
+                        <option value="8시간 미만">8시간 미만</option>
+                        <option value="12시간 미만">12시간 미만</option>
+                        <option value="12시간 이상">12시간 이상</option>
 					</select>
 				</div>
 			</div>

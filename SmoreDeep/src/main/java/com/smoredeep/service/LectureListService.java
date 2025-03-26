@@ -18,14 +18,19 @@ public class LectureListService {
 	private final CourseRepository courseRepository;
 	private final CourseRepositorySupport courseRepositorySupport;
 
+	public Page<TbCourse> getListExp(int page) {
+		Pageable pageable = PageRequest.of(page, 10);
+		return this.courseRepository.findAllExp(pageable);
+	}	
+	
 	public Page<TbCourse> getList(int page) {
 		Pageable pageable = PageRequest.of(page, 10);
 		return this.courseRepository.findAll(pageable);
 	}
 	
-	public Page<TbCourse> getList(String search, String category, String level, String schedule, int page) {
+	public Page<TbCourse> getList(int hide, String search, String category, String level, String schedule, int page) {
 		Pageable pageable = PageRequest.of(page, 10);
-		return this.courseRepositorySupport.findCourse(search, category, level, schedule, pageable);
+		return this.courseRepositorySupport.findCourse(hide, search, category, level, schedule, pageable);
 	}
 	
 }
