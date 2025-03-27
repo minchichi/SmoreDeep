@@ -12,10 +12,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
 <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="assets/css/style_na.css">
+<link rel="stylesheet" href="assets/css/style_min.css">
 <title>S'MoreDeep</title>
 </head>
 <body>
-
+<div th:replace="~{header :: body}"></div>
 	<div class="container">
 		<div class="title">마이페이지</div>
 		<form action="/submit_mypage" method="POST">
@@ -74,7 +75,6 @@
 
 		</form>
 	</div>
-
-
+<div th:replace="~{footer :: body}"></div>
 </body>
 </html>

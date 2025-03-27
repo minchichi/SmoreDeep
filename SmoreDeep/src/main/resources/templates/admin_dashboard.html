@@ -36,7 +36,7 @@
 
    <div class="sidebar">
       <a href="/admin_dashboard" class="pick">대시보드</a> <a
-         href="/admin_lecture">강의목록</a> <a
+         href="/admin_lecture">강의 관리</a> <a
          href="/admin_user">사용자 관리</a>
    </div>
 
@@ -60,39 +60,33 @@
                               <tr>
                                  <th><i class="fas fa-trophy"></i></th>
                                  <th>추천 강의명</th>
-                                 <th>인기도</th>
-                                 <th>좋아요</th>
+                                 <th>선호도</th>
                               </tr>
                            </thead>
                            <tbody>
                               <tr>
                                  <td>01</td>
                                  <td>프론트엔드</td>
-                                 <td>90%</td>
                                  <td>👍85</td>
                               </tr>
                               <tr>
                                  <td>02</td>
                                  <td>백엔드</td>
-                                 <td>80%</td>
                                  <td>👍78</td>
                               </tr>
                               <tr>
                                  <td>03</td>
                                  <td>프로그래밍 언어</td>
-                                 <td>75%</td>
                                  <td>👍72</td>
                               </tr>
                               <tr>
                                  <td>04</td>
                                  <td>알고리즘</td>
-                                 <td>70%</td>
                                  <td>👍65</td>
                               </tr>
                               <tr>
                                  <td>05</td>
                                  <td>데이터베이스</td>
-                                 <td>65%</td>
                                  <td>👍60</td>
                               </tr>
                            </tbody>
@@ -204,12 +198,7 @@
                 labels: ['프론트엔드', '백엔드', '프로그래밍 언어', '알고리즘', '데이터베이스'],
                 datasets: [
                     {
-                        label: '인기도',
-                        data: [90, 80, 75, 70, 65],
-                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
-                    },
-                    {
-                        label: '좋아요 퍼센트',
+                        label: '선호도',
                         data: [85, 78, 72, 65, 60],
                         backgroundColor: 'rgba(54, 162, 235, 0.6)'
                     }

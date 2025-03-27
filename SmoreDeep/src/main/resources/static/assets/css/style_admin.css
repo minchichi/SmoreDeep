@@ -83,6 +83,12 @@ body {
 	font-size: 20px;
     margin: 5px 0 0 10px;
 }
+.box .wraping {
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
 .admin-dashboard .box {
 	text-align: center;
 }
@@ -109,7 +115,7 @@ body {
 
 /* 대시보드 아이콘 */
 .icon {
-    font-size: 40px;
+    font-size: 30px;
     color: #e49434;
     margin-bottom: 5px;
 }
@@ -211,10 +217,13 @@ th {
 }
 
 /* 강의 목록 */
-.admin-user h4,
-.admin-course h4 {
+.admin-user h4 {
     margin-bottom: 20px;
 }
+.admin-course h4 {
+	margin-bottom: 10px;
+}
+
 
 .course {
     background-color: white;
@@ -255,7 +264,8 @@ th {
     margin-bottom: 0;
 }
 
-.admin-course .page ul {
+.admin-course .page ul,
+.admin-user .page ul {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -275,6 +285,7 @@ th {
 .page-item.active .page-link {
 	background-color: white;
 	border-color: var(--main);
+	color: var(--main);
 }
 
 .sidebar .pick {

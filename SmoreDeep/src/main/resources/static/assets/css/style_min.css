@@ -148,6 +148,9 @@ body {
 }
 .lecture-list .category {
   margin: 10px 0;
+  overflow: hidden; /* 넘치는 부분 숨기기 */
+  white-space: nowrap;
+  position: relative;
 }
 .lecture-list .category ul {
   display:flex;
@@ -180,6 +183,9 @@ body {
 }
 .lecture-list .page .active .page-link {
   color: var(--main);
+}
+.lecture-list .one-product .thumb img {
+	height: 117px;
 }
 .page-link {
 	color: #555555;

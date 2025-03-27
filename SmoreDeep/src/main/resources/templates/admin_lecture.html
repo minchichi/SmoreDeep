@@ -36,13 +36,16 @@
 
 <div class="sidebar">
    <a href="/admin_dashboard">대시보드</a>
-   <a href="/admin_lecture" class="pick">강의목록</a>
+   <a href="/admin_lecture" class="pick">강의 관리</a>
    <a href="/admin_user">사용자 관리</a>
 </div>
 
 <div id="course-list" class="content admin-course active-section">
 <div class="box">
-	<h4>강의 목록</h4>
+	<div class="wraping">
+		<h4>강의 목록</h4>
+		<button type="submit" class="btn btn-warning">수정</button>	
+	</div>
 	<form id="courseForm" th:action="@{/admin_lecture_edit}" method="post">
 		<div class="course">
 			<table class="course-table">
@@ -99,7 +102,7 @@
 						<span>다음</span>
 					</a>
 				</li>
-				<button type="submit" class="btn btn-warning">수정</button>
+				
 			</ul>
 		</div>
 		<!-- 페이징처리 끝 -->
