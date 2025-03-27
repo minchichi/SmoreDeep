@@ -54,11 +54,13 @@
 
     <div class="container wrap-join2 hidden">
 		<div class="title">회원가입</div>
-		<form action="/submit_registration" method="POST">
+		<form id="signup-form" action="/submit_registration" method="POST">
 
             <div class="join2">
                 <label for="id">아이디</label>
+                <div id="user_id_message"></div>  <!-- 아이디 중복확인 메시지 표시 -->
                 <input type="identifier" id="user_id" name="id" placeholder="이메일 또는 아이디" required>
+                
 
                 <label for="pw">비밀번호</label>
                 <div class="pass_check hidden">8자리 이상 영문+숫자만 가능</div>

@@ -29,14 +29,14 @@ public class SecurityConfig {
             )
             .oauth2Login(oauth -> oauth
                 .loginPage("/loginForm")  // 로그인이 필요한데 로그인을 하지 않았다면 이동할 URI 설정
-                .defaultSuccessUrl("/")  // OAuth 구글 로그인이 성공하면 이동할 URI 설정
+                .defaultSuccessUrl("/lecture_list")  // OAuth 구글 로그인이 성공하면 이동할 URI 설정
                 .userInfoEndpoint(userInfo -> userInfo.userService(oAuth2MemberService))  // 로그인 완료 후 회원 정보 받기
             )
             .formLogin(Customizer.withDefaults())  // 기본 form login 설정
             .logout(logout -> logout
                 .logoutUrl("/logout")  // 로그아웃 URL 설정
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))  // 로그아웃 요청 URL
-                .logoutSuccessUrl("/loginForm")  // 로그아웃 성공 후 이동할 URI 설정
+                .logoutSuccessUrl("/")  // 로그아웃 성공 후 이동할 URI 설정
                 .logoutSuccessHandler((request, response, authentication) -> {
                 	// 로그아웃 후 쿠키 삭제 명시적으로 추가
                 	Cookie cookie = new Cookie("JSESSIONID", null);
@@ -45,7 +45,7 @@ public class SecurityConfig {
                     cookie.setHttpOnly(true);  // 보안을 위해 HttpOnly로 설정
                     cookie.setSecure(true);  // HTTPS에서만 쿠키 전송되도록 설정 (필요 시)
                     response.addCookie(cookie);  // 쿠키를 응답에 추가
-                    response.sendRedirect("/loginForm");
+                    response.sendRedirect("/");
                 })
                 .deleteCookies("JSESSIONID")  // 로그아웃 시 삭제할 쿠키 설정
                 .invalidateHttpSession(true)  // 세션 무효화 설정

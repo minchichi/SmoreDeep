@@ -21,31 +21,31 @@
 <body>
 <div class="footer">
 
-	<div th:if="${session.user} != null" class="btn">
-		<a href="/logout"> <img src="images/user.svg">
+	<div th:if="${session.user} != null" class="custom-btn">
+		<a href="/logout"> <img src="images/user.svg" class="img">
 			<div class="name">LOGOUT</div>
 		</a>
 	</div>
-	<div th:unless="${session.user} != null" class="btn">
-		<a href="/loginForm"> <img src="images/user.svg">
+	<div th:unless="${session.user} != null" class="custom-btn">
+		<a href="/loginForm"> <img src="images/user.svg" class="img">
 			<div class="name">LOGIN</div>
 		</a>
 	</div>
 
-	<div class="btn">
-		<a href="/"> <img src="images/home.svg">
+	<div class="custom-btn">
+		<a href="/lecture_list"> <img src="images/home.svg" class="img">
 			<div class="name">HOME</div>
 		</a>
 	</div>
 	
-	<div class="btn">
-		<a href="/chatbot"> <img src="images/chat.svg">
+	<div class="custom-btn">
+		<a href="/chatbot"> <img src="images/chat.svg" class="img">
 			<div class="name">S'MORE</div>
 		</a>	
 	</div>
 	
-	<div th:if="${session.user} != null" class="btn">
-		<a href="/mypage"> <img src="images/heart.svg">
+	<div th:if="${session.user} != null" class="custom-btn">
+		<a href="/mypage"> <img src="images/heart.svg" class="img">
 			<div class="name">MYPAGE</div>
 		</a>	
 	</div>

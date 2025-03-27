@@ -33,16 +33,19 @@ public class TbUser {
     
 
     @Builder
-    public TbUser(String email, String password, String role, String provider) {
+    public TbUser(String email, String password, String course_category, String course_level, String course_tm, String role, String provider) {
         this.userId = email;
         this.userPw = password;
+        this.courseCategory = course_category;
+        this.courseLevel = course_level;
+        this.courseTm = course_tm;
         this.adminIs = role;
         this.provider = provider;
     }
 
     
     @Builder
-    public static TbUser toTbUser(MemberVO vo, BCryptPasswordEncoder encoder) {
+    public static TbUser toTbUser(MemberVO vo, String admin_is, BCryptPasswordEncoder encoder) {
     	TbUser tbuser = new TbUser();	
     	
     	tbuser.userId = vo.getId();
@@ -50,7 +53,7 @@ public class TbUser {
     	tbuser.courseCategory = vo.getCourse_category();
     	tbuser.courseLevel = vo.getCourse_level();
     	tbuser.courseTm = vo.getCourse_tm();
-    	tbuser.adminIs = "0";
+    	tbuser.adminIs = admin_is;
     	tbuser.provider = "smore";
     	
     	return tbuser;

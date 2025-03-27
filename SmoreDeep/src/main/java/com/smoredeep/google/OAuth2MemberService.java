@@ -25,22 +25,30 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-//        String provider = userRequest.getClientRegistration().getClientId();
-        String provider = "google";
-//        String username = oAuth2User.getAttribute("name");
+
         String email = oAuth2User.getAttribute("email");
+//      String username = oAuth2User.getAttribute("name");
+        String course_category = "";
+        String course_level = "";
+        String course_tm = "";
         String role = "0"; //일반 유저
+        String provider = "google";
+//      String provider = userRequest.getClientRegistration().getClientId();
         Optional<TbUser> findUser = userRepository.findByUserId(email);
         if (findUser.isEmpty()) {
             TbUser user = TbUser.builder()
                     .email(email)
                     .password(encoder.encode("password"))
-//                    .name(username)
+//                  .name(username)
+                    .course_category(course_category)
+                    .course_level(course_level)
+                    .course_tm(course_tm)
                     .role(role)
                     .provider(provider).build();
             userRepository.save(user);
         }
         
+        findUser = userRepository.findByUserId(email);
         session.setAttribute("user", findUser);
         
         return oAuth2User;

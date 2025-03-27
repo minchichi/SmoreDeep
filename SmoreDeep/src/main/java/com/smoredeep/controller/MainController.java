@@ -1,16 +1,20 @@
 package com.smoredeep.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,23 +50,33 @@ public class MainController {
 	// 회원가입 
 	@RequestMapping(value ="/submit_registration", method = RequestMethod.GET)
 	public String join1() {	
-		return "redirect:/main";
+		return "redirect:/loginForm";
 	}
 	
 	// 회원가입 DB저장 
 	@RequestMapping(value ="/submit_registration", method = RequestMethod.POST)
 	public String join2(MemberVO vo, BCryptPasswordEncoder encoder) {	
-		TbUser tbUser = TbUser.toTbUser(vo, encoder);
-		userRepository.save(tbUser);	
+		TbUser tbUser = TbUser.toTbUser(vo, "0", encoder);
+		userRepository.save(tbUser);
 		return "redirect:/loginForm";
 	}
+	
+	// 아이디 중복확인
+	@PostMapping("/check-userId")
+	public ResponseEntity<Map<String, Boolean>> checkUsername(@RequestBody Map<String, String> request) {
+        String userId = request.get("userId");
+        boolean isUserIdTaken = userRepository.existsByUserId(userId);  // 아이디가 DB에 있는지 확인
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isTaken", isUserIdTaken);
+        return ResponseEntity.ok(response);
+    }
 	
     @GetMapping("/loginForm")
     public String home() {
         return "loginForm";
     }
 	
-	// 로그인 기능 	
+	// 로그인 기능
 	@PostMapping("/submit_login_user")
 	public String login(String user_id, String user_pw, HttpSession session, Model model, BCryptPasswordEncoder encoder) {			
 //		TbUser tbUser = repo.findByUserIdAndUserPw(user_id, user_pw);
@@ -79,12 +93,12 @@ public class MainController {
 	    }
 	    // 로그인 성공: 세션에 사용자 정보 저장
 	    session.setAttribute("user", tbUser);
-	    return "redirect:/";
+	    return "redirect:/lecture_list";
 	}	
 	
 	// 관리자 로그인 기능 	
 	@PostMapping("/submit_login_admin")
-	public String login(String admin_id, String admin_pw, HttpSession session, Model model) {			
+	public String loginAdmin(String admin_id, String admin_pw, HttpSession session, Model model, BCryptPasswordEncoder encoder) {			
 		Optional<TbUser> tbUser = userRepository.findByUserId(admin_id);	
 		System.out.println(admin_id);
 		// 사용자가 존재하지 않는 경우
@@ -98,16 +112,17 @@ public class MainController {
 			  return "loginForm";
 		}
 		// 비밀번호가 틀린 경우
-		else if (!tbUser.get().getUserPw().equals(admin_pw)) {
+		else if (!encoder.matches(admin_pw, tbUser.get().getUserPw())) {
+//				(!tbUser.get().getUserPw().equals(admin_pw)) 
 			  model.addAttribute("error", "비밀번호가 일치하지않습니다.");
 			  return "loginForm";
-			    } 
+	    } 
 		else {
-			    // 로그인 성공: 세션에 사용자 정보 저장
-			 session.setAttribute("user", tbUser);
-			    }
-			    return "redirect:/admin_lecture";		
-			}	
+	    // 로그인 성공: 세션에 사용자 정보 저장
+			session.setAttribute("user", tbUser);
+	    }
+	    return "redirect:/admin_dashboard";		
+	}	
 
 	
 	// 관리자 강의관리 페이지
@@ -118,20 +133,19 @@ public class MainController {
 		return "admin_lecture";
 	}
 	
-	// 관리자 사용자관리 페이지 ++ 추가
+	// 관리자 사용자관리 페이지
 	@GetMapping("/admin_user")
     public String admin_user() {
         return "admin_user";
     }
 	
-	// 관리자 대시보드 페이지 ++ 추가
+	// 관리자 대시보드 페이지
 	@GetMapping("/admin_dashboard")
     public String admin_dashboard() {
         return "admin_dashboard";
     }
 	
-	// ++ 추가
-	@GetMapping("/main")
+	@GetMapping("/")
     public String main() {
         return "main";
     }
@@ -158,7 +172,7 @@ public class MainController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("user");
 		return  "redirect:/";
-		}
+	}
 		
 	
 	// 마이페이지 --> category, level, tm 수정 
@@ -169,11 +183,11 @@ public class MainController {
                              @RequestParam String course_tm) {
         // 직접 repository 메서드 호출
 		userRepository.updateUser(user_id, course_category, course_level, course_tm);
-        return "redirect:/";
+        return "redirect:/lecture_list";
     }
 
 	
-	@GetMapping("/")
+	@GetMapping("/lecture_list")
 	public String lecture_list(Model model, HttpSession session,
 			@RequestParam(value="page", defaultValue="0") int page,
 			@RequestParam(value="search", required=false) String search,

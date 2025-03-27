@@ -141,11 +141,17 @@ input, select {
     margin-right: 5px;
 }
 
+#user_id_message {
+    font-size: 12px;
+    padding: 5px 20px 5px;
+}
+
+
 .join2 .pass_check,
 .join2 .pass_same {
     font-size: 12px;
     color: red;
-    padding: 0 20px 5px;
+    padding: 5px 20px 5px;
 }
 
 .join2 input, .course select, .mypage input {

@@ -48,6 +48,9 @@ public class HomeController {
 
 		String email = userInfo.get("email").toString();
 //		String username = userInfo.get("nickname").toString();
+        String course_category = "";
+        String course_level = "";
+        String course_tm = "";
 		String role = "0";
 		String provider = "kakao";
 
@@ -57,14 +60,19 @@ public class HomeController {
 					.email(email)
 					.password(encoder.encode("password"))
 //					.name(username)
+					.course_category(course_category)
+                    .course_level(course_level)
+                    .course_tm(course_tm)
 					.role(role)
 					.provider(provider).build();
 			userRepository.save(user);
 		}
 		
-		session.setAttribute("user", userInfo);
+		findUser = userRepository.findByUserId(email);
+		System.out.println(findUser);
+		session.setAttribute("user", findUser);
 
-		return "redirect:/";
+		return "redirect:/lecture_list";
 	}
 
 	@RequestMapping(value = "/logout")

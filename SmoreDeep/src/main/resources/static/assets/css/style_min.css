@@ -55,26 +55,30 @@ body {
   bottom: 0;
   z-index: 100;
 }
-.footer .btn {
+.footer .custom-btn {
   text-align: center;
   padding: 30px 40px;
   cursor: pointer;
   position: relative;
+  display: block;
 }
-.footer .btn a {
+.footer .custom-btn a {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   z-index: 10;
+  
 }
-.footer img {
+.footer .custom-btn .img{
   width: 20px;
   height: 20px;
   margin-top: 10px;
+  vertical-align: middle;
 }
-.footer .btn .name {
+.footer .custom-btn .name {
+  line-height: 1;
   margin-top: 5px;
 }
 
@@ -177,6 +181,17 @@ body {
 .lecture-list .page .active .page-link {
   color: var(--main);
 }
+.page-link {
+	color: #555555;
+}
+.page-link:hover {
+	color: var(--main);
+}
+.page-item.active .page-link {
+	background-color: white;
+	border-color: var(--main);
+}
+
 /* 강의 목록 상품 --------------------------------------------- */
 .product {
   font-size: 14px;
@@ -304,6 +319,10 @@ body {
   border-bottom: 1px solid var(--line);
   margin-bottom: 10px;
 }
+.lecture-one .sub-content .writer{
+ font-size: 14px;
+ color: gray;
+}
 .lecture-one .sub-content .date {
   font-size: 14px;
   color: #555;
@@ -312,8 +331,11 @@ body {
   margin-bottom: 5px;
 }
 .lecture-one .sub-content .review-one {
-  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 10px;
 }
+
 
 .lecture-one .page ul {
   display: flex;

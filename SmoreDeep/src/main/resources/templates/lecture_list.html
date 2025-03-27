@@ -17,7 +17,7 @@
   <title>S'MoreDeep</title>
 </head>
 <body>
-<div th:replace="~{/header :: body}"></div>
+<div th:replace="~{header :: body}"></div>
 
 	<!-- Swiper -->
 	  <div class="banner">
@@ -272,7 +272,7 @@
         </ul>
     </div>
     <!-- 페이징처리 끝 -->
-    <form th:action="@{/}" method="get" id="searchForm">
+    <form th:action="@{/lecture_list}" method="get" id="searchForm">
         <input type="hidden" id="search" name="search" th:value="${search}">
         <input type="hidden" id="category" name="category" th:value="${category}">
         <input type="hidden" id="level" name="level" th:value="${level}">
@@ -282,7 +282,7 @@
     </div>
   </div>
 
-<div th:replace="~{/footer :: body}"></div>
+<div th:replace="~{footer :: body}"></div>
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
 	var categoryText = /*[[${category}]]*/'';
