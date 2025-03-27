@@ -152,15 +152,16 @@ body {
   white-space: nowrap;
   position: relative;
 }
-.lecture-list .category ul {
+.lecture-list .category .slides {
   display:flex;
   flex-direction:row;
   justify-content:flex-start;
   align-items:flex-start;
   flex-wrap: nowrap;
   width: max-content;
+  list-style:none;
 }
-.lecture-list .category li {
+.lecture-list .category .slides li {
   padding: 10px;
 }
 .lecture-list .category li:first-child a {

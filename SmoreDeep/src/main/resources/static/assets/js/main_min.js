@@ -25,17 +25,6 @@ window.onload = function() {
 	}
 };
 
-$('.category .slides li').on("click", function(){
-  $('.category .slides li').removeClass("focus");
-  $('.category .slides li').removeClass("activetop");
-  $(this).addClass("focus");
-  $(this).addClass("activetop");
-  
-  document.getElementById('category').value = numToText($(this).val());
-  document.getElementById('page').value = 0;
-  document.getElementById('searchForm').submit();
-});
-
 function numToText(num) {
 switch (num) {
 	case 0: num="전체"
@@ -106,10 +95,10 @@ window.addEventListener('load', function() {
 	var liNum = textToNum(categoryText);
 	const liElement = document.querySelector('li[value="'+liNum+'"]');
 	if (liElement) {
-		liElement.classList.add("focus", "activetop");
+		liElement.classList.add("focus");
 	}
 	/* lecture-list 카테고리 슬라이드 */
-	var on = $('.slides').find('.activetop').index();
+	var on = $('.slides').find('.focus').index();
 	var options = {
 		horizontal: 1,
 		mouseDragging: 1,
@@ -118,8 +107,19 @@ window.addEventListener('load', function() {
 		smart: 1,
 		startAt: on
 	};
-	var frame = new Sly('.category', options).init();
-		
+	var frame = new Sly('.lecture-list .category', options).init();
+});
+
+
+$('.category .slides li').on("click", function(){
+  $('.category .slides li').removeClass("focus");
+  /*$('.category .slides li').removeClass("activetop");*/
+  $(this).addClass("focus");
+  /*$(this).addClass("activetop");*/
+  
+  document.getElementById('category').value = numToText($(this).val());
+  document.getElementById('page').value = 0;
+  document.getElementById('searchForm').submit();
 });
 
 
