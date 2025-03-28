@@ -10,11 +10,20 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.smoredeep.model.PreferenceRequestDTO;
+import com.smoredeep.model.SingleRecommendationDTO;
+import com.smoredeep.repository.CourseRepository;
+import com.smoredeep.service.ChatbotService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/chat")
@@ -35,7 +44,7 @@ public class ChatController {
         Map<String, String> requestJson = new HashMap<>();
         requestJson.put("input", userInput);
         
-        String colabUrl = "https://e7b2-104-197-64-55.ngrok-free.app/recommend"; 
+        String colabUrl = "https://26cc-34-106-23-224.ngrok-free.app/recommend"; 
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(requestJson, headers);
 
@@ -57,4 +66,24 @@ public class ChatController {
                     .body("FastAPI 연결 실패: " + e.getMessage());
         }
     }
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping("/chatbot")
+    public class ChatbotController {
+
+        private final ChatbotService chatbotService;
+
+        @PostMapping("/preference")
+        public ResponseEntity<Integer> savePreference(@RequestBody PreferenceRequestDTO dto) {
+            Integer prefIdx = chatbotService.savePreference(dto);
+            return ResponseEntity.ok(prefIdx);
+        }
+
+        @PostMapping("/recommend/one")
+        public ResponseEntity<String> saveRecommendation(@RequestBody SingleRecommendationDTO dto) {
+            chatbotService.saveSingleRecommendation(dto);
+            return ResponseEntity.ok("추천 결과 저장 완료");
+        }
+    }
+   
 }

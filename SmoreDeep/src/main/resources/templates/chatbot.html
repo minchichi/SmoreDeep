@@ -16,6 +16,8 @@
 <title>S'MoreDeep</title>
 </head>
 <body>
+	<input type="hidden" id="user_id"
+		th:value="${session.user.get().getUserId()}">
 	<div th:replace="~{/header :: body}"></div>
 
 	<div class="chat-container">
@@ -23,54 +25,53 @@
 			<div class="message bot-message">안녕하세요 스모어딥 챗봇입니다. 원하시는 강의
 				스타일이나 관심분야를 말해주시면 강의를 추천해드릴게요!</div>
 
-			
+
 
 			<div class="course-message">
 				<div class="product-list" id="course-list"></div>
 			</div>
 
 
-			
+
 		</div>
 		<!-- 시작 선택: 시나리오 모드 or 직접입력 -->
-			<div class="quick-buttons" id="start-buttons">
-				<button class="quick-button" onclick="startCategoryFlow()">카테고리
-					선택</button>
-				<button class="quick-button" onclick="unlockInput()">직접
-					입력하기</button>
-			</div>
+		<div class="quick-buttons" id="start-buttons">
+			<button class="quick-button" onclick="startCategoryFlow()">카테고리
+				선택</button>
+			<button class="quick-button" onclick="unlockInput()">직접 입력하기</button>
+		</div>
 
-			<!-- 카테고리 선택 단계 -->
-			<div class="quick-buttons" id="step-category" style="display: none;">
-				<button class="quick-button" onclick="selectCategory('프론트엔드')">프론트엔드</button>
-				<button class="quick-button" onclick="selectCategory('백엔드')">백엔드</button>
-				<button class="quick-button" onclick="selectCategory('프로그래밍')">프로그래밍</button>
-			</div>
+		<!-- 카테고리 선택 단계 -->
+		<div class="quick-buttons" id="step-category" style="display: none;">
+			<button class="quick-button" onclick="selectCategory('프론트엔드')">프론트엔드</button>
+			<button class="quick-button" onclick="selectCategory('백엔드')">백엔드</button>
+			<button class="quick-button" onclick="selectCategory('프로그래밍')">프로그래밍</button>
+		</div>
 
-			<!-- 난이도 선택 단계 -->
-			<div class="quick-buttons" id="step-level" style="display: none;">
-				<button class="quick-button" onclick="selectLevel('입문')">입문</button>
-				<button class="quick-button" onclick="selectLevel('초급')">초급</button>
-				<button class="quick-button" onclick="selectLevel('중급 이상')">중급
-					이상</button>
-			</div>
+		<!-- 난이도 선택 단계 -->
+		<div class="quick-buttons" id="step-level" style="display: none;">
+			<button class="quick-button" onclick="selectLevel('입문')">입문</button>
+			<button class="quick-button" onclick="selectLevel('초급')">초급</button>
+			<button class="quick-button" onclick="selectLevel('중급 이상')">중급
+				이상</button>
+		</div>
 
-			<!-- 강의시간 선택 단계 -->
-			<div class="quick-buttons" id="step-time" style="display: none;">
-				<button class="quick-button" onclick="selectTime('1시간 미만')">1시간
-					미만</button>
-				<button class="quick-button" onclick="selectTime('1시간 이상')">1시간
-					이상</button>
-				<button class="quick-button" onclick="selectTime('3시간 이상')">3시간
-					이상</button>
-				<button class="quick-button" onclick="selectTime('5시간 이상')">5시간
-					이상</button>
-			</div>
+		<!-- 강의시간 선택 단계 -->
+		<div class="quick-buttons" id="step-time" style="display: none;">
+			<button class="quick-button" onclick="selectTime('1시간 미만')">1시간
+				미만</button>
+			<button class="quick-button" onclick="selectTime('1시간 이상')">1시간
+				이상</button>
+			<button class="quick-button" onclick="selectTime('3시간 이상')">3시간
+				이상</button>
+			<button class="quick-button" onclick="selectTime('5시간 이상')">5시간
+				이상</button>
+		</div>
 		<div class="chat-input">
 			<input type="text" id="user-input" placeholder="메시지를 입력하세요">
 			<button onclick="sendMessage()">전송</button>
 		</div>
-		
+
 	</div>
 
 	<div th:replace="~{/footer :: body}"></div>
@@ -110,12 +111,35 @@ function selectLevel(level) {
 }
 
 function selectTime(time) {
-  selectedTime = time;
-  $("#step-time").hide();
-  addBotMessage("선택한 조건을 바탕으로 강의를 추천 중입니다...");
-  const combined = `${selectedCategory} ${selectedLevel} ${selectedTime} 추천`;
-  sendQuickMessage(combined);
-}
+	  selectedTime = time;
+	  $("#step-time").hide();
+	  addBotMessage("선택한 조건을 바탕으로 강의를 추천 중입니다...");
+	  const userId = $("#user_id").val().trim();
+	  const combined = `${selectedCategory} ${selectedLevel} ${selectedTime} 추천`;
+
+	  // ✅ 선호 저장
+	  $.ajax({
+	    url: "/chatbot/preference",
+	    type: "POST",
+	    contentType: "application/json",
+	    data: JSON.stringify({
+	      userId: userId,
+	      middleCategory: selectedCategory,
+	      courseLevel: selectedLevel,
+	      coursePlaytime: selectedTime,
+	      userText: ""  // ✅ 시나리오 모드에서는 비워줘야 함
+	    }),
+	    success: function (prefIdx) {
+	      console.log("✅ 선호 저장 성공, prefIdx:", prefIdx);
+
+	      // ✅ 직접 sendToServer 호출 (sendMessage 아님)
+	      sendToServer(combined, prefIdx);  // prefIdx도 함께 넘김!
+	    },
+	    error: function () {
+	      addBotMessage("❌ 선호 저장 실패");
+	    }
+	  });
+	}
 
 function unlockInput() {
   inputUnlocked = true;
@@ -124,10 +148,33 @@ function unlockInput() {
 }
 
 function sendMessage() {
+  const userId = $("#user_id").val().trim();
   const msg = $("#user-input").val().trim();
   if (!msg) return;
   $("#user-input").val("");
   sendToServer(msg);
+//🔥 직접입력 시에도 저장 요청
+  $.ajax({
+    url: "/chatbot/preference",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      userId: userId,
+      middleCategory: "",
+      courseLevel: "",
+      coursePlaytime: "",
+      userText: msg
+    }),
+    success: function (prefIdx) {
+      console.log("✅ 직접입력 선호 저장됨:", prefIdx);
+
+      // 저장 후 GPT 요청
+      sendToServer(msg, prefIdx); // ✅ prefIdx 넘기자!
+    },
+    error: function () {
+      addBotMessage("❌ 직접입력 저장 실패");
+    }
+  });
 }
 
 function sendQuickMessage(text) {
@@ -135,55 +182,110 @@ function sendQuickMessage(text) {
   sendMessage();
 }
 
-function sendToServer(text) {
-  $.ajax({
-    url: "/chat/recommend",
-    type: "POST",
-    contentType: "application/json",
-    data: JSON.stringify({ input: text }),
-    success: function (data) {
-      displayRecommendedCourses(data.results);
-    },
-    error: function () {
-      addBotMessage("❌ 서버 오류가 발생했습니다.");
-    }
-  });
-}
+function sendToServer(text, prefIdx) {
+	  $.ajax({
+	    url: "/chat/recommend",
+	    type: "POST",
+	    contentType: "application/json",
+	    data: JSON.stringify({ input: text }),
+	    success: function (data) {
+	      displayRecommendedCourses(data.results, prefIdx);  // prefIdx 넘겨줌
+	    },
+	    error: function () {
+	      addBotMessage("❌ 서버 오류가 발생했습니다.");
+	    }
+	  });
+	}
+function getCourseIdxByTitle(title, callback) {
+	  $.ajax({
+	    url: "/course/find",  // 🔥 반드시 이 GET API가 있어야 함!
+	    type: "GET",
+	    data: { courseNm: title },
+	    success: function (data) {
+	      if (data && data.courseIdx) {
+	        callback(data.courseIdx);
+	      } else {
+	        console.warn("courseIdx를 찾을 수 없습니다:", title);
+	      }
+	    },
+	    error: function () {
+	      console.error("❌ courseIdx 조회 실패:", title);
+	    }
+	  });
+	}
 
-function displayRecommendedCourses(data) {
-  $(".product-list").empty();
-  data.forEach((title, idx) => {
-    const card = `
-      <div class="one-product">
-        <div class="thumb">
-          <img src="images/thumb${(idx % 3) + 1}.png" alt="">
-        </div>
-        <div class="info">
-          <div class="title">${title}</div>
-          <div class="sub">
-            <div class="date">GPT 추천 강의</div>
-            <div class="positive">👍 추천</div>
-          </div>
-        </div>
-      </div>`;
-    $(".product-list").append(card);
-  });
+function displayRecommendedCourses(data, prefIdx) {
+	
+	 
+	  $(".product-list").empty();
+	  
+	  if (data.length === 0) {
+	        addBotMessage("추천할 강의가 없습니다.");
+	        return;  // 강의가 없으면 출력하지 않음
+	    }
+	  
+	  try {
+		    if ($(".course-message").data("sly")) {
+		      $(".course-message").sly("destroy");
+		    }
+		  } catch (e) {
+		    console.warn("Sly 제거 중 오류 발생 (무시해도 됩니다):", e);
+		  }
 
-  const sly = new Sly(".course-message", {
-    horizontal: 1,
-    mouseDragging: 1,
-    touchDragging: 1
-  }).init();
+	  data.forEach((title, idx) => {
+		  const card = `
+		    <div class="one-product">
+		      <div class="thumb">
+		        <img src="images/thumb${(idx % 3) + 1}.png" alt="">
+		      </div>
+		      <div class="info">
+		        <div class="title">${title}</div>
+		        <div class="sub">
+		          <div class="date">GPT 추천 강의</div>
+		          <div class="positive">👍 추천</div>
+		        </div>
+		      </div>
+		    </div>`;
+		  $(".product-list").append(card);
 
-  addBotMessage("더 자세한 추천을 원하시면 직접 입력하거나, 다시 카테고리를 선택해주세요.");
-  const footerBtns = `
-    <div class="quick-buttons">
-      <button class="quick-button" onclick="unlockInput()">직접 입력하기</button>
-      <button class="quick-button" onclick="startCategoryFlow()">다시 카테고리 선택하기</button>
-    </div>`;
-  $("#chat-box").append(footerBtns);
-  $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
-}
+		  // 🔥 여기서 추천 강의 저장!
+		  getCourseIdxByTitle(title, function (courseIdx) {
+		    saveRecommendation(prefIdx, courseIdx);  // prefIdx는 외부에서 넘겨와야 함!
+		  });
+		});
+
+	  const sly = new Sly(".course-message", {
+	    horizontal: 1,
+	    mouseDragging: 1,
+	    touchDragging: 1
+	  }).init();
+
+	  addBotMessage("더 자세한 추천을 원하시면 직접 입력하거나, 다시 카테고리를 선택해주세요.");
+
+	  const footerBtns = `
+	    <div class="quick-buttons">
+	      <button class="quick-button" onclick="unlockInput()">직접 입력하기</button>
+	      <button class="quick-button" onclick="startCategoryFlow()">다시 카테고리 선택하기</button>
+	    </div>`;
+	  $("#chat-box").append(footerBtns);
+	  $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
+	}
+function saveRecommendation(prefIdx, courseIdx) {
+	 const userId = $("#user_id").val().trim();
+	  $.ajax({
+	    url: "/chatbot/recommend/one",
+	    type: "POST",
+	    contentType: "application/json",
+	    data: JSON.stringify({
+	      userId: userId,
+	      prefIdx: prefIdx,
+	      courseIdx: courseIdx,
+	      recommended: "1"
+	    }),
+	    success: () => console.log("✅ 추천 저장 성공:", courseIdx),
+	    error: () => console.error("❌ 추천 저장 실패:", courseIdx)
+	  });
+	}
 </script>
 
 </body>

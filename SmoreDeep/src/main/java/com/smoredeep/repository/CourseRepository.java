@@ -2,6 +2,7 @@ package com.smoredeep.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,5 +31,6 @@ public interface CourseRepository extends JpaRepository<TbCourse, Integer> {
     @Modifying
     @Query(value = "update tb_course set course_hide = :courseHide where course_idx = :courseIdx", nativeQuery = true)
     void updateCourseHide(@Param("courseIdx") Integer courseIdx, @Param("courseHide") Integer courseHide);
+    Optional<TbCourse> findByCourseNm(String courseNm);
     
 }
