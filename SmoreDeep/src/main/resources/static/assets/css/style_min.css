@@ -186,17 +186,18 @@ body {
   color: var(--main);
 }
 .lecture-list .one-product .thumb img {
-	height: 117px;
+   height: 117px;
 }
 .page-link {
-	color: #555555;
+   padding: 6px 8px;
+   color: #555555;
 }
 .page-link:hover {
-	color: var(--main);
+   color: var(--main);
 }
 .page-item.active .page-link {
-	background-color: white;
-	border-color: var(--main);
+   background-color: white;
+   border-color: var(--main);
 }
 
 /* 강의 목록 상품 --------------------------------------------- */
@@ -414,6 +415,7 @@ body {
 .chat-container .course-message {
   margin: 10px 10px 0;
   line-height: 1.2;
+  overflow: unset !important;
 }
 .chat-container .course-message .product-list {
   gap: 10px;

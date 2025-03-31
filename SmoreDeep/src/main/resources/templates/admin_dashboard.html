@@ -9,16 +9,16 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet"   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="stylesheet" href="assets/css/style_admin.css">
 
 <!-- 파비콘 -->
 <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
 <!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script   src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script   src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
+<script   src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>S'MoreDeep</title>
 </head>
@@ -26,32 +26,65 @@
 <body>
    <nav class="navbar navbar-dark fixed-top">
       <div class="container-fluid d-flex justify-content-between">
-         <a class="navbar-brand" href="#">
-         	<img src="images/logo.png" alt="logo">
-            S'MoreDeep
-         </a>
+         <a class="navbar-brand" href="#"><img src="images/logo.png" alt="logo"> S'MoreDeep </a>
          <span class="navbar-text">관리자</span>
       </div>
    </nav>
 
    <div class="sidebar">
-      <a href="/admin_dashboard" class="pick">대시보드</a> <a
-         href="/admin_lecture">강의 관리</a> <a
-         href="/admin_user">사용자 관리</a>
+      <a href="/admin_dashboard" class="pick">대시보드</a>
+      <a href="/admin_lecture">강의 관리</a>
+      <a href="/admin_user">사용자 관리</a>
    </div>
 
    <div id="dashboard" class="content active-section admin-dashboard">
       <div class="box">
          <div class="print">
-	   		<h4>대시보드</h4>
-         	<span>관리자용 페이지 출력 🖨</span>
+            <h4>대시보드</h4>
+            <div class="filter-container">
+               <div class="filter-row">
+                  <label for="categoryFilter">카테고리 :</label>
+                  <select   id="categoryFilter">
+                     <option value="">전체</option>
+                     <option value="프론트엔드">프론트엔드</option>
+                     <option value="백엔드">백엔드</option>
+                     <option value="프로그래밍 언어">프로그래밍 언어</option>
+                     <option value="알고리즘">알고리즘</option>
+                     <option value="데이터베이스">데이터베이스</option>
+                  </select>
+               </div>
+               <div class="filter-row">
+                  <label>기간 :</label>
+                  <div id="dateFilter">
+                     <button data-date="">전체</button>
+                     <button data-date="1시간">1시간</button>
+                     <button data-date="1일">1일</button>
+                     <button data-date="1주">1주</button>
+                     <button data-date="1개월">1개월</button>
+                     <button data-date="3개월">3개월</button>
+                     <button data-date="6개월">6개월</button>
+                     <button data-date="1년">1년</button>
+                  </div>
+               </div>
+               <div class="filter-row">
+                  <div class="input-group">
+                     <input type="text" id="searchInput" class="form-control"
+                        placeholder="검색어를 입력하세요...">
+                     <div class="input-group-append">
+                        <button id="searchButton" class="btn btn-success" type="submit">검색</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <button type="resetButton" class="btn btn-warning">초기화</button>
+            <span>보고서 출력 🖨</span>
          </div>
          <div class="row">
             <!-- 카테고리별 추천 강의 순위 막대 그래프 -->
             <div class="col-7">
                <div class="box">
                   <i class="fas fa-trophy icon"></i>
-                  <h6 class="card-title">추천 카테고리 TOP 5</h6>
+                  <h6 class="card-title">카테고리별 추천 강의 TOP 5</h6>
                   <div class="category-recommand">
                      <!-- 첫 번째 행: 테이블 -->
                      <div class="category-top5">
@@ -59,7 +92,7 @@
                            <thead>
                               <tr>
                                  <th><i class="fas fa-trophy"></i></th>
-                                 <th>상위 카테고리</th>
+                                 <th>추천 강의명</th>
                                  <th>선호도</th>
                               </tr>
                            </thead>
@@ -81,7 +114,7 @@
                               </tr>
                               <tr>
                                  <td>04</td>
-                                 <td>알고리즘·자료구조</td>
+                                 <td>알고리즘</td>
                                  <td>👍65</td>
                               </tr>
                               <tr>
@@ -111,11 +144,9 @@
                         <ul>
                            <li><span style="background-color: #e49434;"></span> 프론트엔드</li>
                            <li><span style="background-color: #f7c24d;"></span> 백엔드</li>
-                           <li><span style="background-color: #f79c42;"></span> 프로그래밍
-                              언어</li>
-                           <li><span style="background-color: #f68c36;"></span> 알고리즘·자료구조</li>
-                           <li><span style="background-color: #f45b29;"></span>
-                              데이터베이스</li>
+                           <li><span style="background-color: #f79c42;"></span> 프로그래밍 언어</li>
+                           <li><span style="background-color: #f68c36;"></span> 알고리즘</li>
+                           <li><span style="background-color: #f45b29;"></span>   데이터베이스</li>
                         </ul>
                      </div>
                      <!-- 오른쪽: 도넛 차트 -->
@@ -145,8 +176,8 @@
                <div class="box">
                   <i class="fas fa-comments icon"></i>
                   <h6 class="card-title">추천 강의 리뷰</h6>
-                  <label for="course-select">강의 선택: </label> <select
-                     id="course-select" onchange="updateReviews()">
+                  <label for="course-select">강의 선택: </label>
+                  <select   id="course-select" onchange="updateReviews()">
                      <option value="웹 개발 입문">프론트엔드</option>
                      <option value="데이터 사이언스">벡엔드</option>
                      <option value="머신러닝 개론">프로그래밍 언어</option>
@@ -170,7 +201,7 @@
       </div>
    </div>
 
-   
+
 
    <script>
         // 대시보드 사이드바
