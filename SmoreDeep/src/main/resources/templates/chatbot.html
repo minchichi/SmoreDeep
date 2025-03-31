@@ -241,15 +241,7 @@ function getCourseIdxByTitle(title, callback) {
 
 function displayRecommendedCourses(data, prefIdx) {
 	  $(".quick-buttons").hide();
-	  //슬라이더 요소가 이미 있다면 제거
-	  const existingSlider = $(".course-message").data("sly");
-	  if (existingSlider) {
-	    existingSlider.destroy();
-	    $(".course-message").remove();
-	    console.log("🧹 기존 Sly 인스턴스 제거 및 DOM 삭제 완료");
-	  } else {
-	    $(".course-message").remove();
-	  }
+	 
 	// 추천 결과가 없을 경우 처리
 	  if (!data || data.length === 0) {
 	    addBotMessage("적합한 강의를 찾지 못했어요.");
