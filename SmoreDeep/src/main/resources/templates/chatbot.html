@@ -213,7 +213,7 @@ function sendToServer(text, prefIdx) {
 	    success: function (data) {
 	    	console.log("GPT 응답:", data); 
 	      displayRecommendedCourses(data.results, prefIdx);  // prefIdx 넘겨줌
-	      const cleanedTitles = data.results.map(title => title.replace(/^강의명:\s*/, ""));
+	      
 	    },
 	    
 	    error: function () {
@@ -292,20 +292,22 @@ $.ajax({
 	  addBotMessage("추천된 강의 리스트입니다!");
 	  
 
-	  data.forEach((rawTitle, idx) => {
-		  const matched = rawTitle.match(/^강의명\s*:\s*(.*?)\*\*/); // ** 앞까지 캡처
-		  const title = matched ? matched[1].trim() : rawTitle.trim();
+	  data.forEach((course, idx) => {
+		  const title = course.title;
+		  const rating = course.rating;
+		  const positive = course.positive;
+		  const thumbnail = course.thumbnail;
 
 	    const card = `
 	      <div class="one-product">
 	        <div class="thumb">
-	          <img src="images/thumb${(idx % 3) + 1}.png" alt="">
+	          <img src="${course.thumbnail}" alt="">
 	        </div>
 	        <div class="info">
-	          <div class="title">${title}</div>
+	          <div class="title">${course.title}</div>
 	          <div class="sub">
-	            <div class="date">GPT 추천 강의</div>
-	            <div class="positive">👍 추천</div>
+	            <div class="date">평점 : ${course.rating}</div>
+	            <div class="positive">👍  ${course.positive}%</div>
 	          </div>
 	        </div>
 	      </div>`;

@@ -1,6 +1,7 @@
 package com.smoredeep.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,11 +62,16 @@ public class ChatController {
                 return ResponseEntity.ok(Map.of("message", "적합한 강의가 없습니다.", "results", List.of()));
             }
 
-            List<String> finalTitles = matchedCourses.stream()
-                    .map(TbCourse::getCourseNm)
-                    .collect(Collectors.toList());
+            List<Map<String, Object>> courseInfoList = matchedCourses.stream().map(course -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("title", course.getCourseNm());
+                map.put("rating", course.getAverageRating()); 
+                map.put("positive", course.getPositiveRatio()); // 긍정비율
+                map.put("thumbnail", course.getCourseImg()); // 이미지 경로 (또는 idx 기반으로 JS에서 결정 가능)
+                return map;
+            }).collect(Collectors.toList());
 
-            return ResponseEntity.ok(Map.of("message", "추천 완료", "results", finalTitles));
+            return ResponseEntity.ok(Map.of("message", "추천 완료", "results", courseInfoList));
 
         } catch (Exception e) {
             e.printStackTrace();
