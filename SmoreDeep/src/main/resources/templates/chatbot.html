@@ -213,7 +213,7 @@ function sendToServer(text, prefIdx) {
 	    success: function (data) {
 	    	console.log("GPT 응답:", data); 
 	      displayRecommendedCourses(data.results, prefIdx);  // prefIdx 넘겨줌
-	      const cleanedTitles = data.results.map(title => title.replace(/^강의명:\s*/, ""));
+	      
 	    },
 	    
 	    error: function () {
@@ -241,15 +241,7 @@ function getCourseIdxByTitle(title, callback) {
 
 function displayRecommendedCourses(data, prefIdx) {
 	  $(".quick-buttons").hide();
-	  //슬라이더 요소가 이미 있다면 제거
-	  const existingSlider = $(".course-message").data("sly");
-	  if (existingSlider) {
-	    existingSlider.destroy();
-	    $(".course-message").remove();
-	    console.log("🧹 기존 Sly 인스턴스 제거 및 DOM 삭제 완료");
-	  } else {
-	    $(".course-message").remove();
-	  }
+	 
 	// 추천 결과가 없을 경우 처리
 	  if (!data || data.length === 0) {
 	    addBotMessage("적합한 강의를 찾지 못했어요.");
@@ -300,20 +292,22 @@ $.ajax({
 	  addBotMessage("추천된 강의 리스트입니다!");
 	  
 
-	  data.forEach((rawTitle, idx) => {
-		  const matched = rawTitle.match(/^강의명\s*:\s*(.*?)\*\*/); // ** 앞까지 캡처
-		  const title = matched ? matched[1].trim() : rawTitle.trim();
+	  data.forEach((course, idx) => {
+		  const title = course.title;
+		  const rating = course.rating;
+		  const positive = course.positive;
+		  const thumbnail = course.thumbnail;
 
 	    const card = `
 	      <div class="one-product">
 	        <div class="thumb">
-	          <img src="images/thumb${(idx % 3) + 1}.png" alt="">
+	          <img src="${course.thumbnail}" alt="">
 	        </div>
 	        <div class="info">
-	          <div class="title">${title}</div>
+	          <div class="title">${course.title}</div>
 	          <div class="sub">
-	            <div class="date">GPT 추천 강의</div>
-	            <div class="positive">👍 추천</div>
+	            <div class="date">평점 : ${course.rating}</div>
+	            <div class="positive">👍  ${course.positive}%</div>
 	          </div>
 	        </div>
 	      </div>`;
@@ -342,8 +336,8 @@ $.ajax({
 	  addBotMessage("더 자세한 추천을 원하시면 직접 입력하거나, 다시 카테고리를 선택해주세요.");
 	  const footerBtns = `
 	    <div class="quick-buttons">
+	      <button class="quick-button" onclick="startCategoryFlow()">카테고리 선택하기</button>
 	      <button class="quick-button" onclick="unlockInput()">직접 입력하기</button>
-	      <button class="quick-button" onclick="startCategoryFlow()">다시 카테고리 선택하기</button>
 	    </div>`;
 	  $("#chat-box").append(footerBtns);
 	  $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
