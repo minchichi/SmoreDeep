@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +24,7 @@ import com.smoredeep.entity.TbReview;
 import com.smoredeep.entity.TbUser;
 import com.smoredeep.model.MemberVO;
 import com.smoredeep.repository.CourseRepository;
+import com.smoredeep.repository.CourseRepositorySupport;
 import com.smoredeep.repository.UserRepository;
 import com.smoredeep.service.LectureListService;
 import com.smoredeep.service.ReviewListService;
@@ -37,6 +38,7 @@ public class MainController {
 
 	private final UserRepository userRepository;
 	private final CourseRepository courseRepository;
+	private final CourseRepositorySupport courseRepositorySupport;
 	
 	private final LectureListService lectureListService;
 	private final ReviewListService reviewListService;
@@ -194,6 +196,17 @@ public class MainController {
 			@RequestParam(value="category", required=false) String category,
 			@RequestParam(value="level", required=false) String level,
 			@RequestParam(value="schedule", required=false) String schedule) {
+		
+		AtomicReference<String> user_first = new AtomicReference<>();
+		
+		Optional<TbUser> tbuser_first = (Optional<TbUser>) session.getAttribute("user");
+		tbuser_first.ifPresent(user -> {
+			user_first.set(user.getUserId());
+		});
+		List<TbCourse> recommendCourse = this.courseRepositorySupport.findRecommendCourse(user_first.get());
+		System.out.println(recommendCourse);
+		model.addAttribute("recommendCourse", recommendCourse);
+		
 		List<String> course_level = courseRepository.findDistinctCourseLevel();
 		model.addAttribute("course_level", course_level);
 		int hide = 0;
@@ -257,6 +270,9 @@ public class MainController {
 	@GetMapping("/chatbot")
 	public String chatbot() {
 		return "chatbot";
-	}	
+	}
+	
+
+	
 	
 }

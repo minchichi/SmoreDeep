@@ -19,67 +19,30 @@
 <div th:replace="~{header :: body}"></div>
 
 	<!-- Swiper -->
-	  <div class="banner">
+	  <div class="banner" th:if="${#lists.isEmpty(recommendCourse) == false}">
 	    <div class="banner-title">다음 강의를 추천 받았어요!</div>
 	    <div class="swiper mySwiper">
 	      <div class="swiper-wrapper">
-	        <div class="swiper-slide">
+	      
+	        <div class="swiper-slide" th:each="recommendCourse : ${recommendCourse}">
 	          <div class="one-product">
 	            <div class="thumb">
-	              <a href="#"></a>
-	              <img src="images/thumb1.png" alt="">
+	              <a th:href="@{/lecture_one(idx=${recommendCourse.courseIdx})}"></a>
+	              <img th:src="${recommendCourse.courseImg}" alt="">
 	            </div>
 	    
 	            <div class="info">
 	              <div class="category">
-	                <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+	                <div class="text" th:text="${recommendCourse.middleCategory}">
 	                </div>
 	              </div>
-	              <div class="title">
-	                누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+	              <div class="title" th:text="${recommendCourse.courseNm}">
 	              </div>
-	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+	              <div th:text="${recommendCourse.subCategory}"></div>
 	            </div>
 	          </div>
 	        </div>
-	        <div class="swiper-slide">
-	          <div class="one-product">
-	            <div class="thumb">
-	              <a href="#"></a>
-	              <img src="images/thumb2.png" alt="">
-	            </div>
-	    
-	            <div class="info">
-	              <div class="category">
-	                <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
-	                </div>
-	              </div>
-	              <div class="title">
-	                누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
-	              </div>
-	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="swiper-slide">
-	          <div class="one-product">
-	            <div class="thumb">
-	              <a href="#"></a>
-	              <img src="images/thumb3.png" alt="">
-	            </div>
-	    
-	            <div class="info">
-	              <div class="category">
-	                <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
-	                </div>
-	              </div>
-	              <div class="title">
-	                누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
-	              </div>
-	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
-	            </div>
-	          </div>
-	        </div>
+	        
 	      </div>
 	      <div class="swiper-pagination"></div>
 	    </div>

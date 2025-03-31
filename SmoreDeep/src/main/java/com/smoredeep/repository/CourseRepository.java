@@ -2,6 +2,7 @@ package com.smoredeep.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +26,12 @@ public interface CourseRepository extends JpaRepository<TbCourse, Integer> {
     
     @Query(value = "select distinct course_level from tb_course order by field (course_level, '입문', '초급', '중급이상')", nativeQuery = true)
     List<String> findDistinctCourseLevel();
+    List<TbCourse> findByCourseNmIn(List<String> courseNm);
     
     @Transactional
     @Modifying
     @Query(value = "update tb_course set course_hide = :courseHide where course_idx = :courseIdx", nativeQuery = true)
     void updateCourseHide(@Param("courseIdx") Integer courseIdx, @Param("courseHide") Integer courseHide);
+    Optional<TbCourse> findByCourseNm(String courseNm);
     
 }

@@ -34,7 +34,7 @@
 			</div>
 			<!-- 오류 메시지 표시 -->
        		<div class="error-message" th:if="${error}">
-        	  <p th:text="${error}"></p>
+        	  <p th:text="${error}" style="color: red;"></p>
      		</div>
 			<button type="submit"  class="button">로그인</button>					 
 		</form>
