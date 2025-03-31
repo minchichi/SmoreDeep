@@ -8,12 +8,15 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.smoredeep.entity.QTbCourse;
+import com.smoredeep.entity.QTbRecommendation;
 import com.smoredeep.entity.TbCourse;
+import com.smoredeep.entity.TbRecommendation;
 
 @Repository
 public class CourseRepositorySupport extends QuerydslRepositorySupport {
@@ -103,8 +106,46 @@ public class CourseRepositorySupport extends QuerydslRepositorySupport {
 			return timeExtract.castToNum(Integer.class).loe(11);
 		} else {
 			return timeExtract.castToNum(Integer.class).goe(12);
-		} 
+		}
 		
+	}
+	
+	
+	public List<Tuple> findRecommendRecommendationAndCourse(String user_id) {
+		List<Tuple> result = queryFactory
+				.select(QTbRecommendation.tbRecommendation, QTbCourse.tbCourse)
+				.from(QTbRecommendation.tbRecommendation)
+				.join(QTbCourse.tbCourse).on(QTbRecommendation.tbRecommendation.courseIdx.eq(QTbCourse.tbCourse.courseIdx))
+				.where(QTbRecommendation.tbRecommendation.userId.eq(user_id))
+				.orderBy(QTbRecommendation.tbRecommendation.createdAt.desc())
+				.fetch();
+		
+		return result;
+	}
+	
+	public List<TbCourse> findRecommendCourse(String user_id) {
+		List<TbCourse> result = queryFactory
+				.select(QTbCourse.tbCourse)
+				.from(QTbRecommendation.tbRecommendation)
+				.join(QTbCourse.tbCourse).on(QTbRecommendation.tbRecommendation.courseIdx.eq(QTbCourse.tbCourse.courseIdx))
+				.where(QTbRecommendation.tbRecommendation.userId.eq(user_id))
+				.orderBy(QTbRecommendation.tbRecommendation.createdAt.desc())
+				.limit(6)
+				.fetch();
+		
+		return result;
+	}
+	
+	public List<TbRecommendation> findRecommendRecommendatio(String user_id) {
+		List<TbRecommendation> result = queryFactory
+				.select(QTbRecommendation.tbRecommendation)
+				.from(QTbRecommendation.tbRecommendation)
+				.join(QTbCourse.tbCourse).on(QTbRecommendation.tbRecommendation.courseIdx.eq(QTbCourse.tbCourse.courseIdx))
+				.where(QTbRecommendation.tbRecommendation.userId.eq(user_id))
+				.orderBy(QTbRecommendation.tbRecommendation.createdAt.desc())
+				.fetch();
+		
+		return result;
 	}
 	
 	
