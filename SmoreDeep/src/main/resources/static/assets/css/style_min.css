@@ -414,6 +414,7 @@ body {
 .chat-container .course-message {
   margin: 10px 10px 0;
   line-height: 1.2;
+  overflow: unset !important;
 }
 .chat-container .course-message .product-list {
   gap: 10px;

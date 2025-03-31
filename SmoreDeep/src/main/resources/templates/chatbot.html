@@ -342,8 +342,8 @@ $.ajax({
 	  addBotMessage("더 자세한 추천을 원하시면 직접 입력하거나, 다시 카테고리를 선택해주세요.");
 	  const footerBtns = `
 	    <div class="quick-buttons">
+	      <button class="quick-button" onclick="startCategoryFlow()">카테고리 선택하기</button>
 	      <button class="quick-button" onclick="unlockInput()">직접 입력하기</button>
-	      <button class="quick-button" onclick="startCategoryFlow()">다시 카테고리 선택하기</button>
 	    </div>`;
 	  $("#chat-box").append(footerBtns);
 	  $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
