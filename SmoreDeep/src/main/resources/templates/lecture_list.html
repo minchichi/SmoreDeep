@@ -48,7 +48,8 @@
 	    </div>
 	  </div>
 	<!-- 모달을 여는 버튼 -->
-	<button type="button" class="btn btn-primary btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin: 100px 16px -80px;">
+	<button type="button" class="btn btn-primary btn-warning"  th:if="${#lists.isEmpty(newRecommendCourse) == false}"
+	data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin: 100px 16px -80px;">
 	  신규 강의를 추천해 드릴게요!
 	</button>
 	
@@ -63,45 +64,43 @@
 	      <div class="modal-body lecture-one">
 	          <div class="one-product">
 	              <div class="thumb">
-	              <a href="#"></a>
-	              <img src="images/thumb1.png" alt="">
+	              <a href="/lecture_one?idx=13"></a>
+	              <img th:src="${alarmCourse.courseImg}" alt="">
 	              </div>
 	      
 	              <div class="info">
 	              <div class="category">
-	                  <div class="text">데이터 사이언스<span>데이터 사이언스 자격증</span>
+	                  <div class="text" th:text="${alarmCourse.middleCategory}">
 	                  </div>
 	              </div>
-	              <div class="title">
-	                  누구나 할 수 있는 웹사이트 제작 전문가 - Java Script
+	              <div class="title" th:text="${alarmCourse.courseNm}">
 	              </div>
-	              <div>빅데이터분석기사, 빅데이터, 통계, 인공지능(AI)</div>
+	              <div th:text="${alarmCourse.subCategory}"></div>
 	              <div class="wrap">
-	                  <div class="time">32시간 34분</div>
+	                  <div class="time" th:text="${#strings.substring(alarmCourse.courseTm,1,#strings.length(alarmCourse.courseTm)-1)}"></div>
 	              </div>
 	              <div class="wrap">
-	                  <div class="level">입문</div>
-	                  <div class="positive">👍78%</div>  
+	                  <div class="level" th:text="${alarmCourse.courseLevel}"></div>
+	                  <div class="positive" th:text="'👍' +${#numbers.formatInteger(alarmCourse.positiveRatio,0)}+'%'"></div>  
 	              </div>
 	              </div>
 	          </div>
 	          <br>
 	          <div class="sub-content" id="lecture-intro">
 	              <div class="sub-title">강의 소개</div>
-	              <div class="text">
-	                  이 강의는 Java와 Spring Boot를 활용한 웹 개발을 처음부터 끝까지 배우는 마스터 과정입니다. 기본적인 Java 문법부터 시작하여, REST API 개발, 데이터베이스 연동, 보안 및 배포까지 실무에서 자주 사용되는 핵심 개념들을 집중적으로 다룹니다.
+	              <div class="text" th:text="${alarmCourse.courseIntro}">
 	                  </div>
 	                  <div class="text recom">
 	                  🎯 이런 분들에게 추천합니다! <br>
-	                  ✔️ Java와 Spring Boot로 백엔드 개발을 배우고 싶은 분 <br>
-	                  ✔️ RESTful API 개발 및 데이터베이스 연동을 경험하고 싶은 분 <br>
-	                  ✔️ 기업 채용에서 요구하는 웹 개발 역량을 갖추고 싶은 분
+	                  <ul>
+			          <li th:each="item :${#strings.arraySplit(alarmCourse.targetAudience, ',')}" th:text="'✔️ '+${#strings.trim(item)}"></li>
+			          </ul>
 	                  </div>
 	              </div>
 	      </div>
 	      <div class="modal-footer">
 	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	          <button type="button" class="btn btn-warning">강의 보러가기</button>
+	          <button type="button" class="btn btn-warning" onclick="window.location.href='/lecture_one?idx=13';">강의 보러가기</button>
 	      </div>
 	      </div>
 	  </div>
