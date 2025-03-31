@@ -18,7 +18,7 @@
 <body>
 	<input type="hidden" id="user_id"
 		th:value="${session.user.get().getUserId()}">
-	<div th:replace="~{/header :: body}"></div>
+	<div th:replace="~{header :: body}"></div>
 
 	<div class="chat-container">
 		<div class="chat-box" id="chat-box">
@@ -74,7 +74,7 @@
 
 	</div>
 
-	<div th:replace="~{/footer :: body}"></div>
+	<div th:replace="~{footer :: body}"></div>
 
 	<script>
 let selectedCategory = "";

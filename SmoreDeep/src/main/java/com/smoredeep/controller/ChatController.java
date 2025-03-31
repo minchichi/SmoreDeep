@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class ChatController {
     private RestTemplate restTemplate;
 
     @PostMapping("/recommend")
-    public ResponseEntity<?> recommendLecture(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<?> recommendLecture(@RequestBody Map<String, String> payload, Model model) {
         String userInput = payload.get("input");
 
         HttpHeaders headers = new HttpHeaders();
@@ -52,7 +53,10 @@ public class ChatController {
 
             // DB에서 존재하는 강의만 필터링
             List<TbCourse> matchedCourses = courseRepository.findByCourseNmIn(titles);
-
+            
+            model.addAttribute("matchedCourses", matchedCourses);
+            System.out.println(matchedCourses);
+            
             if (matchedCourses.isEmpty()) {
                 return ResponseEntity.ok(Map.of("message", "적합한 강의가 없습니다.", "results", List.of()));
             }
