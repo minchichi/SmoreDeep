@@ -30,7 +30,7 @@ public class CourseController {
     public ResponseEntity<Map<String, Integer>> findByCourseName(@RequestParam String courseNm) {
         try {
             String decodedCourseNm = URLDecoder.decode(courseNm, "UTF-8");
-            log.info("Decoded courseNm: {}", decodedCourseNm); // 로그로 디코딩된 값 확인
+            log.info("Decoded courseNm: {}", decodedCourseNm);
             return courseRepository.findByCourseNm(decodedCourseNm)
                     .map(course -> Map.of("courseIdx", course.getCourseIdx()))
                     .map(ResponseEntity::ok)

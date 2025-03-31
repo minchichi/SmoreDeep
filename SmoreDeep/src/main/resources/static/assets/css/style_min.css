@@ -386,6 +386,7 @@ body {
 .chat-container .chat-box .bot-message {
   align-self: flex-start;
 }
+
 .chat-container .chat-input {
   display: flex;
   justify-content: center;

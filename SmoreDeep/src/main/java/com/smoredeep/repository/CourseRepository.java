@@ -26,6 +26,7 @@ public interface CourseRepository extends JpaRepository<TbCourse, Integer> {
     
     @Query(value = "select distinct course_level from tb_course order by field (course_level, '입문', '초급', '중급이상')", nativeQuery = true)
     List<String> findDistinctCourseLevel();
+    List<TbCourse> findByCourseNmIn(List<String> courseNm);
     
     @Transactional
     @Modifying

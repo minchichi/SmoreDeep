@@ -81,6 +81,16 @@ let selectedCategory = "";
 let selectedLevel = "";
 let selectedTime = "";
 let inputUnlocked = false;
+const currentUserId = $("#user_id").val();
+
+
+
+
+function addUserMessage(msg) {
+	  $("#chat-box").append(`<div class="message user-message">${msg}</div>`);
+	  $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
+	}
+
 
 function addBotMessage(msg) {
   $("#chat-box").append(`<div class="message bot-message">${msg}</div>`);
@@ -98,6 +108,7 @@ function startCategoryFlow() {
 
 function selectCategory(category) {
   selectedCategory = category;
+  addUserMessage(category);
   $("#step-category").hide();
   addBotMessage("난이도를 선택해주세요!");
   $("#step-level").show();
@@ -105,6 +116,7 @@ function selectCategory(category) {
 
 function selectLevel(level) {
   selectedLevel = level;
+  addUserMessage(level);
   $("#step-level").hide();
   addBotMessage("강의 시간을 선택해주세요!");
   $("#step-time").show();
@@ -112,12 +124,13 @@ function selectLevel(level) {
 
 function selectTime(time) {
 	  selectedTime = time;
+	  addUserMessage(time + " 선택");
 	  $("#step-time").hide();
 	  addBotMessage("선택한 조건을 바탕으로 강의를 추천 중입니다...");
 	  const userId = $("#user_id").val().trim();
 	  const combined = `${selectedCategory} ${selectedLevel} ${selectedTime} 추천`;
 
-	  // ✅ 선호 저장
+	  //선호 저장
 	  $.ajax({
 	    url: "/chatbot/preference",
 	    type: "POST",
@@ -127,13 +140,13 @@ function selectTime(time) {
 	      middleCategory: selectedCategory,
 	      courseLevel: selectedLevel,
 	      coursePlaytime: selectedTime,
-	      userText: ""  // ✅ 시나리오 모드에서는 비워줘야 함
+	      userText: ""  // 시나리오 모드에서는 비워줘야 함
 	    }),
 	    success: function (prefIdx) {
-	      console.log("✅ 선호 저장 성공, prefIdx:", prefIdx);
+	      console.log("선호 저장 성공, prefIdx:", prefIdx);
 
-	      // ✅ 직접 sendToServer 호출 (sendMessage 아님)
-	      sendToServer(combined, prefIdx);  // prefIdx도 함께 넘김!
+	      //직접 sendToServer 호출 (sendMessage 아님)
+	      sendToServer(combined, prefIdx);
 	    },
 	    error: function () {
 	      addBotMessage("❌ 선호 저장 실패");
@@ -148,12 +161,21 @@ function unlockInput() {
 }
 
 function sendMessage() {
+	
+	 if (!inputUnlocked) {
+		    addBotMessage("먼저 '직접 입력하기' 버튼을 눌러주세요!");
+		    return;
+		  }
   const userId = $("#user_id").val().trim();
   const msg = $("#user-input").val().trim();
   if (!msg) return;
+  
+  addUserMessage(msg);
+  addBotMessage("잠시만 기다려주세요. 강의를 추천 중입니다.");
   $("#user-input").val("");
-  sendToServer(msg);
-//🔥 직접입력 시에도 저장 요청
+  
+
+//직접입력 시에도 저장 요청
   $.ajax({
     url: "/chatbot/preference",
     type: "POST",
@@ -166,10 +188,10 @@ function sendMessage() {
       userText: msg
     }),
     success: function (prefIdx) {
-      console.log("✅ 직접입력 선호 저장됨:", prefIdx);
+      console.log("직접입력 선호 저장됨:", prefIdx);
 
       // 저장 후 GPT 요청
-      sendToServer(msg, prefIdx); // ✅ prefIdx 넘기자!
+      sendToServer(msg, prefIdx);
     },
     error: function () {
       addBotMessage("❌ 직접입력 저장 실패");
@@ -189,8 +211,11 @@ function sendToServer(text, prefIdx) {
 	    contentType: "application/json",
 	    data: JSON.stringify({ input: text }),
 	    success: function (data) {
+	    	console.log("GPT 응답:", data); 
 	      displayRecommendedCourses(data.results, prefIdx);  // prefIdx 넘겨줌
+	      const cleanedTitles = data.results.map(title => title.replace(/^강의명:\s*/, ""));
 	    },
+	    
 	    error: function () {
 	      addBotMessage("❌ 서버 오류가 발생했습니다.");
 	    }
@@ -198,7 +223,7 @@ function sendToServer(text, prefIdx) {
 	}
 function getCourseIdxByTitle(title, callback) {
 	  $.ajax({
-	    url: "/course/find",  // 🔥 반드시 이 GET API가 있어야 함!
+	    url: "/course/find", 
 	    type: "GET",
 	    data: { courseNm: title },
 	    success: function (data) {
@@ -215,53 +240,106 @@ function getCourseIdxByTitle(title, callback) {
 	}
 
 function displayRecommendedCourses(data, prefIdx) {
-	
-	 
-	  $(".product-list").empty();
-	  
-	  if (data.length === 0) {
-	        addBotMessage("추천할 강의가 없습니다.");
-	        return;  // 강의가 없으면 출력하지 않음
-	    }
-	  
-	  try {
-		    if ($(".course-message").data("sly")) {
-		      $(".course-message").sly("destroy");
-		    }
-		  } catch (e) {
-		    console.warn("Sly 제거 중 오류 발생 (무시해도 됩니다):", e);
-		  }
-
-	  data.forEach((title, idx) => {
-		  const card = `
-		    <div class="one-product">
-		      <div class="thumb">
-		        <img src="images/thumb${(idx % 3) + 1}.png" alt="">
-		      </div>
-		      <div class="info">
-		        <div class="title">${title}</div>
-		        <div class="sub">
-		          <div class="date">GPT 추천 강의</div>
-		          <div class="positive">👍 추천</div>
-		        </div>
-		      </div>
+	  $(".quick-buttons").hide();
+	  //슬라이더 요소가 이미 있다면 제거
+	  const existingSlider = $(".course-message").data("sly");
+	  if (existingSlider) {
+	    existingSlider.destroy();
+	    $(".course-message").remove();
+	    console.log("🧹 기존 Sly 인스턴스 제거 및 DOM 삭제 완료");
+	  } else {
+	    $(".course-message").remove();
+	  }
+	// 추천 결과가 없을 경우 처리
+	  if (!data || data.length === 0) {
+	    addBotMessage("적합한 강의를 찾지 못했어요.");
+	    
+	    addBotMessage("다시 추천받으시려면 아래에서 선택해주세요!");
+	    
+	    const footerBtns = `
+		    <div class="quick-buttons">
+		      <button class="quick-button" onclick="unlockInput()">직접 입력하기</button>
+		      <button class="quick-button" onclick="startCategoryFlow()">다시 카테고리 선택하기</button>
 		    </div>`;
-		  $(".product-list").append(card);
+		  $("#chat-box").append(footerBtns);
+		  $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
 
-		  // 🔥 여기서 추천 강의 저장!
-		  getCourseIdxByTitle(title, function (courseIdx) {
-		    saveRecommendation(prefIdx, courseIdx);  // prefIdx는 외부에서 넘겨와야 함!
-		  });
-		});
+	 
+	    
+	    // recommended=0 저장 요청
+	    const currentUserId = $("#user_id").val();
 
-	  const sly = new Sly(".course-message", {
-	    horizontal: 1,
-	    mouseDragging: 1,
-	    touchDragging: 1
-	  }).init();
+$.ajax({
+  url: "/chat/recommend/fail",
+  type: "POST",
+  contentType: "application/json",
+  data: JSON.stringify({
+    prefIdx: prefIdx,
+    userId: currentUserId 
+  }),
+  success: function () {
+    console.log("추천 실패 기록 저장 성공");
+  },
+  error: function () {
+    console.log("❌ 추천 실패 기록 저장 실패");
+  }
+});
 
+	    return; // 더 이상 아래 코드 실행하지 않음
+	  }
+
+	  //새로운 슬라이더 DOM 생성
+	  const courseMessageHTML = `
+	    <div class="course-message">
+	      <div class="product-list"></div>
+	    </div>`;
+	  $("#chat-box").append(courseMessageHTML);
+
+	  const $courseMessage = $(".course-message").last();
+	  const $productList = $courseMessage.find(".product-list");
+	  addBotMessage("추천된 강의 리스트입니다!");
+	  
+
+	  data.forEach((rawTitle, idx) => {
+		  const matched = rawTitle.match(/^강의명\s*:\s*(.*?)\*\*/); // ** 앞까지 캡처
+		  const title = matched ? matched[1].trim() : rawTitle.trim();
+
+	    const card = `
+	      <div class="one-product">
+	        <div class="thumb">
+	          <img src="images/thumb${(idx % 3) + 1}.png" alt="">
+	        </div>
+	        <div class="info">
+	          <div class="title">${title}</div>
+	          <div class="sub">
+	            <div class="date">GPT 추천 강의</div>
+	            <div class="positive">👍 추천</div>
+	          </div>
+	        </div>
+	      </div>`;
+	    $productList.append(card);
+
+	    getCourseIdxByTitle(title, function (courseIdx) {
+	      if (!courseIdx) return;
+	      saveRecommendation(prefIdx, courseIdx);
+	    });
+	  });
+
+	  // 슬라이더 새로 초기화
+	  try {
+	    const slyInstance = new Sly($courseMessage[0], {
+	      horizontal: 1,
+	      mouseDragging: 1,
+	      touchDragging: 1
+	    });
+	    slyInstance.init();
+	    console.log("새 Sly 인스턴스 초기화 성공");
+	  } catch (e) {
+	    console.warn("Sly 슬라이더 초기화 실패", e);
+	  }
+
+	  // 챗봇 안내 및 버튼
 	  addBotMessage("더 자세한 추천을 원하시면 직접 입력하거나, 다시 카테고리를 선택해주세요.");
-
 	  const footerBtns = `
 	    <div class="quick-buttons">
 	      <button class="quick-button" onclick="unlockInput()">직접 입력하기</button>
@@ -270,7 +348,10 @@ function displayRecommendedCourses(data, prefIdx) {
 	  $("#chat-box").append(footerBtns);
 	  $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
 	}
+
 function saveRecommendation(prefIdx, courseIdx) {
+	
+	
 	 const userId = $("#user_id").val().trim();
 	  $.ajax({
 	    url: "/chatbot/recommend/one",
@@ -282,10 +363,14 @@ function saveRecommendation(prefIdx, courseIdx) {
 	      courseIdx: courseIdx,
 	      recommended: "1"
 	    }),
-	    success: () => console.log("✅ 추천 저장 성공:", courseIdx),
+	    success: () => console.log("추천 저장 성공:", courseIdx),
 	    error: () => console.error("❌ 추천 저장 실패:", courseIdx)
 	  });
 	}
+	
+$(document).ready(function () {
+	  $("#user-input").prop("disabled", true); // 잠금 상태
+	});
 </script>
 
 </body>
