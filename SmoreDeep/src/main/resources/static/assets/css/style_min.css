@@ -531,3 +531,10 @@ body {
 .modal .lecture-one .title {
   text-align: start;
 }
+
+#reload {
+	margin-bottom: 100px;
+}
+.product .page {
+	margin-bottom: 90px;
+}
