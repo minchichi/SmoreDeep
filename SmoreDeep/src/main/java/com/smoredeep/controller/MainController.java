@@ -216,8 +216,9 @@ public class MainController {
 		
 		TbCourse alarmCourse = this.courseRepository.findByCourseIdx(13);
 		System.out.println(alarmCourse);
+		if (alarmCourse.getCourseHide() == 0) {
 		model.addAttribute("alarmCourse", alarmCourse);
-		
+		}
 		List<String> course_level = courseRepository.findDistinctCourseLevel();
 		model.addAttribute("course_level", course_level);
 		int hide = 0;

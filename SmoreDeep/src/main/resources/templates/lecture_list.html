@@ -48,13 +48,13 @@
 	    </div>
 	  </div>
 	<!-- 모달을 여는 버튼 -->
-	<button type="button" class="btn btn-primary btn-warning"  th:if="${#lists.isEmpty(newRecommendCourse) == false}"
+	<button type="button" class="btn btn-primary btn-warning"  th:if="${#lists.isEmpty(newRecommendCourse) == false and #lists.isEmpty(alarmCourse) == false}"
 	data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin: 100px 16px -80px;">
 	  신규 강의를 추천해 드릴게요!
 	</button>
 	
 	<!-- 모달 -->
-	<div class="modal fade" id="exampleModal" tabindex="-1">
+	<div class="modal fade" id="exampleModal" tabindex="-1" th:if="${#lists.isEmpty(alarmCourse) == false}">
 	  <div class="modal-dialog modal-dialog-scrollable">
 	      <div class="modal-content">
 	      <div class="modal-header">

@@ -68,6 +68,7 @@ public class ChatController {
                 map.put("rating", course.getAverageRating()); 
                 map.put("positive", course.getPositiveRatio()); // 긍정비율
                 map.put("thumbnail", course.getCourseImg()); // 이미지 경로 (또는 idx 기반으로 JS에서 결정 가능)
+                map.put("courseidx", course.getCourseIdx());
                 return map;
             }).collect(Collectors.toList());
 
