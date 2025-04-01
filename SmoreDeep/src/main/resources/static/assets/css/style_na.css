@@ -23,7 +23,7 @@ input, select {
     font-weight: bold;
     color: #333;
     text-align: center;
-    margin: 150px 0 80px;
+    margin: 100px 0 80px;
 }
 
 .button {
@@ -319,4 +319,8 @@ input, select {
 }
 #user .button {
 	margin-bottom: 0;
+}
+
+.mypage-container .title {
+	margin-top: 150px;
 }
