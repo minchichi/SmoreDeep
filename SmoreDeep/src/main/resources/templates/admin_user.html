@@ -27,7 +27,7 @@
 <nav class="navbar navbar-dark fixed-top">
    <div class="container-fluid d-flex justify-content-between">
       <a class="navbar-brand" href="#">
-      	<img src="images/logo.png" alt="logo">
+         <img src="images/logo.png" alt="logo">
          S'MoreDeep
       </a>
       <span class="navbar-text">관리자</span>
@@ -42,7 +42,16 @@
 
     <div id="user-list" class="content admin-user active-section">
     <div class="box">
-        <h4>사용자 목록</h4>
+       <div class="wraping">
+           <h4>사용자 목록</h4>
+           <div class="search-bar">
+            <input type="text" id="searchInput" class="form-control"
+               placeholder="검색어를 입력하세요...">
+            <div class="search-bar-append">
+               <button id="searchButton" class="btn btn-success" type="submit">검색</button>
+            </div>
+         </div>
+      </div>
         <div class="course user">
           <table class="course-table user-table">
             <thead>
@@ -51,7 +60,7 @@
                 <th>아이디</th>
                 <th>선호 카테고리</th>
                 <th>선호 난이도</th>
-                <th>선호 수강기간</th>
+                <th>선호 수강시간</th>
                 <th>가입일자</th>
               </tr>
             </thead>
@@ -182,34 +191,34 @@
         </div>
         
         <div class="page">
-	        <ul class="pagination justify-content-center">
-	            <li class="page-item">
-	                    <a class="page-link" href="#">
-	                    <span>이전</span>
-	                </a>
-	            </li>
-	            <li class="page-item active">
-	                <a class="page-link" href="#">1</a>
-	            </li>
-	            <li class="page-item">
-	                <a class="page-link" href="#">2</a>
-	            </li>
-	            <li class="page-item">
-	                <a class="page-link" href="#">3</a>
-	            </li>
-	            <li class="page-item">
-	                <a class="page-link" href="#">4</a>
-	            </li>
-	            <li class="page-item">
-	                <a class="page-link" href="#">5</a>
-	            </li>
-	            <li class="page-item">
-	                <a class="page-link" href="#">
-	                    <span>다음</span>
-	                </a>
-	            </li>
-	        </ul>
-	    </div>
+           <ul class="pagination justify-content-center">
+               <li class="page-item">
+                       <a class="page-link" href="#">
+                       <span>이전</span>
+                   </a>
+               </li>
+               <li class="page-item active">
+                   <a class="page-link" href="#">1</a>
+               </li>
+               <li class="page-item">
+                   <a class="page-link" href="#">2</a>
+               </li>
+               <li class="page-item">
+                   <a class="page-link" href="#">3</a>
+               </li>
+               <li class="page-item">
+                   <a class="page-link" href="#">4</a>
+               </li>
+               <li class="page-item">
+                   <a class="page-link" href="#">5</a>
+               </li>
+               <li class="page-item">
+                   <a class="page-link" href="#">
+                       <span>다음</span>
+                   </a>
+               </li>
+           </ul>
+       </div>
         
       </div>
 <script src="assets/js/main_min.js"></script>

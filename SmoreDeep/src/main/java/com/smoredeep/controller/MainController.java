@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.smoredeep.entity.TbCourse;
+import com.smoredeep.entity.TbRecommendation;
 import com.smoredeep.entity.TbReview;
 import com.smoredeep.entity.TbUser;
 import com.smoredeep.model.MemberVO;
 import com.smoredeep.repository.CourseRepository;
 import com.smoredeep.repository.CourseRepositorySupport;
+import com.smoredeep.repository.RecommendationRepository;
 import com.smoredeep.repository.UserRepository;
 import com.smoredeep.service.LectureListService;
 import com.smoredeep.service.ReviewListService;
@@ -39,6 +41,7 @@ public class MainController {
 	private final UserRepository userRepository;
 	private final CourseRepository courseRepository;
 	private final CourseRepositorySupport courseRepositorySupport;
+	private final RecommendationRepository recommendationRepository;
 	
 	private final LectureListService lectureListService;
 	private final ReviewListService reviewListService;
@@ -207,6 +210,15 @@ public class MainController {
 		System.out.println(recommendCourse);
 		model.addAttribute("recommendCourse", recommendCourse);
 		
+		TbRecommendation newRecommendCourse = this.recommendationRepository.findRecommended0(user_first.get());
+		System.out.println(newRecommendCourse);
+		model.addAttribute("newRecommendCourse", newRecommendCourse);
+		
+		TbCourse alarmCourse = this.courseRepository.findByCourseIdx(13);
+		System.out.println(alarmCourse);
+		if (alarmCourse.getCourseHide() == 0) {
+		model.addAttribute("alarmCourse", alarmCourse);
+		}
 		List<String> course_level = courseRepository.findDistinctCourseLevel();
 		model.addAttribute("course_level", course_level);
 		int hide = 0;

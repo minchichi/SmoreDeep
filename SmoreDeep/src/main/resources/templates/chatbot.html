@@ -293,14 +293,17 @@ $.ajax({
 	  
 
 	  data.forEach((course, idx) => {
+		  console.log(course);
 		  const title = course.title;
 		  const rating = course.rating;
 		  const positive = course.positive;
 		  const thumbnail = course.thumbnail;
+		  const courseidx = course.courseidx;
 
 	    const card = `
 	      <div class="one-product">
 	        <div class="thumb">
+	        <a href="/lecture_one?idx=${course.courseidx}"></a>
 	          <img src="${course.thumbnail}" alt="">
 	        </div>
 	        <div class="info">
