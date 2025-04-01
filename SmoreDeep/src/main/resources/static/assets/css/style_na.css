@@ -314,3 +314,9 @@ input, select {
     color: #555;
     cursor: pointer;
 }
+.container .button {
+	margin-bottom: 100px;
+}
+#user .button {
+	margin-bottom: 0;
+}
