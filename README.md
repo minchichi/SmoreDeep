@@ -170,7 +170,7 @@
     <td align="center">Back-end, 데이터 연동</td>
   </tr>
   <tr>
-    <td align="center" width=200>
+    <td align="center" width=220>
       - 사이트 메인 페이지<br>
       - 사용자 강의 목록<br>
       - 사용자 강의상세정보<br>
@@ -180,7 +180,7 @@
       - 관리자 사용자 관리<br>
       - 전체 일정 및 서류 관리
     </td>
-    <td align="center" width=200>
+    <td align="center" width=220>
       - Spring Boot<br>
       - 소셜 로그인(카카오)<br>
       - 회원가입(ID 중복 확인, 비밀번호 유효성 검사)<br>
@@ -188,7 +188,7 @@
       - 클라우드 연동<br>
       - 발표자료제작
     </td>
-    <td align="center" width=200>
+    <td align="center" width=220>
       - 빅데이터 분석 기획 및 정의<br>
       - 데이터 수집 설계 및 전처리<br>
       - 데이터 분석 및 모델링<br>
@@ -196,7 +196,7 @@
       - 챗봇 구현 및 챗봇기능<br>
       - 서류(빅데이터 분석 정의서, 요구사항정의서, 테이블명세서 작성)
     </td>
-    <td align="center" width=200>
+    <td align="center" width=220>
       - 회원가입 페이지<br>
       - 로그인 페이지<br>
       - 사용자 마이 페이지<br>
@@ -204,7 +204,7 @@
       - Bootstrap, Chart.js<br>
       - 서류(기획서, 화면 설계서)
     </td>
-    <td align="center" width=200>
+    <td align="center" width=220>
       - Spring Boot <br>
       - 소셜 로그인(구글)<br>
       - 사용자강의목록<br>
