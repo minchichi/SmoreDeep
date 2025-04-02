@@ -1,4 +1,4 @@
-# 📎 ChatGPT-4o 기반 강의평 분석 및 강의 추천 서비스(팀명: Deep Dream)
+# 📎 GPT-4o 기반 강의평 분석 및 강의 추천 서비스(팀명: Deep Dream)
 
 ## 👀 서비스 소개
 * 서비스명:  S'MoreDeep(Some More Deep)
