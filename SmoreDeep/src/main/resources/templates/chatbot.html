@@ -52,8 +52,7 @@
 		<div class="quick-buttons" id="step-level" style="display: none;">
 			<button class="quick-button" onclick="selectLevel('입문')">입문</button>
 			<button class="quick-button" onclick="selectLevel('초급')">초급</button>
-			<button class="quick-button" onclick="selectLevel('중급 이상')">중급
-				이상</button>
+			<button class="quick-button" onclick="selectLevel('중급이상')">중급이상</button>
 		</div>
 
 		<!-- 강의시간 선택 단계 -->
@@ -68,7 +67,8 @@
 				이상</button>
 		</div>
 		<div class="chat-input">
-			<input type="text" id="user-input" placeholder="메시지를 입력하세요">
+			<input type="text" id="user-input" placeholder="메시지를 입력하세요"
+			onkeydown="if(event.key === 'Enter'){ sendMessage(); }">
 			<button onclick="sendMessage()">전송</button>
 		</div>
 
@@ -128,7 +128,7 @@ function selectTime(time) {
 	  $("#step-time").hide();
 	  addBotMessage("선택한 조건을 바탕으로 강의를 추천 중입니다...");
 	  const userId = $("#user_id").val().trim();
-	  const combined = `${selectedCategory} ${selectedLevel} ${selectedTime} 추천`;
+	  const combined = `카테고리는 ${selectedCategory}, 난이도는 ${selectedLevel}, 수강 시간은 ${selectedTime}일 때 추천할 수 있는 강의가 있을까?`;
 
 	  //선호 저장
 	  $.ajax({
@@ -140,12 +140,12 @@ function selectTime(time) {
 	      middleCategory: selectedCategory,
 	      courseLevel: selectedLevel,
 	      coursePlaytime: selectedTime,
-	      userText: ""  // 시나리오 모드에서는 비워줘야 함
+	      userText: "" 
 	    }),
 	    success: function (prefIdx) {
 	      console.log("선호 저장 성공, prefIdx:", prefIdx);
 
-	      //직접 sendToServer 호출 (sendMessage 아님)
+	      
 	      sendToServer(combined, prefIdx);
 	    },
 	    error: function () {
