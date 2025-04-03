@@ -1,7 +1,6 @@
 /* 회원가입-----공통 스타일 */
 body {
     font-family: 'Pretendard', sans-serif;
-    width: 412px;
     height: 100vh;
     margin: 0 auto;
     display: flex;
@@ -24,7 +23,7 @@ input, select {
     font-weight: bold;
     color: #333;
     text-align: center;
-    margin: 150px 0 80px;
+    margin: 100px 0 80px;
 }
 
 .button {
@@ -314,4 +313,14 @@ input, select {
     font-weight: bold;
     color: #555;
     cursor: pointer;
+}
+.container .button {
+	margin-bottom: 100px;
+}
+#user .button {
+	margin-bottom: 0;
+}
+
+.mypage-container .title {
+	margin-top: 150px;
 }

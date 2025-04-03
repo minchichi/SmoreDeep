@@ -21,13 +21,14 @@ input, select {
 }
 body {
   font-family: var(--font--style);
-  width: 412px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  position: relative;
+  height: 100vh;
 }
 .header {
-  width: 412px;
+  width: 100%;
   height: 80px;
   background-color: var(--main);
   display: flex;
@@ -43,7 +44,7 @@ body {
 }
 
 .footer {
-  width: 412px;
+  width: 100%;
   height: 80px;
   background-color: var(--gray);
   font-size: 12px;
@@ -184,9 +185,6 @@ body {
 }
 .lecture-list .page .active .page-link {
   color: var(--main);
-}
-.lecture-list .one-product .thumb img {
-   height: 117px;
 }
 .page-link {
    padding: 6px 8px;
@@ -359,13 +357,13 @@ body {
 .chat-container {
   display:flex;
   flex-direction:column;
-  justify-content:flex-start;
+  justify-content: flex-start;
   align-items:center;
-  margin-top: 80px;
-  height: 760px;
+  position: absolute;
+  top: 80px;
+  bottom: 160px;
 }
 .chat-container .chat-box {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -388,22 +386,24 @@ body {
   align-self: flex-start;
 }
 
-.chat-container .chat-input {
+ .chat-input {
   display: flex;
   justify-content: center;
   width: 100%;
   padding: 10px 16px;
   box-sizing: border-box;
   background-color: white;
+  position: fixed;
+  bottom: 80px;
 }
-.chat-container .chat-input input {
+.chat-input input {
   flex: 1;
   padding: 20px;
   border: 1px solid #999;
   border-radius: 5px;
   outline: none;
 }
-.chat-container .chat-input button {
+.chat-input button {
   margin-left: 10px;
   padding: 12px;
   border: none;
@@ -463,12 +463,12 @@ body {
 
 .quick-buttons {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 10px;
   padding: 10px;
 }
 .quick-button {
-  padding: 10px 15px;
+  padding: 10px 12px;
   border: none;
   background-color: var(--main);
   color: white;
@@ -483,7 +483,7 @@ body {
   margin: 0 auto;
 }
 .main-container .main {
-  margin-top: 150px;
+  margin-top: 100px;
 }
 .main-container .main img {
   width: 300px;
@@ -530,4 +530,20 @@ body {
 }
 .modal .lecture-one .title {
   text-align: start;
+}
+
+#reload {
+	margin-bottom: 100px;
+}
+.product .page {
+	margin-bottom: 90px;
+}
+.main-container .join-btn {
+	margin-bottom: 80px;
+}
+.container .join-btn {
+	margin-bottom: 80px;
+}
+.container .button {
+	margin-bottom: 100px;
 }

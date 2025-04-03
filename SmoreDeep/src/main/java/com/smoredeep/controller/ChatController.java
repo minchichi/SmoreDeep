@@ -61,23 +61,27 @@ public class ChatController {
             if (matchedCourses.isEmpty()) {
                 return ResponseEntity.ok(Map.of("message", "적합한 강의가 없습니다.", "results", List.of()));
             }
-
             List<Map<String, Object>> courseInfoList = matchedCourses.stream().map(course -> {
                 Map<String, Object> map = new HashMap<>();
                 map.put("title", course.getCourseNm());
                 map.put("rating", course.getAverageRating()); 
                 map.put("positive", course.getPositiveRatio()); // 긍정비율
-                map.put("thumbnail", course.getCourseImg()); // 이미지 경로 (또는 idx 기반으로 JS에서 결정 가능)
+                map.put("thumbnail", course.getCourseImg()); // 이미지 경로
                 map.put("courseidx", course.getCourseIdx());
+                map.put("subCategory", course.getSubCategory());
                 return map;
             }).collect(Collectors.toList());
+         
+
 
             return ResponseEntity.ok(Map.of("message", "추천 완료", "results", courseInfoList));
+            
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("FastAPI 연결 실패: " + e.getMessage());
+            
         }
     }
     
