@@ -295,7 +295,6 @@ $.ajax({
 	  data.forEach((course, idx) => {
 		  console.log(course);
 		  const title = course.title;
-		  const rating = course.rating;
 		  const positive = course.positive;
 		  const thumbnail = course.thumbnail;
 		  const courseidx = course.courseidx;
@@ -310,7 +309,6 @@ $.ajax({
 	        <div class="info">
 	          <div class="title">${course.title}</div>
 	          <div class="sub">
-	            <div class="date">평점 : ${course.rating}</div>
 	            <div class="positive">👍  ${course.positive}%</div>
 	          </div>
 	        </div>

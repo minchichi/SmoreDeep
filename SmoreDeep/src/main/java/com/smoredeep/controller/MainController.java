@@ -214,7 +214,7 @@ public class MainController {
 		System.out.println(newRecommendCourse);
 		model.addAttribute("newRecommendCourse", newRecommendCourse);
 		
-		TbCourse alarmCourse = this.courseRepository.findByCourseIdx(13);
+		TbCourse alarmCourse = this.courseRepository.findByCourseIdx(44);
 		System.out.println(alarmCourse);
 		if (alarmCourse.getCourseHide() == 0) {
 		model.addAttribute("alarmCourse", alarmCourse);
