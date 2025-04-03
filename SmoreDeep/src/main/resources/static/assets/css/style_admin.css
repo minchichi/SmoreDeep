@@ -82,12 +82,13 @@ body {
 .box h4 {
    font-size: 20px;
    margin-left: 10px;
+   margin-bottom: 0px;
 }
 
 .box .wraping {
    display: flex;
    flex-direction: row;
-   align-items: baseline;
+   align-items: center;
    justify-content: space-between;
 }
 
@@ -150,6 +151,24 @@ body {
    border-radius: 4px;
 }
 
+#dateFilter button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#dateFilter button.active {
+    background-color: #d1822c;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: #e49434 0 0 10px;
+    transition: all 0.2s ease-in-out;
+}
+
 #searchButton, #dateFilter button, #resetButton {
    background-color: #e49434;
    color: white;
@@ -159,8 +178,11 @@ body {
    cursor: pointer;
 }
 
-#searchButton:hover, #dateFilter button:hover, #resetButton:hover {
+#searchButton:hover, #dateFilter button:hover,
+#dateFilter button:active, #dateFilter button:focus,
+#resetButton:hover {
    background-color: #d1822c;
+   box-shadow: #e49434 0 0 10px;
 }
 
 /* 대시보드 아이콘 */
@@ -212,9 +234,10 @@ body {
 
 .chart-labels li {
    font-size: 16px;
-   margin: 10px 0;
+   height: 40px;
    display: flex;
    align-items: center;
+   justify-content: space-between;
 }
 
 .chart-labels li span {
@@ -222,6 +245,11 @@ body {
    width: 30px;
    height: 15px;
    margin-right: 20px;
+}
+
+.chart-labels p {
+   font-size: 16px;
+    margin: 0 0 0 20px;
 }
 
 /* 도넛차트 오른쪽 차트 스타일 */
@@ -358,7 +386,7 @@ th {
 
 .course-item .pointer {
    cursor: pointer;
-   width: 800px;
+   width: 700px;
 }
 
 .admin-user .pointer {

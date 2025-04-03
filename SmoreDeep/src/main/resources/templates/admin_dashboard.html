@@ -48,9 +48,16 @@
                      <option value="">전체</option>
                      <option value="프론트엔드">프론트엔드</option>
                      <option value="백엔드">백엔드</option>
-                     <option value="프로그래밍 언어">프로그래밍 언어</option>
-                     <option value="알고리즘">알고리즘</option>
+                     <option value="프로그래밍언어">프로그래밍언어</option>
+                     <option value="알고리즘·자료구조">알고리즘·자료구조</option>
+                     <option value="데브옵스·인프라">데브옵스·인프라</option>
                      <option value="데이터베이스">데이터베이스</option>
+                     <option value="웹개발">웹개발</option>
+                     <option value="모바일앱개발">모바일앱개발</option>
+                     <option value="개발도구">개발도구</option>
+                     <option value="개발·프로그래밍기타">개발·프로그래밍기타</option>
+                     <option value="풀스택">풀스택</option>
+                     <option value="데스크톱앱개발">데스크톱앱개발</option>
                   </select>
                </div>
                <div class="filter-row">
@@ -109,12 +116,12 @@
                               </tr>
                               <tr>
                                  <td>03</td>
-                                 <td>프로그래밍 언어</td>
+                                 <td>프로그래밍언어</td>
                                  <td>👍72</td>
                               </tr>
                               <tr>
                                  <td>04</td>
-                                 <td>알고리즘</td>
+                                 <td>모바일앱개발</td>
                                  <td>👍65</td>
                               </tr>
                               <tr>
@@ -142,11 +149,11 @@
                      <!-- 왼쪽: labels -->
                      <div class="chart-labels">
                         <ul>
-                           <li><span style="background-color: #e49434;"></span> 프론트엔드</li>
-                           <li><span style="background-color: #f7c24d;"></span> 백엔드</li>
-                           <li><span style="background-color: #f79c42;"></span> 프로그래밍 언어</li>
-                           <li><span style="background-color: #f68c36;"></span> 알고리즘</li>
-                           <li><span style="background-color: #f45b29;"></span>   데이터베이스</li>
+                           <li><span style="background-color: #e49434;"></span> 프론트엔드 <p>100명</p></li>
+                           <li><span style="background-color: #f7c24d;"></span> 백엔드 <p>150명</p></li>
+                           <li><span style="background-color: #f79c42;"></span> 프로그래밍언어 <p>200명</p></li>
+                           <li><span style="background-color: #f68c36;"></span> 모바일앱개발 <p>120명</p></li>
+                           <li><span style="background-color: #f45b29;"></span> 데이터베이스 <p>180명</p></li>
                         </ul>
                      </div>
                      <!-- 오른쪽: 도넛 차트 -->
@@ -160,7 +167,7 @@
 
          <div class="row">
             <!-- 사용자 꺾은선 차트 -->
-            <div class="col-5">
+            <div class="col-6">
                <div class="box">
                   <i class="fas fa-users icon"></i>
                   <h6 class="card-title">사용자</h6>
@@ -172,17 +179,24 @@
             </div>
 
             <!-- 추천 강의 선택 리뷰 평점 -->
-            <div class="col-7">
+            <div class="col-6">
                <div class="box">
                   <i class="fas fa-comments icon"></i>
                   <h6 class="card-title">추천 강의 리뷰</h6>
                   <label for="course-select">강의 선택: </label>
                   <select   id="course-select" onchange="updateReviews()">
-                     <option value="웹 개발 입문">프론트엔드</option>
-                     <option value="데이터 사이언스">벡엔드</option>
-                     <option value="머신러닝 개론">프로그래밍 언어</option>
-                     <option value="네트워크 기초">알고리즘</option>
-                     <option value="데이터베이스 설계">데이터베이스</option>
+                     <option value="프론트엔드">프론트엔드</option>
+                     <option value="백엔드">백엔드</option>
+                     <option value="프로그래밍언어">프로그래밍언어</option>
+                     <option value="알고리즘·자료구조">알고리즘·자료구조</option>
+                     <option value="데브옵스·인프라">데브옵스·인프라</option>
+                     <option value="데이터베이스">데이터베이스</option>
+                     <option value="웹개발">웹개발</option>
+                     <option value="모바일앱개발">모바일앱개발</option>
+                     <option value="개발도구">개발도구</option>
+                     <option value="개발·프로그래밍기타">개발·프로그래밍기타</option>
+                     <option value="풀스택">풀스택</option>
+                     <option value="데스크톱앱개발">데스크톱앱개발</option>
                   </select>
                   <table>
                      <thead>
@@ -220,13 +234,74 @@
             // 클릭된 메뉴에 active 추가
             element.classList.add('active');
         }
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const resetButton = document.querySelector(".btn-warning"); // 초기화 버튼
+            const categoryFilter = document.getElementById("categoryFilter"); // 카테고리 필터
+            const dateFilterButtons = document.querySelectorAll("#dateFilter button"); // 기간 버튼들
+            const searchInput = document.getElementById("searchInput"); // 검색 입력 필드
+            let selectedDate = ""; // 선택된 기간 값 저장
+
+            // 기간 버튼 클릭 시 선택 유지 & 검색 적용
+            dateFilterButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    // 모든 버튼 초기화
+                    dateFilterButtons.forEach(btn => {
+                        btn.classList.remove("active");
+                        btn.style.boxShadow = "none"; // 테두리 제거
+                    });
+
+                    // 선택한 버튼 강조 (초록색 테두리 추가)
+                    this.classList.add("active");
+                    this.style.boxShadow = "#e49434 0 0 10px";
+
+                    // 선택한 날짜 값을 저장
+                    selectedDate = this.getAttribute("data-date");
+
+                    // 필터링된 데이터 자동 검색
+                    applyFilters();
+                });
+            });
+
+            // 초기화 버튼 클릭 시 모든 필터 리셋
+            resetButton.addEventListener("click", function () {
+                categoryFilter.value = ""; // 카테고리 초기화
+                searchInput.value = ""; // 검색 필드 초기화
+                selectedDate = ""; // 기간 초기화
+
+                // 모든 기간 버튼 초기화
+                dateFilterButtons.forEach(button => {
+                    button.classList.remove("active");
+                    button.style.boxShadow = "none";
+                });
+
+                // "전체" 버튼 활성화
+                const allButton = document.querySelector('#dateFilter button[data-date=""]');
+                if (allButton) {
+                    allButton.classList.add("active");
+                    allButton.style.boxShadow = "#e49434 0 0 10px";
+                }
+
+                // 필터링된 데이터 다시 불러오기
+                applyFilters();
+            });
+
+            // 필터 적용 함수 (데이터 갱신)
+            function applyFilters() {
+                const selectedCategory = categoryFilter.value;
+                console.log("📌 필터 적용됨:", { category: selectedCategory, date: selectedDate, search: searchInput.value });
+
+                // 여기에 실제 검색 기능 추가 (AJAX 호출 or 데이터 필터링)
+            }
+        });
+
 
         // 카테고리별 추천 강의 TOP5
         const ctx = document.getElementById('chart').getContext('2d');
         const chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['프론트엔드', '백엔드', '프로그래밍 언어', '알고리즘', '데이터베이스'],
+                labels: ['프론트엔드', '백엔드', '프로그래밍언어', '모바일앱개발', '데이터베이스'],
                 datasets: [
                     {
                         label: '선호도',
@@ -251,7 +326,7 @@
         var categoryUsersChart = new Chart(categoryUsersCtx, {
             type: 'doughnut',
             data: {
-                labels: ['프론트엔드', '백엔드', '프로그래밍 언어', '알고리즘', '데이터베이스'],
+                labels: ['프론트엔드', '백엔드', '프로그래밍언어', '모바일앱개발', '데이터베이스'],
                 datasets: [{
                     label: '강의 사용자 수',
                     data: [100, 150, 200, 120, 180],
@@ -312,18 +387,88 @@
 
         // 카테고리별 추천 강의 리뷰 평점
         const reviews = {
-            "웹 개발 입문": [
+            "프론트엔드": [
                 { text: "정말 좋은 강의였습니다!", rating: 5 },
                 { text: "입문자가 듣기에 적절합니다.", rating: 4 },
                 { text: "예제가 많아 도움이 됐어요.", rating: 5 },
-                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 3 },
                 { text: "추천합니다!", rating: 5 }
             ],
-            "데이터 사이언스": [
+            "벡엔드": [
                 { text: "유익한 강의였어요!", rating: 4 },
                 { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
                 { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
                 { text: "실습이 많아 좋았어요.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "프로그래밍언어": [
+                { text: "추천합니다!", rating: 4 },
+                { text: "실습이 많아 좋았어요.", rating: 5 },
+                { text: "입문자가 듣기에 적절합니다.", rating: 3 },
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "알고리즘·자료구조": [
+                { text: "조금 어렵지만 좋았습니다", rating: 3 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "예제가 많아 도움이 됐어요.", rating: 5 },
+                { text: "실습이 많아 좋았어요.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "데브옵스·인프라": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "데이터베이스": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "웹개발": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "모바일앱개발": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "개발도구": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "개발·프로그래밍기타": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "풀스택": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
+                { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
+            ],
+            "데스크톱앱개발": [
+                { text: "정말 좋은 강의였습니다!", rating: 4 },
+                { text: "데이터 분석에 많은 도움이 됐습니다.", rating: 5 },
+                { text: "쉽게 설명해주셔서 이해가 잘 됐어요.", rating: 5 },
+                { text: "조금 어렵지만 좋았습니다.", rating: 4 },
                 { text: "기본 개념을 잘 잡아줍니다.", rating: 5 }
             ]
         };
